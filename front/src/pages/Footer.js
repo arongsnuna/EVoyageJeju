@@ -1,30 +1,40 @@
 import styled from 'styled-components';
 
-// const div = styled.div`
-//   display: flex;
-//   flex-direction: column;
-//   align-items: center;
-//   padding: 24px 80px;
-//   gap: 48px;
-
-//   position: relative;
-//   // width: 1440px;
-//   height: 75px;
-//   left: 0px;
-//   // top: 1697px;
-//   transform: translateY(-100%);
-
-//   background: #3563E9;
-// `;
-
-// 하단 고정, 가로 설정
-
 function Footer() {
+
+  if (window.location.pathname === '/login') return null;
+  else if (window.location.pathname === '/register') return null;
+  
   return (
-    <div>
-      <p>여긴 푸터야</p>
-    </div>
+    <Container>
+      <p>Copyright 2023. EVoyageJeju. All rights reserved.</p>
+    </Container>
   )
 }
 
 export default Footer;
+
+const Container = styled.div`
+  display: block;
+  flex-direction: column;
+  align-items: center;
+
+  position: relative;
+  width: 100%;
+  height: 75px;
+  transform: translateY(-100%);
+  
+  background: #3563E9;
+
+  p {
+    padding: 24px 80px;
+
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 140%;
+    color: #FFFFFF;
+    text-align: center;
+  } 
+`;
