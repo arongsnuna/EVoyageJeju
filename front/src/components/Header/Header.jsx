@@ -1,5 +1,5 @@
 import { useNavigate, Link } from 'react-router-dom';
-import { ROUTE } from '../routes';
+import { ROUTE } from '../../routes';
 import { Container, TitleContainer, Navigation, NavContainer, ButtonContainer, HeaderButton } from './Header.style';
 
 import logo from './logo.png'
@@ -7,13 +7,13 @@ import logo from './logo.png'
 function Header() {
   const navigate = useNavigate();
 
-  if (window.location.pathname === '/login') {
+  if (window.location.pathname === ROUTE.LOGIN.link) {
     return (
-      <Link to={ROUTE.LOGIN.link}></Link>
+      <></>
     )
-  } else if (window.location.pathname === '/register') {
+  } else if (window.location.pathname === ROUTE.REGISTER.link) {
     return (
-      <Link to={ROUTE.REGISTER.link}></Link>
+      <></>
     )
   };
   
