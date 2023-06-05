@@ -1,26 +1,19 @@
 import {BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { ROUTE_ARR } from './routes';
 
-import Header from './pages/Header';
-import Footer from './pages/Footer';
-import Main from './pages/Main';
-// import Info from './pages/Info';
-// import Community from './pages/Community';
-// import Charger from './pages/Charger';
-import LoginForm from "./pages/LoginForm";
-import RegisterForm from "./pages/RegisterForm";
+import Header from './components/Header';
+import Footer from './components/Footer';
 
 function App() {
   return (
     <Router>
       <Header />
       <Routes>
-        <Route path='/' exact element={<Main />} />
-        <Route path="/login" element={<LoginForm />} />
-        <Route path="/register" element={<RegisterForm />} />
-        {/* <Route path='/info' element={<Info />} />
-        <Route path='/community' element={<Community />} />
-        <Route path='/charger' element={<Charger />} />
-        <Route path='*' element={<NotFound />} /> // 정의하지 않은 경로로 접속?! */}
+        {ROUTE_ARR.map((route, index) => {
+          return (
+            <Route path={route.path} element={<route.element />} key={index} />
+          )
+        })}
       </Routes>
       <Footer />
     </Router>
