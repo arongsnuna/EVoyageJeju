@@ -1,16 +1,32 @@
 import styled from "styled-components";
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css'
-import 'slick-carousel/slick/slick-theme.css'
 
 export const Container = styled.div`
+  display: flex;
+  flex-direction: column;
   margin: 170px 50px 300px;
 `;
 
 export const TitleContainer = styled.div`
-  border: 5px solid black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;  
+  margin: 50px 0;
 
-  text-align: center;
+  background: #A6C8FF;
+
+  p {
+    padding: 75px 0 90px;
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 52px;
+    line-height: 58px;
+    text-align: center;
+    letter-spacing: 0.2px;
+    text-transform: capitalize;
+    color: #212121;
+  }
 `;
 
 export const PostingContainer = styled.div`

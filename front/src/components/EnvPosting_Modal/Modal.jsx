@@ -1,0 +1,47 @@
+import React from "react";
+
+import { Container, BackGroundContainer, ModalContainer, CancelButton, SliderContainer, StyledSlider } from "./Modal.style";
+
+function Modal(props) {
+  const { closeModal, selectedItem } = props;
+
+  const settings = {
+    dots: true,
+    arrows: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1
+  };
+  console.log(selectedItem)
+
+  return (
+    <Container>
+      <BackGroundContainer
+        style={{
+          position: "fixed",
+          top: -100,
+          right: -5000,
+          width: 9999,
+          height: 5000,
+          backgroundColor: 'rgba(0, 0, 0, 0.35)'
+        }}
+        onClick={closeModal}
+      ></BackGroundContainer>
+      <ModalContainer>
+        <SliderContainer>
+          <CancelButton onClick={closeModal}>X</CancelButton>
+          <StyledSlider {...settings}>
+            {selectedItem.map((item) => (
+              <div>
+                <p>{item.text}</p>
+              </div>
+            ))}
+          </StyledSlider>
+        </SliderContainer>
+      </ModalContainer>
+    </Container>
+  )
+}
+
+export default Modal;
