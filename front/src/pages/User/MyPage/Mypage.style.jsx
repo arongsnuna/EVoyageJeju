@@ -69,7 +69,7 @@ export const FormUserDiv = styled.div`
   div {
     display: flex;
     flex-direction: row;
-    padding: 15px 20px 0;
+    margin: 0 0 30px;
   }
 
   label {

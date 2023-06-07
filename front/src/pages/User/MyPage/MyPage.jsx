@@ -15,6 +15,14 @@ function MyPage() {
   const [isEditableNickName, setIsEditableNickName] = useState(false);
   const [isEditablePassword, setIsEditablePassword] = useState(false);
 
+  // 수정 완료 알림을 위한 state
+  const [editComplete, setEditComplete] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+  }
+
   return (
     <>
       <TitleContainer>
@@ -55,6 +63,7 @@ function MyPage() {
                 <EditNickName
                   currentNickName={nickname}
                   setIsEditableNickName={setIsEditableNickName}
+                  setEditComplete={setEditComplete}
                 />
               ) : (
                 <>
@@ -77,6 +86,7 @@ function MyPage() {
                 <EditPassword
                   currentPassword={password}
                   setIsEditablePassword={setIsEditablePassword}
+                  setEditComplete={setEditComplete}
                 />
               ) : (
                 <>
@@ -96,9 +106,11 @@ function MyPage() {
             </ButtonContainer>
           </FormUserDiv>
         </fieldset>
-        <EditCompletedText> 
-          <p><strong>Successfully Saved.</strong> Your profile settings have been saved.</p>
-        </EditCompletedText>
+        {editComplete ? (
+          <EditCompletedText> 
+            <p><strong>Successfully Saved.</strong> Your profile settings have been saved.</p>
+          </EditCompletedText>
+        ) : null }
       </FormContainer>
     </>
   );
