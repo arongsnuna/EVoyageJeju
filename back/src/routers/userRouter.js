@@ -3,9 +3,6 @@ import { Router } from 'express';
 
 import { login_required } from '../middlewares/login_required.js';
 import { userAuthService } from '../services/userService.js';
-import {pool} from'../config/dbConnect.js';
-import path from 'path';
-import { error } from 'console';
 
 const userAuthRouter = Router();
 
@@ -38,7 +35,7 @@ userAuthRouter.post('/register', async function (req, res, next) {
             userPassword,
         });
 
-        if(newUser.errorMessage != 'error'){
+        if(newUser.errorMessage){
             throw new Error(newUser.errorMessage);
         }    
         res.status(201).json(newUser);
@@ -51,47 +48,43 @@ userAuthRouter.post('/register', async function (req, res, next) {
 // 로그인
 userAuthRouter.post('/login', async function (req, res, next) {
     try {
-        // req (request) 에서 데이터 가져오기
         const userId = req.body.userId;
         const userPassword = req.body.userPassword;
 
-        // 위 데이터를 이용하여 유저 db에서 유저 찾기
         const user = await userAuthService.getUser({ userId, userPassword });
 
-        if (user.errorMessage != 'error') {
+        if (user.errorMessage) {
             throw new Error(user.errorMessage);
         }
+        console.log(user);
         res.status(200).send(user);
     } catch (error) {
         next(error);
     }
 });
+
 // 유저정보 수정
 userAuthRouter.put('/users/:userId', login_required, async function (req, res, next) {
     try {
         const userId = req.currentUserId;
-        // body data 로부터 업데이트할 사용자 정보를 추출함.
         const userNickname = req.body.userNickname ?? null;
         const userPassword = req.body.userPassword ?? null;
 
         if (userNickname === (null || '')) {
-            res.status(400).send({ error: '별명을 입력해주세요' });
             throw new Error('별명을 입력해주세요');
         }
         if (userPassword === (null || '')) {
-            res.status(400).send({ error: '비밀번호를 입력해주세요' });
             throw new Error('비밀번호를 입력해주세요');
         }
 
         const toUpdate = {userNickname, userPassword}
-        // 해당 사용자 아이디로 사용자 정보를 db에서 찾아 업데이트함. 업데이트 요소가 없을 시 생략함
+
         const updatedUser = await userAuthService.setUser({ userId, toUpdate  });
 
         if (updatedUser.errorMessage) {
-            res.status(400).send({ error: user.errorMessage });
             throw new Error(updatedUser.errorMessage);
         }
-
+        
         res.status(200).json(updatedUser);
     } catch (error) {
         next(error);
@@ -99,12 +92,10 @@ userAuthRouter.put('/users/:userId', login_required, async function (req, res, n
 });
 
 // 유저의 전체 목록 불러오기
-userAuthRouter.get('/users', async function (req, res, next) {
+userAuthRouter.get('/users', login_required, async function (req, res, next) {
     try {
         const users = await userAuthService.getUsers();
-        // 2. users 값이 드렁가게끔
         res.status(200).send(users);
-        console.log(users); // undefined 
     } catch (error) {
         next(error);
     }
@@ -114,14 +105,7 @@ userAuthRouter.get('/users', async function (req, res, next) {
 userAuthRouter.get('/users/:userId', login_required, async function (req, res, next) {
     try {
         const userId = req.currentUserId;
-        const currentUserInfo = await userAuthService.getUserInfo({
-            userId,
-        });
-
-        if (currentUserInfo.errorMessage) {
-            throw new Error(currentUserInfo.errorMessage);
-        }
-
+        const currentUserInfo = await userAuthService.getUserInfo({userId});
         res.status(200).send(currentUserInfo);
     } catch (error) {
         next(error);
