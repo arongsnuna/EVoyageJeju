@@ -1,5 +1,4 @@
 import {pool} from'../config/dbConnect.js';
-import {User} from '../db/User.js'
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
@@ -102,13 +101,18 @@ class userAuthService {
             }
         })
     }
-
     //update
-    static async setUser({ userId, toUpdate }) {
+    static async setUser({ userId, newNickname, newPassword }) {
         const userFound = await this.findById({userId});
+        const userNickname = await this.userNicknameUpdate({userFound, newNickname });
+        const userPassword = await this.userPasswordUpdate({userFound, newPassword });
+    
         return new Promise((resolve, reject)=>{
+            
             let user ={
                 userId, 
+                userNickname,
+                userPassword,
                 errorMessage: null,
             };
 
@@ -117,15 +121,6 @@ class userAuthService {
                 resolve(user);
             }
             else{
-                for (const[fieldToUpdate, newValue] of Object.entries(toUpdate)){
-                    let sql = `UPDATE User SET ${fieldToUpdate}='${newValue}' WHERE userId = '${userId}'`;
-                    pool.query(sql, (error, results, fields)=>{
-                        if(error){
-                            user.errorMessage = error;
-                            resolve(user);
-                        }
-                    })
-                }
                 let sql = `select * from User where userId='${userId}'`;
                 pool.query(sql, (error, results, fields)=>{
                     let updatedUser = results[0];
@@ -133,6 +128,47 @@ class userAuthService {
                     resolve(updatedUser);
                 })
             }
+        })
+    }
+    // 닉네임 업데이트
+    static async userNicknameUpdate({ userFound, newNickname }) {
+        
+        return new Promise((resolve, reject)=>{
+            if(userFound.userNickname !=  newNickname){
+                const sql = `UPDATE User SET userNickname='${newNickname}' WHERE userId = '${userFound.userId}'`;
+                pool.query(sql, (error, results, fields)=>{
+                    if(error){
+                        reject(error);
+                    }
+                    resolve(results);
+                })
+            }
+            else{
+                resolve();
+            }
+            
+        })
+    }
+    // 비밀번호 업데이트
+    static async userPasswordUpdate({ userFound, newPassword }) {
+        const hashedPassword = await bcrypt.hash(newPassword , 10);
+        return new Promise((resolve, reject)=>{
+            const userPassword = userFound.userPassword;
+            bcrypt.compare(newPassword, userPassword, (error, result)=>{
+                
+                if(!result){
+                    const sql = `UPDATE User SET userPassword='${hashedPassword}' WHERE userId = '${userFound.userId}'`;
+                    pool.query(sql, (error, results, fields)=>{
+                        if(error){
+                            reject(error);
+                        }
+                        resolve(results);
+                    })
+
+                }
+                resolve();
+            });
+            
         })
     }
 
@@ -158,6 +194,41 @@ class userAuthService {
         return new Promise((resolve, reject)=>{
             resolve(user);
         })
+    }
+
+    // 유저 삭제
+    static async deleteUser({userId, userPassword}){
+        let status={
+            message:null,
+            errorMessage:null,
+        }
+        const userFound = await this.findById({userId});
+        return new Promise((resolve, reject)=>{
+            bcrypt.compare(userPassword, userFound.userPassword, (error, result)=>{
+                if(result){//같으면
+                    const sql = `DELETE from User WHERE userId = '${userId}'`;
+                    pool.query(sql, (error, results, fields)=>{
+                        if(error){
+                            status.errorMessage = error;
+                            resolve(status);
+                        }
+                        else{
+                            status.message = 'Delete successfully';
+                            resolve(status);
+                        }
+                    })
+                }
+                else{// 다르면
+                    status.errorMessage = '입력한 비밀번호가 옳지 않습니다';
+                    resolve(status);
+
+
+                }
+            })
+            
+            
+        })
+
     }
 
 }

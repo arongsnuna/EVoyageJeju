@@ -3,6 +3,8 @@ import { Router } from 'express';
 
 import { login_required } from '../middlewares/login_required.js';
 import { userAuthService } from '../services/userService.js';
+import jwt from 'jsonwebtoken';
+
 
 const userAuthRouter = Router();
 
@@ -63,23 +65,49 @@ userAuthRouter.post('/login', async function (req, res, next) {
     }
 });
 
+// 로그아웃
+userAuthRouter.post('/logout', login_required, async function(req,res,next){
+    try{
+        const token = req.headers.authorization.split(' ')[1];
+        console.log(token);
+        // 토큰 무효화
+        jwt.verify(token, process.env.JWT_SECRET_KEY, (error, decoded)=>{
+            if(error){
+                const errorMessage = 'Invalid token';
+                throw new Error(errorMessage);
+            }
+            res.status(200).send({message: 'Logged out successfully'});
+        })
+        
+
+    }catch(error){
+        next(error);
+    }
+})
+
 // 유저정보 수정
 userAuthRouter.put('/users/:userId', login_required, async function (req, res, next) {
     try {
         const userId = req.currentUserId;
-        const userNickname = req.body.userNickname ?? null;
-        const userPassword = req.body.userPassword ?? null;
+        const newNickname = req.body.userNickname ?? null;
+        const newPassword = req.body.userPassword ?? null;
+        const confirmPassword = req.body.confirmPassword ?? null;
 
-        if (userNickname === (null || '')) {
+        if (newNickname === (null || '')) {
             throw new Error('별명을 입력해주세요');
         }
-        if (userPassword === (null || '')) {
+        if (newPassword === (null || '')) {
             throw new Error('비밀번호를 입력해주세요');
         }
+        if (confirmPassword === (null || '')) {
+            throw new Error('확인 비밀번호를 입력해주세요');
+        }
+        if (newPassword !== confirmPassword){
+            throw new Error('비밀번호와 확인 비밀번호가 다릅니다');
+            // 말을 좀 괜찮게 해봐 ....
+        }
 
-        const toUpdate = {userNickname, userPassword}
-
-        const updatedUser = await userAuthService.setUser({ userId, toUpdate  });
+        const updatedUser = await userAuthService.setUser({ userId, newNickname, newPassword });
 
         if (updatedUser.errorMessage) {
             throw new Error(updatedUser.errorMessage);
@@ -92,7 +120,7 @@ userAuthRouter.put('/users/:userId', login_required, async function (req, res, n
 });
 
 // 유저의 전체 목록 불러오기
-userAuthRouter.get('/users', login_required, async function (req, res, next) {
+userAuthRouter.get('/users',  async function (req, res, next) {
     try {
         const users = await userAuthService.getUsers();
         res.status(200).send(users);
@@ -111,6 +139,25 @@ userAuthRouter.get('/users/:userId', login_required, async function (req, res, n
         next(error);
     }
 });
+
+// 유저정보 삭제
+userAuthRouter.post('/users/:userId', login_required, async function(req,res,next){
+    try{
+        const userId = req.currentUserId;
+        const userPassword = req.body.userPassword ?? null;
+        if (userPassword === (null || '')) {
+            throw new Error('비밀번호를 입력해주세요');
+        }
+        const status = await userAuthService.deleteUser({userId, userPassword});
+        if(status.errorMessage){
+            throw new Error(status.errorMessage);
+        }
+        res.status(200).send(status.message);
+
+    }catch(error){
+        next(error);
+    }
+})
 
 
 
