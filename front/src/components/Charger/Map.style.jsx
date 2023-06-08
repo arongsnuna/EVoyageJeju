@@ -1,5 +1,10 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  margin: 170px 0 300px;
+
+`;
+
+export const MapContainer = styled.div`
+  width: 1000px;
+  height: 800px;
 `;
