@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import * as Api from "../api";
 import { useNavigate } from "react-router-dom";
 import { isIDVaild, isPasswordValid } from '../../../utils/util';
 import { TitleContainer, FormContainer, FormFieldset, ButtonContainer, FormButton, AlreadySignUpText } from './LoginForm.style';
@@ -15,37 +14,16 @@ function LoginForm() {
   // 입력값에 대한 유효성 검사
   const isFormValid = isIDVaild(id) && isPasswordValid(password);
 
-  // 로그인 handlesubmit
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  // // 로그인 handlesubmit
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
 
-    try {
-      // "/login" 엔드포인트로 post요청함.
-      const res = await Api.post("/login", {
-        userId: id,
-        userPassword: password,
-      });
-      // 유저 정보는 response의 data임.
-      const user = res.data;
-      // // JWT 토큰은 유저 정보의 token임.
-      // const jwtToken = user.token;
-      // // sessionStorage에 "userToken"이라는 키로 JWT 토큰을 저장함.
-      // sessionStorage.setItem("userToken", jwtToken);
-
-      // dispatch 함수를 이용해 로그인 성공 상태로 만듦.
-      dispatch({
-        type: "LOGIN_SUCCESS",
-        payload: user,
-      });
-
-      // 기본 페이지로 이동함.
-      navigate("/", { replace: true });
-    } catch (err) {
-      console.log("로그인에 실패하였습니다.\n", err);
-      // 에러메세지 출력
-      alert(err.response.data)
-    }
-  }
+  //   try {
+  //     await Api.get(~~~)
+  //   } catch (err) {
+  //     
+  //   }
+  // }
 
   return (
     <>
@@ -53,7 +31,8 @@ function LoginForm() {
         <img src={logo} alt='EVoyageJeju Logo' />
         <a href='/'>탐라는차다</a>
       </TitleContainer>
-      <FormContainer onSubmit={handleSubmit}>
+      {/* <form onSubmit={handleSubmit}> */}
+      <FormContainer>
         <legend>로그인</legend>
         <FormFieldset>
           <label>ID</label>
@@ -84,7 +63,7 @@ function LoginForm() {
             fontColor='#FFFFFF'
             backgroundColor='#3563E9'
             type="submit" 
-            // onClick={() => navigate('/')}
+            onClick={() => navigate('/')}
             disabled={!isFormValid}
           >
             LOGIN

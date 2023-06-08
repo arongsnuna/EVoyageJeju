@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import * as Api from "../api";
 import { useNavigate } from "react-router-dom";
 import { isNameValid, isNickNameValid, isIDVaild, isPasswordValid, isPasswordSame } from '../../../utils/util';
 import { TitleContainer, FormContainer, FormFieldset, ButtonContainer, FormButton, AlreadySignUpText } from './RegisterForm.style';
@@ -15,29 +14,22 @@ function RegisterForm() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const isFormValid = isNameValid(id) && isNickNameValid(nickname) && isIDVaild(id) && isPasswordValid(password) && isPasswordSame({password, confirmPassword});
+  const isFormValid = isNameValid(id) 
+                        && isNickNameValid(nickname) 
+                        && isIDVaild(id) 
+                        && isPasswordValid(password) 
+                        && isPasswordSame({password, confirmPassword});
 
-  // 회원가입 handlesubmit
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      // "/register" 엔드포인트로 post요청함.
-      await Api.post("/register", {
-        userId: id,
-        userName: name,
-        userNickname: nickname,
-        userPassword: password
-      });
+  // // 회원가입 handlesubmit
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
 
-      // 로그인 페이지로 이동함.
-      navigate("/login");
-    } catch (err) {
-      console.log("회원가입에 실패하였습니다.", err);
-
-      // 아이디, 닉네임 중복되면 alert 창 출력
-      alert(err.response.data)
-    }
-  }
+  //   try {
+  //     await Api.post(~~~)
+  //   } catch (err) {
+  //     닉네임, 아이디 중복검사해야지
+  //   }
+  // }
 
   return (
     <>
@@ -45,7 +37,8 @@ function RegisterForm() {
         <img src={logo} alt='EVoyageJeju Logo' />
         <a href='/'>탐라는차다</a>
       </TitleContainer>
-      <FormContainer onSubmit={handleSubmit}>
+      {/* <form onSubmit={handleSubmit}> */}
+      <FormContainer>
         <legend>회원가입</legend>
         <FormFieldset>
           <label>이름</label><br />
@@ -112,7 +105,7 @@ function RegisterForm() {
             fontColor='#FFFFFF'
             backgroundColor='#3563E9'
             type="submit" 
-            // onClick={() => navigate('/login')}
+            onClick={() => navigate('/login')}
             disabled={!isFormValid}
           >
             Register
