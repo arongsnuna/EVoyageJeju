@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { Container, MapContainer } from "./Map.style";
 import SearchForm from "./SearchForm";
-import Modal from "./Modal";
 
 const { kakao } = window;
 

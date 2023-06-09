@@ -3,38 +3,42 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 class userAuthService {
-  //create
+  // 회원가입
   static async addUser({ userId, userName, userNickname, userPassword }) {
+    // 비밀번호 해쉬화
     const hashedPassword = await bcrypt.hash(userPassword, 10);
-    return new Promise((resolve, reject) => {
-      // 비밀번호 해쉬화
-      const newUser = {
-        userId,
-        userName,
-        userNickname,
-        userPassword: hashedPassword,
-        errorMessage: null,
-      };
-      // userId, userNickname 중복 확인
-      const user1 = this.findById({ userId });
-      const user2 = this.findByNickname({ userNickname });
-      if (!user1) {
-        newUser.errorMessage =
-          "이 아이디는 현재 사용중입니다. 다른 아이디를 입력해 주세요.";
-      } else if (!user2) {
-        newUser.errorMessage =
-          "이 별명은 현재 사용중입니다. 다른 별명을 입력해 주세요.";
-      }
+    let newUser = {
+      userId,
+      userName,
+      userNickname,
+      userPassword: hashedPassword,
+      errorMessage: null,
+    };
+    const user1 = await this.findById({ userId });
+    const user2 = await this.findByNickname({ userNickname });
 
-      const sql = `insert into User(userId,userName,userNickname,userPassword) values('${userId}','${userName}','${userNickname}','${hashedPassword}' )`;
-      pool.query(sql, (error, results, fields) => {
-        if (error) {
-          newUser.errorMessage = error;
-          reject(newUser);
-        } else {
-          resolve(newUser);
-        }
-      });
+    return new Promise((resolve, reject) => {
+      if (user1) {
+        const errorMessage =
+          "이 아이디는 현재 사용중입니다. 다른 아이디를 입력해 주세요.";
+        newUser.errorMessage = errorMessage;
+        resolve(newUser);
+      } else if (user2) {
+        const errorMessage =
+          "이 닉네임은 현재 사용중입니다. 다른 닉네임을 입력해 주세요.";
+        newUser.errorMessage = errorMessage;
+        resolve(newUser);
+      } else {
+        const sql = `insert into User(userId,userName,userNickname,userPassword) values('${userId}','${userName}','${userNickname}','${hashedPassword}' )`;
+        pool.query(sql, (error, results, fields) => {
+          if (error) {
+            newUser.errorMessage = error;
+            resolve(newUser);
+          } else {
+            resolve(newUser);
+          }
+        });
+      }
     });
   }
   // userId 조회
@@ -69,15 +73,14 @@ class userAuthService {
   //로그인
   static async getUser({ userId, userPassword }) {
     const userFound = await this.findById({ userId });
+    let user = {
+      userId,
+      errorMessage: null,
+      token: null,
+      userName: null,
+      userNickname: null,
+    };
     return new Promise((resolve, reject) => {
-      let user = {
-        userId,
-        errorMessage: null,
-        token: null,
-        userName: null,
-        userNickname: null,
-      };
-
       if (!userFound) {
         user.errorMessage =
           "이 아이디는 가입내역이 없습니다. 다시 한 번 확인해주세요.";
@@ -104,7 +107,7 @@ class userAuthService {
       }
     });
   }
-  //update
+  // 유저정보 수정
   static async setUser({ userId, newNickname, newPassword }) {
     const userFound = await this.findById({ userId });
     const userNickname = await this.userNicknameUpdate({
@@ -116,14 +119,14 @@ class userAuthService {
       newPassword,
     });
 
-    return new Promise((resolve, reject) => {
-      let user = {
-        userId,
-        userNickname,
-        userPassword,
-        errorMessage: null,
-      };
+    let user = {
+      userId,
+      userNickname,
+      userPassword,
+      errorMessage: null,
+    };
 
+    return new Promise((resolve, reject) => {
       if (!userFound) {
         user.errorMessage =
           "이 아이디는 가입내역이 없습니다. 다시 한 번 확인해주세요.";
@@ -190,36 +193,42 @@ class userAuthService {
     });
   }
 
-  // 특정 user read(ObjectId로)
+  // 특정 user 불러오기
   static async getUserInfo({ userId }) {
-    //const user = await this.findById({ userId });
-    //////
-    let userFound;
-    const findIdSql = `select * from User where userId='${userId}'`;
-    console.log("아이디는!!!!!!", userId);
-    pool.query(findIdSql, (error, results, fields) => {
-      console.log("여기야!!!!!!! QBdbdbddb ", results[0]);
-      userFound = results[0];
-      if (!userFound) {
-        userFound.errorMessage =
-          "이 아이디는 가입내역이 없습니다. 다시 한 번 확인해주세요.";
-        console.log("22222", user);
-        return user;
-      }
-      return;
-    });
-    console.log("아직 아니야!!!!", userFound);
-
-    ///////
     const user = await this.findById({ userId });
-    // db에서 찾지 못한 경우, 에러 메시지 반환
-    if (!user) {
-      const errorMessage =
-        "해당 아이디는 가입 내역이 없습니다. 다시 한 번 확인해 주세요.";
-      return { errorMessage };
-    }
+    return new Promise((resolve, reject) => {
+      resolve(user);
+    });
+  }
 
-    return user;
+  // 유저 삭제
+  static async deleteUser({ userId, userPassword }) {
+    let status = {
+      message: null,
+      errorMessage: null,
+    };
+    const userFound = await this.findById({ userId });
+    return new Promise((resolve, reject) => {
+      bcrypt.compare(userPassword, userFound.userPassword, (error, result) => {
+        if (result) {
+          //같으면
+          const sql = `DELETE from User WHERE userId = '${userId}'`;
+          pool.query(sql, (error, results, fields) => {
+            if (error) {
+              status.errorMessage = error;
+              resolve(status);
+            } else {
+              status.message = "성공적으로 삭제되었습니다.";
+              resolve(status);
+            }
+          });
+        } else {
+          // 다르면
+          status.errorMessage = "입력한 비밀번호가 옳지 않습니다";
+          resolve(status);
+        }
+      });
+    });
   }
 }
 
