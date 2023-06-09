@@ -1,8 +1,8 @@
-import {BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { ROUTE_ARR } from './routes';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { ROUTE_ARR } from "./routes";
 
-import Header from './components/Header/Header';
-import Footer from './components/Footer/Footer';
+import Header from "./components/Header/Header";
+import Footer from "./components/Footer/Footer";
 
 function App() {
   return (
@@ -12,7 +12,7 @@ function App() {
         {ROUTE_ARR.map((route, index) => {
           return (
             <Route path={route.path} element={<route.element />} key={index} />
-          )
+          );
         })}
       </Routes>
       <Footer />

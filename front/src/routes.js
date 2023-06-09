@@ -1,10 +1,10 @@
-import Home from './pages/Home/Home';
-import MyPage from './pages/User/MyPage/MyPage';
+import Home from "./pages/Home/Home";
+import MyPage from "./pages/User/MyPage/MyPage";
 import LoginForm from "./pages/User/Login/LoginForm";
 import RegisterForm from "./pages/User/Register/RegisterForm";
-import EnvPosting from './pages/EnvPosting/EnvPosting';
-import Community from './pages/Community/Community';
-import Charger from './pages/Charger/Charger';
+import EnvPosting from "./pages/EnvPosting/EnvPosting";
+import Community from "./pages/Community/Community";
+import Charger from "./pages/Charger/Charger";
 
 export const ROUTE = {
   Home: {

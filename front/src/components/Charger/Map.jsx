@@ -1,89 +1,154 @@
-import React, { useEffect, useState } from "react";
-import axios from 'axios';
+import React, { useEffect, useState, useRef } from "react";
+import axios from "axios";
 import { Container, MapContainer } from "./Map.style";
+import SearchForm from "./SearchForm";
+import Modal from "./Modal";
 
 const { kakao } = window;
 
-function Map() {
-  const [chargerData, setChargerData] = useState([]);
+function Map({ searchPlace }) {
+  const [chargerData, setChargerData] = useState([]); // 충전소 위치찾기
+  const [searchQuery, setSearchQuery] = useState(""); // 검색창 만들기
 
-  const serviceKey = '2p8b2t5trpcc2ootb2p2t8e12o8b2toe';
-  // const serviceKey = process.env.REACT_APP_CHARGER_API_KEY;
+  const mapRef = useRef(null); // Store map instance in ref
+  const psRef = useRef(null);
+
+  const serviceKey = process.env.REACT_APP_CHARGER_API_KEY;
   const URL = `https://open.jejudatahub.net/api/proxy/atDab6t8218btaa122b26DDtbatD86t1/${serviceKey}`;
 
-  const searchCharger = async (e) => {
-    e.preventDefault();
-
+  const searchCharger = async () => {
     try {
-      const res = await axios.get(URL, {
-        params: {
-          hasMore: true,
-          limit: 100,
-        }
-      });
-      console.log(res.data)
-      setChargerData(res.data.data)
+      const reqs = [];
+      for (let page = 1; page <= 2; page++) {
+        reqs.push(axios.get(`${URL}?limit=100&number=${page}`));
+      }
 
+      const res = await Promise.all(reqs);
+      const resArr = [];
+      for (const el of res) {
+        resArr.push(...el.data.data);
+      }
+      setChargerData(resArr);
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
-  }
-  console.log(chargerData)
+  };
 
   useEffect(() => {
-    mapscript();
+    searchCharger(); // Fetch charger data when component mounts or searchPlace changes
+  }, [searchPlace]);
+
+  useEffect(() => {
+    if (chargerData.length > 0 && kakao && kakao.maps) {
+      mapscript();
+    }
   }, [chargerData]);
 
-  const mapscript = async () => {
-    // 지도를 표시할 div
-    const container = document.getElementById("map");  
-    // 지도의 중심좌표(위도(lat), 경도(long))
+  const mapscript = () => {
+    const container = document.getElementById("map");
     const options = {
-      center: new kakao.maps.LatLng(33.5104135, 126.4913534),  
-      level: 5,  // 확대 레벨
+      center: new kakao.maps.LatLng(33.5104135, 126.4913534),
+      level: 5,
     };
 
-    // 지도 생성
     const map = new kakao.maps.Map(container, options);
+    mapRef.current = map;
+    // Create places service and assign it to the ref
+    psRef.current = new kakao.maps.services.Places();
 
-    // try {
-    //   const res = await axios.get(URL, {
-    //     params: {
-    //       hasMore: true,
-    //       limit: 100,
-    //     }
-    //   });
-    //   setChargerData(res.data.data)
-    // } catch (err) {
-    //   console.log(err)
-    // }
+    // Add zoom controls
+    const zoomControl = new kakao.maps.ZoomControl();
+    map.addControl(zoomControl, kakao.maps.ControlPosition.BOTTOMRIGHT);
 
-    chargerData.map((data) => {
-      new kakao.maps.Marker({
+    const infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
+
+    chargerData.forEach((data) => {
+      const markerPosition = new kakao.maps.LatLng(
+        data.latitude,
+        data.longitude
+      );
+      const marker = new kakao.maps.Marker({
         map: map,
-        position: new kakao.maps.LatLng(data.latitude, data.longitude),
+        position: markerPosition,
         title: data.chargingPlace,
-      })
+      });
+      marker.setMap(map);
+
+      // Add click event listener to show info window
+      kakao.maps.event.addListener(marker, "click", function () {
+        infowindow.setContent(data.chargingPlace);
+        infowindow.open(map, marker);
+      });
     });
+  };
 
-    //마커가 표시 될 위치
-    const markerPosition = new kakao.maps.LatLng(33.5104135, 126.4913534);
+  const searchPlaces = (query) => {
+    if (!query) {
+      return;
+    }
+    psRef.current.keywordSearch(query, (results, status, pagination) => {
+      if (status === kakao.maps.services.Status.OK) {
+        const firstResult = results[0];
+        const coords = new kakao.maps.LatLng(firstResult.y, firstResult.x);
 
-    // 마커 생성
-    const marker = new kakao.maps.Marker({
-      position: markerPosition,
+        mapRef.current.setCenter(coords);
+
+        const marker = new kakao.maps.Marker({
+          position: coords,
+        });
+        marker.setMap(mapRef.current);
+      } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
+        alert("No search results found.");
+        return;
+      } else {
+        alert("An error occurred during the search.");
+        return;
+      }
     });
+  };
 
-    // 마커를 지도 위에 표시
-    marker.setMap(map);
+  const handleSearch = () => {
+    // Perform search based on the searchQuery value
+    console.log(searchQuery);
+    searchPlaces(searchQuery);
+  };
+
+  const moveToCurrentLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        function (position) {
+          const lat = position.coords.latitude,
+            lon = position.coords.longitude;
+
+          const locPosition = new kakao.maps.LatLng(lat, lon);
+          mapRef.current.setCenter(locPosition);
+
+          const marker = new kakao.maps.Marker({
+            map: mapRef.current,
+            position: locPosition,
+          });
+          marker.setMap(mapRef.current);
+        },
+        function (error) {
+          console.log("Error occurred. Error code: " + error.code);
+        }
+      );
+    } else {
+      alert("Geolocation is not supported by this browser.");
+    }
   };
 
   return (
     <div>
+      <SearchForm
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+        handleSearch={handleSearch}
+      />
+      <button onClick={moveToCurrentLocation}>Move to My Location</button>
       <MapContainer id="map"></MapContainer>
-      <button onClick={searchCharger}>전체 충전소 위치 찾기</button>
     </div>
   );
-};
+}
 
 export default Map;
