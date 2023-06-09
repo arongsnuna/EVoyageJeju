@@ -37,7 +37,7 @@ userAuthRouter.post('/register', async function (req, res, next) {
 
         if(newUser.errorMessage){
             throw new Error(newUser.errorMessage);
-        }    
+        }
         res.status(201).json(newUser);
 
     } catch (error) {
