@@ -18,14 +18,6 @@ function Modal(props) {
   return (
     <Container>
       <BackGroundContainer
-        style={{
-          position: "fixed",
-          top: -100,
-          right: -5000,
-          width: 9999,
-          height: 5000,
-          backgroundColor: 'rgba(0, 0, 0, 0.35)'
-        }}
         onClick={closeModal}
       ></BackGroundContainer>
       <ModalContainer>

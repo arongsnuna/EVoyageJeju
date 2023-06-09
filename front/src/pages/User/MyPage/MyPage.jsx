@@ -1,15 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import EditNickName from '../../../components/MyPage/EditNickName';
 import EditPassword from '../../../components/MyPage/EditPassword';
+import { useUserState } from "../../../UserContext";
 import { TitleContainer, FormContainer, FormPhotoDiv, FormUserDiv, ButtonContainer, EditCompletedText } from "./Mypage.style";
 
 function MyPage() {
+  const { user } = useUserState();
+  const { userName, userNickname, userId, userPassword } = user;
+  
   const [Photo, setPhoto] = useState(null);
-  const [nickname, setNickName] = useState("yedara");
-  const [password, setPassword] = useState("12345678");
-
-  const name = '강다영';
-  const id = 'wkvksrl100';
+  const [nickname, setNickName] = useState(userNickname);
+  const [password, setPassword] = useState(userPassword);
 
   // EditForm 활성화를 위한 state
   const [isEditableNickName, setIsEditableNickName] = useState(false);
@@ -54,7 +55,7 @@ function MyPage() {
             <legend>User Details</legend>
             <div>
               <label>이름</label>
-              <p>{name}</p>
+              <p>{userName}</p>
             </div>
 
             <div>
@@ -77,7 +78,7 @@ function MyPage() {
 
             <div>
               <label>ID</label>
-              <p>{id}</p>
+              <p>{userId}</p>
             </div>
 
             <div>

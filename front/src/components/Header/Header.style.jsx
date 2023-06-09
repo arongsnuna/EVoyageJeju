@@ -94,11 +94,38 @@ export const NavContainer = styled.div`
 export const ButtonContainer = styled.div`
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   align-items: center;
+  justify-content: flex-end;
 
   margin-right: 120px;
-  padding: 8px 22px;
+  padding: 38px 22px;
   gap: 10px;
+
+  width: 450px;
+  height: 75px;
+
+  p {
+    margin-right: 15px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 28px;
+    line-height: 19px;
+    text-align: center;
+    letter-spacing: 0.46px;
+  }
+
+  img {
+    width: 75px;
+    height: 75px;
+    cursor: pointer;
+
+    &:active {
+      position: relative;
+      top: 3px;
+    }
+  }
 `;
 
 export const HeaderButton = styled.button`

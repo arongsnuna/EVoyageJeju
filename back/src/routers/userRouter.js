@@ -3,9 +3,7 @@ import { Router } from "express";
 
 import { login_required } from "../middlewares/login_required.js";
 import { userAuthService } from "../services/userService.js";
-import { pool } from "../config/dbConnect.js";
-import path from "path";
-import { error } from "console";
+import jwt from "jsonwebtoken";
 
 const userAuthRouter = Router();
 
@@ -39,7 +37,7 @@ userAuthRouter.post("/register", async function (req, res, next) {
       userPassword,
     });
 
-    if (newUser.errorMessage != "error") {
+    if (newUser.errorMessage) {
       throw new Error(newUser.errorMessage);
     }
     res.status(201).json(newUser);
@@ -55,17 +53,36 @@ userAuthRouter.post("/login", async function (req, res, next) {
     const userId = req.body.userId;
     const userPassword = req.body.userPassword;
 
-    // 위 데이터를 이용하여 유저 db에서 유저 찾기
     const user = await userAuthService.getUser({ userId, userPassword });
 
-    if (user.errorMessage != "error") {
+    if (user.errorMessage) {
       throw new Error(user.errorMessage);
     }
+    console.log(user);
     res.status(200).send(user);
   } catch (error) {
     next(error);
   }
 });
+
+// 로그아웃
+userAuthRouter.post("/logout", login_required, async function (req, res, next) {
+  try {
+    const token = req.headers.authorization.split(" ")[1];
+    console.log(token);
+    // 토큰 무효화
+    jwt.verify(token, process.env.JWT_SECRET_KEY, (error, decoded) => {
+      if (error) {
+        const errorMessage = "Invalid token";
+        throw new Error(errorMessage);
+      }
+      res.status(200).send({ message: "Logged out successfully" });
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
 // 유저정보 수정
 userAuthRouter.put(
   "/users/:userId",
@@ -73,9 +90,9 @@ userAuthRouter.put(
   async function (req, res, next) {
     try {
       const userId = req.currentUserId;
-      // body data 로부터 업데이트할 사용자 정보를 추출함.
-      const userNickname = req.body.userNickname ?? null;
-      const userPassword = req.body.userPassword ?? null;
+      const newNickname = req.body.userNickname ?? null;
+      const newPassword = req.body.userPassword ?? null;
+      const confirmPassword = req.body.confirmPassword ?? null;
 
       if (userNickname === (null || "")) {
         res.status(400).send({ error: "별명을 입력해주세요" });
@@ -86,12 +103,13 @@ userAuthRouter.put(
         throw new Error("비밀번호를 입력해주세요");
       }
 
-      const toUpdate = { userNickname, userPassword };
-      // 해당 사용자 아이디로 사용자 정보를 db에서 찾아 업데이트함. 업데이트 요소가 없을 시 생략함
-      const updatedUser = await userAuthService.setUser({ userId, toUpdate });
+      const updatedUser = await userAuthService.setUser({
+        userId,
+        newNickname,
+        newPassword,
+      });
 
       if (updatedUser.errorMessage) {
-        res.status(400).send({ error: user.errorMessage });
         throw new Error(updatedUser.errorMessage);
       }
 
@@ -106,9 +124,7 @@ userAuthRouter.put(
 userAuthRouter.get("/users", async function (req, res, next) {
   try {
     const users = await userAuthService.getUsers();
-    console.log(users);
-    // 2. users 값이 드렁가게끔
-    res.status(200).send(users); // undefined
+    res.status(200).send(users);
   } catch (error) {
     next(error);
   }
