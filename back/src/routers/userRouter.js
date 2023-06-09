@@ -27,8 +27,8 @@ userAuthRouter.post('/register', wrapper(async (req, res, next)=> {
         }
         res.status(201).json(newUser);
 
-    } catch (error) {
-        next(error);
+    if (newUser.errorMessage) {
+      throw new Error(newUser.errorMessage);
     }
 }));
 
@@ -38,7 +38,7 @@ userAuthRouter.post('/login', wrapper(async (req, res, next) =>{
         const userId = req.body.userId;
         const userPassword = req.body.userPassword;
 
-        const user = await userAuthService.getUser({ userId, userPassword });
+    const user = await userAuthService.getUser({ userId, userPassword });
 
         if (user.errorMessage) {
             throw new Error(user.errorMessage);
@@ -77,7 +77,7 @@ userAuthRouter.put('/users/:userId', login_required, wrapper(async (req, res, ne
         }
         res.status(200).json(updatedUser);
     } catch (error) {
-        next(error);
+      next(error);
     }
 }));
 
@@ -141,5 +141,11 @@ userAuthRouter.get('/current', login_required, wrapper(async (req, res, next) =>
     }
 }));
 
+      res.status(200).send(currentUserInfo);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
 
 export { userAuthRouter };

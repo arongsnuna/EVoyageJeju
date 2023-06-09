@@ -1,6 +1,6 @@
-import {pool} from'../config/dbConnect.js';
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
+import { pool } from "../config/dbConnect.js";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 class userAuthService {
     // 회원가입
@@ -151,61 +151,75 @@ class userAuthService {
             else{
                 resolve();
             }
-            
-        })
-    }
-    // 비밀번호 업데이트
-    static async userPasswordUpdate({ userFound, newPassword }) {
-        const hashedPassword = await bcrypt.hash(newPassword , 10);
-        return new Promise((resolve, reject)=>{
-            const userPassword = userFound.userPassword;
-            bcrypt.compare(newPassword, userPassword, (error, result)=>{
-                
-                if(!result){
-                    const sql = `UPDATE User SET userPassword='${hashedPassword}' WHERE userId = '${userFound.userId}'`;
-                    pool.query(sql, (error, results, fields)=>{
-                        if(error){
-                            reject(error);
-                        }
-                        resolve(results);
-                    })
+          }
+        );
+      }
+    });
+  }
+  //update
+  static async setUser({ userId, newNickname, newPassword }) {
+    const userFound = await this.findById({ userId });
+    const userNickname = await this.userNicknameUpdate({
+      userFound,
+      newNickname,
+    });
+    const userPassword = await this.userPasswordUpdate({
+      userFound,
+      newPassword,
+    });
 
-                }
-                resolve();
-            });
-            
-        })
-    }
+    return new Promise((resolve, reject) => {
+      let user = {
+        userId,
+        userNickname,
+        userPassword,
+        errorMessage: null,
+      };
 
-    // 전체 유저 불러오기
-    static async getUsers() {
-        return new Promise((resolve, reject) => {
-          const sql = `SELECT * FROM User`;
-          //const sql = 'TRUNCATE table User';
+      if (!userFound) {
+        user.errorMessage =
+          "이 아이디는 가입내역이 없습니다. 다시 한 번 확인해주세요.";
+        resolve(user);
+      } else {
+        let sql = `select * from User where userId='${userId}'`;
+        pool.query(sql, (error, results, fields) => {
+          let updatedUser = results[0];
+          updatedUser.errorMessage = null;
+          resolve(updatedUser);
+        });
+      }
+    });
+  }
+  // 닉네임 업데이트
+  static async userNicknameUpdate({ userFound, newNickname }) {
+    return new Promise((resolve, reject) => {
+      if (userFound.userNickname != newNickname) {
+        const sql = `UPDATE User SET userNickname='${newNickname}' WHERE userId = '${userFound.userId}'`;
+        pool.query(sql, (error, results, fields) => {
+          if (error) {
+            reject(error);
+          }
+          resolve(results);
+        });
+      } else {
+        resolve();
+      }
+    });
+  }
+  // 비밀번호 업데이트
+  static async userPasswordUpdate({ userFound, newPassword }) {
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    return new Promise((resolve, reject) => {
+      const userPassword = userFound.userPassword;
+      bcrypt.compare(newPassword, userPassword, (error, result) => {
+        if (!result) {
+          const sql = `UPDATE User SET userPassword='${hashedPassword}' WHERE userId = '${userFound.userId}'`;
           pool.query(sql, (error, results, fields) => {
             if (error) {
               reject(error);
-            } else {
-              const users = results;
-              resolve(users);
             }
+            resolve(results);
           });
-        });
-    }
-
-    // 특정 user 불러오기
-    static async getUserInfo({ userId }) {
-        const user = await this.findById({userId});
-        return new Promise((resolve, reject)=>{
-            resolve(user);
-        })
-    }
-
-    // 유저 삭제
-    static async deleteUser({userId, userPassword}){
-        let status={
-            message:null,
-            errorMessage:null,
         }
         const userFound = await this.findById({userId});
         return new Promise((resolve, reject)=>{
@@ -233,8 +247,17 @@ class userAuthService {
             
         })
 
+    ///////
+    const user = await this.findById({ userId });
+    // db에서 찾지 못한 경우, 에러 메시지 반환
+    if (!user) {
+      const errorMessage =
+        "해당 아이디는 가입 내역이 없습니다. 다시 한 번 확인해 주세요.";
+      return { errorMessage };
     }
 
+    return user;
+  }
 }
 
 export { userAuthService };
