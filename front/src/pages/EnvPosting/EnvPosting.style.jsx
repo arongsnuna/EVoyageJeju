@@ -50,13 +50,23 @@ export const PostingContainer = styled.div`
   img {
     cursor: pointer;
 
-    border: 1px solid grey;
+    border: none;
     width: 700px;
-    height: 600px;
+    height: 700px;
   }
 
   p {
     width: 700px;
     text-align: center;
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 28px;
+    line-height: 58px;
+    letter-spacing: 0.2px;
+    text-transform: capitalize;
+
+    color: #212121;
   }
 `;
