@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useReducer } from "react";
+import React, { createContext, useContext, useEffect, useReducer, useState } from "react";
+import * as Api from './api';
 import { loginReducer } from "./reducer";
 
 const UserStateContext = createContext(null);
@@ -9,6 +10,34 @@ export const UserProvider = ({ children }) => {
     userList: [],
     user: null,
   });
+
+  const [isFetching, setIsFetching] = useState(false);
+
+  const fetchCurrentUser = async () => {
+    try {
+      // 이전에 회원가입한 내역(토근 발급 내역)이 있다면, 이를 통해 유저 정보 가져오기
+      const res = await Api.get("current");
+      const currentUser = res.data;
+      // dispatch 함수를 통해 로그인 성공 상태로 변환
+      dispatch({
+        type: "LOGIN_SUCCESS",
+        payload: currentUser,
+      });
+
+      console.log("%c sessionStorage에 토큰 있음.", "color: #d93d1a;");
+    } catch {
+      console.log("%c SessionStorage에 토큰 없음.", "color: #d93d1a;");
+    }
+    setIsFetching(true);
+  };
+
+  useEffect(() => {
+    fetchCurrentUser();
+  }, []);
+
+  if (!isFetching) {
+    return 'loading...'
+  };
 
   return (
     <UserStateContext.Provider value={userState}>

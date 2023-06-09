@@ -35,8 +35,7 @@ function RegisterForm() {
       console.log("회원가입에 실패하였습니다.", err);
 
       // 아이디, 닉네임 중복되면 alert 창 출력
-      // alert(err.response.data)
-      console.log(err)
+      alert(err.response.data)
     }
   };
 
