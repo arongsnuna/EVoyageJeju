@@ -1,9 +1,7 @@
-import is from '@sindresorhus/is';
 import { Router } from 'express';
 
 import { login_required } from '../middlewares/login_required.js';
 import { userAuthService } from '../services/userService.js';
-import jwt from 'jsonwebtoken';
 
 
 const userAuthRouter = Router();
@@ -64,26 +62,6 @@ userAuthRouter.post('/login', async function (req, res, next) {
         next(error);
     }
 });
-
-// 로그아웃
-userAuthRouter.post('/logout', login_required, async function(req,res,next){
-    try{
-        const token = req.headers.authorization.split(' ')[1];
-        console.log(token);
-        // 토큰 무효화
-        jwt.verify(token, process.env.JWT_SECRET_KEY, (error, decoded)=>{
-            if(error){
-                const errorMessage = 'Invalid token';
-                throw new Error(errorMessage);
-            }
-            res.status(200).send({message: 'Logged out successfully'});
-        })
-        
-
-    }catch(error){
-        next(error);
-    }
-})
 
 // 유저정보 수정
 userAuthRouter.put('/users/:userId', login_required, async function (req, res, next) {
@@ -158,6 +136,22 @@ userAuthRouter.post('/users/:userId', login_required, async function(req,res,nex
         next(error);
     }
 })
+
+// 현재 로그인된 사용자 가져오기
+userAuthRouter.get('/current', login_required, async function (req, res, next) {
+    try {
+        const userId = req.currentUserId;
+        const user = await userAuthService.findById({ userId })
+
+        if (!user) {
+            const errorMessage = '현재 사용자를 찾을 수 없습니다.';
+            throw new Error(user.errorMessage)
+        }
+        res.status(200).send(user);
+    } catch (error) {
+        next(error)
+    }
+});
 
 
 
