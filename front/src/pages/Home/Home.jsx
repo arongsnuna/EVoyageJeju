@@ -1,8 +1,18 @@
 import React from "react";
-
-import { Container, HeadContentContainer, SliderContainer, StyledSlider,  } from "./Home.style";
+import VideoBackground from "../../components/Home/VideoBackground";
+import {
+  Container,
+  HeadContentContainer,
+  SliderContainer,
+  StyledSlider,
+  VideoBackgroundContainer,
+  VideoBackgroundInner,
+  VideoBackgroundVideo,
+  VideoBackgroundContent,
+} from "./Home.style";
 
 function Home() {
+  console.log("Rendering Home");
   const settings = {
     dots: true,
     arrows: true,
@@ -12,34 +22,14 @@ function Home() {
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 2000,
-    pauseOnHover: true
+    pauseOnHover: true,
   };
 
   return (
     <Container>
-      <HeadContentContainer>
-        <h1>여긴 메인 화면이야!</h1>
-        <h1>여긴 메인 화면이야!</h1>
-        <h1>여긴 메인 화면이야!</h1>
-        <h1>여긴 메인 화면이야!</h1>
-      </HeadContentContainer>
-      <SliderContainer>
-        <h2> Single Item</h2>
-        <StyledSlider {...settings}>
-          <div>
-            <p>1</p>
-          </div>
-          <div>
-            <p>2</p>
-          </div>
-          <div>
-            <p>3</p>
-          </div>
-        </StyledSlider>
-      </SliderContainer>
+      <VideoBackground />
     </Container>
   );
 }
 
 export default Home;
-
