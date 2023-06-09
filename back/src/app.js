@@ -3,7 +3,7 @@ import express from "express";
 import { errorMiddleware } from './middlewares/errorMiddleware.js';
 
 import { userAuthRouter } from './routers/userRouter.js';
-import { communityRouter } from './routers/communityRouter.js';
+//import { communityRouter } from './routers/communityRouter.js';
 
 const app = express();
 
@@ -19,7 +19,7 @@ app.get("/", (req, res) => {
 
 // router, service 구현
 app.use('', userAuthRouter);
-app.use('/posts', communityRouter);
+//app.use('/posts', communityRouter);
 app.use(errorMiddleware);
 
 
