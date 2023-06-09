@@ -1,0 +1,108 @@
+import React, { useState } from 'react';
+import * as Api from '../../../api';
+import { useNavigate } from "react-router-dom";
+import { isIDVaild, isPasswordValid } from '../../../utils/util';
+import { useUserDispatch } from '../../../UserContext';
+import { TitleContainer, FormContainer, FormFieldset, ButtonContainer, FormButton, AlreadySignUpText } from './LoginForm.style';
+
+import logo from '../logo.png'
+
+function LoginForm() {
+  const navigate = useNavigate();
+  const dispatch = useUserDispatch();
+
+  const [id, setId] = useState("");
+  const [password, setPassword] = useState("");
+
+  // 입력값에 대한 유효성 검사
+  const isFormValid = isIDVaild(id) && isPasswordValid(password);
+
+  // 로그인 handlesubmit
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      // "/login" 엔드포인트로 post요청함.
+      const res = await Api.post("login", {
+        userId: id,
+        userPassword: password,
+      });
+      // 유저 정보는 response의 data임.
+      const user = res.data;
+      // JWT 토큰은 유저 정보의 token임.
+      const jwtToken = user.token;
+      // sessionStorage에 "userToken"이라는 키로 JWT 토큰을 저장함.
+      sessionStorage.setItem("userToken", jwtToken);
+      // dispatch 함수를 이용해 로그인 성공 상태로 만듦.
+      dispatch({
+        type: "LOGIN_SUCCESS",
+        payload: user,
+      });
+
+      // 기본 페이지로 이동함.
+      navigate("/", { replace: true });
+    } catch (err) {
+      // 에러메세지 출력
+      alert(err.response.data)
+    }
+  };
+
+  return (
+    <>
+      <TitleContainer>
+        <img src={logo} alt='EVoyageJeju Logo' />
+        <a href='/'>탐라는차다</a>
+      </TitleContainer>
+      <FormContainer onSubmit={handleSubmit}>
+        <legend>로그인</legend>
+        <FormFieldset>
+          <label>ID</label>
+          <input 
+            name="id" 
+            type="text" 
+            value={id} 
+            onChange={(e) => setId(e.target.value)} 
+          />
+          {!isIDVaild(id) && (
+            <p>아이디를 입력해주십시오.</p>
+          )}
+        </FormFieldset>
+        <FormFieldset>
+          <label>Password</label>
+          <input 
+            name="password" 
+            type="password" 
+            value={password} 
+            onChange={(e) => setPassword(e.target.value)} 
+          />
+          {!isPasswordValid(password) && (
+            <p>비밀번호를 4글자 이상 작성해주십시오.</p>
+          )}
+        </FormFieldset>
+        <ButtonContainer>
+          <FormButton 
+            fontColor='#FFFFFF'
+            backgroundColor='#3563E9'
+            type="submit" 
+            disabled={!isFormValid}
+          >
+            LOGIN
+          </FormButton>
+          <FormButton 
+            fontColor='#3563E9'
+            backgroundColor='#FFFFFF'
+            type="submit" 
+          >
+            Log in with Google
+          </FormButton>
+        </ButtonContainer>
+        <AlreadySignUpText>
+          <a href='/'>Just Searching.</a>
+          <a href='/register'>No account yet? Sign Up First.</a>
+        </AlreadySignUpText>
+      </FormContainer>
+    </>
+  );
+}
+
+export default LoginForm;
