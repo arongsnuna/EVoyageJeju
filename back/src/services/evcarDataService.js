@@ -20,10 +20,10 @@ class evcarDataService {
 
     static async findJejuEvCar() {
         return new Promise((resolve, reject)=>{
-            const sql = `select evcar.year, evcar.elec, co2.co2 from evcar_count_data as evcar, co2_data as co2\
+            const sql = `select evcar.year, evcar.evcar_count, co2.co2 from EvcarCountData as evcar, Co2Data as co2\
                             where evcar.city = 'Jeju' \
                             and evcar.city = co2.city\
-                            and evcar.year = co2.year;`;
+                            and evcar.year = co2.year`;
             pool.query(sql, (error, results, fields)=>{
                 if(error){
                     reject(error);
