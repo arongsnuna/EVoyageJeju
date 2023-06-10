@@ -1,7 +1,16 @@
 import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
-import { Container, MapContainer } from "./Map.style";
 import SearchForm from "./SearchForm";
+import basicMarker from "./markerImage/basicMarker.png";
+import currentMarker from "./markerImage/currentMarker.png";
+import searchPoint from "./markerImage/searchPoint.png";
+import "./content.css";
+import {
+  MapContainer,
+  InputContainer,
+  CurrentPositionButton,
+  MapComp,
+} from "./Map.style";
 
 const { kakao } = window;
 
@@ -15,10 +24,21 @@ function Map({ searchPlace }) {
   const serviceKey = process.env.REACT_APP_CHARGER_API_KEY;
   const URL = `https://open.jejudatahub.net/api/proxy/atDab6t8218btaa122b26DDtbatD86t1/${serviceKey}`;
 
+  useEffect(() => {
+    searchCharger(); // Fetch charger data when component mounts or searchPlace changes
+  }, [searchPlace]);
+
+  useEffect(() => {
+    if (chargerData.length > 0 && kakao && kakao.maps) {
+      mapscript();
+    }
+  }, [chargerData]);
+
+  // 충전기 API 불러오기
   const searchCharger = async () => {
     try {
       const reqs = [];
-      for (let page = 1; page <= 2; page++) {
+      for (let page = 1; page <= 4; page++) {
         reqs.push(axios.get(`${URL}?limit=100&number=${page}`));
       }
 
@@ -33,21 +53,12 @@ function Map({ searchPlace }) {
     }
   };
 
-  useEffect(() => {
-    searchCharger(); // Fetch charger data when component mounts or searchPlace changes
-  }, [searchPlace]);
-
-  useEffect(() => {
-    if (chargerData.length > 0 && kakao && kakao.maps) {
-      mapscript();
-    }
-  }, [chargerData]);
-
+  // 카카오맵 API 호출 및 생성
   const mapscript = () => {
     const container = document.getElementById("map");
     const options = {
-      center: new kakao.maps.LatLng(33.5104135, 126.4913534),
-      level: 5,
+      center: new kakao.maps.LatLng(33.505395, 126.495111),
+      level: 3,
     };
 
     const map = new kakao.maps.Map(container, options);
@@ -59,24 +70,74 @@ function Map({ searchPlace }) {
     const zoomControl = new kakao.maps.ZoomControl();
     map.addControl(zoomControl, kakao.maps.ControlPosition.BOTTOMRIGHT);
 
-    const infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
-
+    // 불러온 충전소 위치 지도에 표시하기
     chargerData.forEach((data) => {
+      // 충전소 위치 저장(위도, 경도)
       const markerPosition = new kakao.maps.LatLng(
         data.latitude,
         data.longitude
       );
+
+      // 기본 마커 이미지 설정
+      var imageSrc = basicMarker,
+        imageSize = new kakao.maps.Size(70, 75),
+        imageOption = { offset: new kakao.maps.Point(27, 69) };
+      var markerImage = new kakao.maps.MarkerImage(
+        imageSrc,
+        imageSize,
+        imageOption
+      );
+
+      // 충전소를 마커로 표시
       const marker = new kakao.maps.Marker({
         map: map,
         position: markerPosition,
+        image: markerImage,
         title: data.chargingPlace,
       });
       marker.setMap(map);
 
-      // Add click event listener to show info window
+      // custom-overlay content
+      const content =
+        '<div class="wrap">' +
+        '    <div class="boxtitle">' +
+        '        <div class="location-box">' +
+        `            <a class="location">${data.chargingPlace}</a>` +
+        `            <a class="address">${data.addressDoro}</a>` +
+        "        </div>" +
+        `        <button class="close" title="닫기">X</button>` +
+        "    </div>" +
+        '    <div class="boxcontent>' +
+        '        <div class="time-box">' +
+        '            <a class="time text">운영 시간</a>' +
+        `            <a class="time">${data.startTime} ~ ${data.endTime}</a>` +
+        "        </div>" +
+        '        <div class="quickcharging-box">' +
+        '            <a class="quickcharging text">급속충전 가능여부</a>' +
+        `            <a class="quickcharging">${data.quickChargingFlag}</a>` +
+        "        </div>" +
+        '        <div class="parkingfee-box">' +
+        '            <a class="parkingfee text">주차료 부과 여부</a>' +
+        `            <a class="parkingfee">${data.parkingFeeFlag}</a>` +
+        "        </div>" +
+        "    </div>" +
+        "</div>";
+
+      // 충전소 정보를 제공할 infowindow를 custom-overlay로 표현
+      var customOverlay = new kakao.maps.CustomOverlay({
+        position: markerPosition,
+        content: content,
+        xAnchor: 0.3,
+        yAnchor: 0.91,
+      });
+
+      // 충전소 마커 클릭 시 overlay 호출
       kakao.maps.event.addListener(marker, "click", function () {
-        infowindow.setContent(data.chargingPlace);
-        infowindow.open(map, marker);
+        customOverlay.setMap(map);
+      });
+      // map 클릭 시 overlay 닫기
+      kakao.maps.event.addListener(map, "click", function () {
+        customOverlay.setMap(null);
       });
     });
   };
@@ -92,8 +153,19 @@ function Map({ searchPlace }) {
 
         mapRef.current.setCenter(coords);
 
+        // searchPoint 마커 표시를 위한 이미지 선언
+        var imageSrc = searchPoint,
+          imageSize = new kakao.maps.Size(75, 80),
+          imageOption = { offset: new kakao.maps.Point(27, 69) };
+        var markerImage = new kakao.maps.MarkerImage(
+          imageSrc,
+          imageSize,
+          imageOption
+        );
+
         const marker = new kakao.maps.Marker({
           position: coords,
+          image: markerImage,
         });
         marker.setMap(mapRef.current);
       } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
@@ -112,6 +184,7 @@ function Map({ searchPlace }) {
     searchPlaces(searchQuery);
   };
 
+  // window func을 통해 현재 위치 출력 & 이동하는 함수
   const moveToCurrentLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -119,12 +192,23 @@ function Map({ searchPlace }) {
           const lat = position.coords.latitude,
             lon = position.coords.longitude;
 
+          // 현재 위치 Marker 변경
+          var imageSrc = currentMarker,
+            imageSize = new kakao.maps.Size(75, 80),
+            imageOption = { offset: new kakao.maps.Point(27, 69) };
+          var markerImage = new kakao.maps.MarkerImage(
+            imageSrc,
+            imageSize,
+            imageOption
+          );
+
           const locPosition = new kakao.maps.LatLng(lat, lon);
           mapRef.current.setCenter(locPosition);
 
           const marker = new kakao.maps.Marker({
             map: mapRef.current,
             position: locPosition,
+            image: markerImage,
           });
           marker.setMap(mapRef.current);
         },
@@ -138,15 +222,20 @@ function Map({ searchPlace }) {
   };
 
   return (
-    <div>
-      <SearchForm
-        searchQuery={searchQuery}
-        setSearchQuery={setSearchQuery}
-        handleSearch={handleSearch}
-      />
-      <button onClick={moveToCurrentLocation}>Move to My Location</button>
-      <MapContainer id="map"></MapContainer>
-    </div>
+    <MapContainer>
+      <InputContainer>
+        <CurrentPositionButton onClick={moveToCurrentLocation}>
+          Where am I
+        </CurrentPositionButton>
+        <p>|</p>
+        <SearchForm
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+          handleSearch={handleSearch}
+        />
+      </InputContainer>
+      <MapComp id="map"></MapComp>
+    </MapContainer>
   );
 }
 

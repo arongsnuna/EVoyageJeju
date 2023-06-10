@@ -113,7 +113,7 @@ userAuthRouter.get(
   login_required,
   wrapper(async (req, res, next) => {
     try {
-      const userId = req.currentUserId;
+      const userId = req.params.userId;
       const currentUserInfo = await userAuthService.getUserInfo({ userId });
       res.status(200).send(currentUserInfo);
     } catch (error) {
@@ -126,9 +126,13 @@ userAuthRouter.get(
 userAuthRouter.post(
   "/users/:userId",
   login_required,
-  async function (req, res, next) {
+  wrapper(async (req, res, next) => {
     try {
-      const userId = req.currentUserId;
+      const currentUser = req.currentUserId;
+      const userId = req.params.userId;
+      if (currentUser != userId) {
+        throw new Error("삭제할 권한이 없습니다.");
+      }
       const userPassword = req.body.userPassword ?? null;
       if (userPassword === (null || "")) {
         throw new Error("비밀번호를 입력해주세요");
@@ -141,7 +145,27 @@ userAuthRouter.post(
     } catch (error) {
       next(error);
     }
-  }
+  })
+);
+
+// 현재 로그인된 사용자 가져오기
+userAuthRouter.get(
+  "/current",
+  login_required,
+  wrapper(async (req, res, next) => {
+    try {
+      const userId = req.currentUserId;
+      const user = await userAuthService.findById({ userId });
+
+      if (!user) {
+        const errorMessage = "현재 사용자를 찾을 수 없습니다.";
+        throw new Error(errorMessage);
+      }
+      res.status(200).send(user);
+    } catch (error) {
+      next(error);
+    }
+  })
 );
 
 export { userAuthRouter };

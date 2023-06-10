@@ -1,15 +1,17 @@
+import { SearchFormInput, SearchFormButton } from "./Map.style";
+
 // Separate component for search input and button
 function SearchForm({ searchQuery, setSearchQuery, handleSearch }) {
   return (
-    <div>
-      <input
+    <>
+      <SearchFormInput
         type="text"
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
-        placeholder="Enter a location"
+        placeholder="Enter the location"
       />
-      <button onClick={handleSearch}>Search</button>
-    </div>
+      <SearchFormButton onClick={handleSearch}>Search</SearchFormButton>
+    </>
   );
 }
 export default SearchForm;

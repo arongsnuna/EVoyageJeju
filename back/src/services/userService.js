@@ -141,6 +141,7 @@ class userAuthService {
       }
     });
   }
+
   // 닉네임 업데이트
   static async userNicknameUpdate({ userFound, newNickname }) {
     return new Promise((resolve, reject) => {
@@ -157,12 +158,12 @@ class userAuthService {
       }
     });
   }
+
   // 비밀번호 업데이트
   static async userPasswordUpdate({ userFound, newPassword }) {
     const hashedPassword = await bcrypt.hash(newPassword, 10);
     return new Promise((resolve, reject) => {
-      const userPassword = userFound.userPassword;
-      bcrypt.compare(newPassword, userPassword, (error, result) => {
+      bcrypt.compare(newPassword, userFound.userPassword, (error, result) => {
         if (!result) {
           const sql = `UPDATE User SET userPassword='${hashedPassword}' WHERE userId = '${userFound.userId}'`;
           pool.query(sql, (error, results, fields) => {
@@ -171,47 +172,24 @@ class userAuthService {
             }
             resolve(results);
           });
-        }
-        resolve();
-      });
-    });
-  }
-
-  // 전체 유저 불러오기
-  static async getUsers() {
-    return new Promise((resolve, reject) => {
-      const sql = `SELECT * FROM User`;
-      //const sql = 'TRUNCATE table User';
-      pool.query(sql, (error, results, fields) => {
-        if (error) {
-          reject(error);
         } else {
-          const users = results;
-          resolve(users);
+          resolve();
         }
       });
-    });
-  }
-
-  // 특정 user 불러오기
-  static async getUserInfo({ userId }) {
-    const user = await this.findById({ userId });
-    return new Promise((resolve, reject) => {
-      resolve(user);
     });
   }
 
   // 유저 삭제
   static async deleteUser({ userId, userPassword }) {
-    let status = {
-      message: null,
-      errorMessage: null,
-    };
     const userFound = await this.findById({ userId });
+    let status = {
+      userId,
+      errorMessage: null,
+      message: null,
+    };
     return new Promise((resolve, reject) => {
       bcrypt.compare(userPassword, userFound.userPassword, (error, result) => {
         if (result) {
-          //같으면
           const sql = `DELETE from User WHERE userId = '${userId}'`;
           pool.query(sql, (error, results, fields) => {
             if (error) {
@@ -223,9 +201,23 @@ class userAuthService {
             }
           });
         } else {
-          // 다르면
           status.errorMessage = "입력한 비밀번호가 옳지 않습니다";
           resolve(status);
+        }
+      });
+    });
+  }
+
+  // 유저 조회
+  static async getUserById({ userId }) {
+    return new Promise((resolve, reject) => {
+      const sql = `SELECT * FROM User WHERE userId='${userId}'`;
+      pool.query(sql, (error, results, fields) => {
+        if (error) {
+          reject(error);
+        } else {
+          const user = results[0];
+          resolve(user);
         }
       });
     });
