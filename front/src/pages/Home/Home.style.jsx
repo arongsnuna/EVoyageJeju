@@ -4,7 +4,17 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 export const Container = styled.div`
-  margin: 170px 0 600px;
+  text-align: center;
+  height: 2000px;
+`;
+
+export const Title = styled.h1`
+  color: #444;
+  margin: 20px 0;
+`;
+export const ChartContainer = styled.div`
+  height: 400px; // 원하는 높이로 조절
+  margin-bottom: 20px; // 그래프 사이의 간격 조절
 `;
 
 export const HeadContentContainer = styled.div`

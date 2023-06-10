@@ -3,6 +3,8 @@ import express from "express";
 import { errorMiddleware } from './middlewares/errorMiddleware.js';
 
 import { userAuthRouter } from './routers/userRouter.js';
+import { fileRouter} from './routers/fileRouter.js';
+import { evcarDataRouter } from "./routers/evcarDataRouter.js";
 //import { communityRouter } from './routers/communityRouter.js';
 
 const app = express();
@@ -19,6 +21,8 @@ app.get("/", (req, res) => {
 
 // router, service 구현
 app.use('', userAuthRouter);
+app.use('', fileRouter);
+app.use('', evcarDataRouter);
 //app.use('/posts', communityRouter);
 app.use(errorMiddleware);
 
