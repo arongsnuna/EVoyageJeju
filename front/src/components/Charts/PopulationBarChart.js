@@ -9,6 +9,7 @@ import {
   Cell,
   ResponsiveContainer,
 } from "recharts";
+import { PopulationBarChartTitle } from "./ChartStyle";
 
 function PopulationBarChart() {
   const [data, setData] = useState([]);
@@ -61,31 +62,33 @@ function PopulationBarChart() {
   }, []);
 
   return (
-    <ResponsiveContainer>
-      <BarChart width={1000} height={600} layout="vertical" data={data}>
-        <XAxis
-          type="number"
-          tickFormatter={(tickItem) => new Intl.NumberFormat().format(tickItem)}
-        />
-        <YAxis dataKey="city" type="category" />
-
-        {/* CartesianGrid 컴포넌트를 제거합니다 */}
-
-        <Tooltip
-          formatter={(value) => {
-            return [new Intl.NumberFormat().format(value) + "명"];
-          }}
-        />
-        <Bar dataKey="인구수">
-          {data.map((entry, index) => (
-            <Cell
-              key={`cell-${index}`}
-              fill={entry.city === "제주" ? "orange" : "skyblue"}
-            />
-          ))}
-        </Bar>
-      </BarChart>
-    </ResponsiveContainer>
+    <>
+      <PopulationBarChartTitle>도시별 인구수</PopulationBarChartTitle>
+      <ResponsiveContainer>
+        <BarChart width={1000} height={600} layout="vertical" data={data}>
+          <XAxis
+            type="number"
+            tickFormatter={(tickItem) =>
+              new Intl.NumberFormat().format(tickItem)
+            }
+          />
+          <YAxis dataKey="city" type="category" />
+          <Tooltip
+            formatter={(value) => {
+              return [new Intl.NumberFormat().format(value) + "명"];
+            }}
+          />
+          <Bar dataKey="인구수">
+            {data.map((entry, index) => (
+              <Cell
+                key={`cell-${index}`}
+                fill={entry.city === "제주" ? "orange" : "skyblue"}
+              />
+            ))}
+          </Bar>
+        </BarChart>
+      </ResponsiveContainer>
+    </>
   );
 }
 

@@ -4,17 +4,27 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 export const Container = styled.div`
+  padding-top: 200px;
   text-align: center;
-  height: 2000px;
+  height: auto;
+`;
+
+export const Section = styled.section`
+  margin-bottom: 40px;
 `;
 
 export const Title = styled.h1`
   color: #444;
   margin: 20px 0;
 `;
+
 export const ChartContainer = styled.div`
-  height: 400px; // 원하는 높이로 조절
-  margin-bottom: 20px; // 그래프 사이의 간격 조절
+  height: 500px;
+  width: 500px;
+  margin-right: 50px;
+  margin-bottom: 10px;
+  padding: 10px 20px 30px 40px; // 상 우 하 좌
+  background-color: #f5f5f5; // 원하는 배경색으로 변경
 `;
 
 export const HeadContentContainer = styled.div`

@@ -1,19 +1,20 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const Container = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-content: center;
-  border-bottom: 2px solid #DDE1E6;
+  border-bottom: 2px solid #dde1e6;
 
-  position: absolute;
+  position: fixed;
   width: 100%;
   height: 150px;
   left: 0px;
   top: 0px;
 
-  background: #FFFFFF;
+  background: #ffffff;
+  z-index: 1000;
 `;
 
 export const TitleContainer = styled.div`
@@ -33,8 +34,8 @@ export const TitleContainer = styled.div`
     height: 51px;
     padding-left: 30px;
     text-decoration: none;
-  
-    font-family: 'Inter';
+
+    font-family: "Inter";
     font-style: normal;
     font-weight: 700;
     font-size: 40px;
@@ -42,7 +43,7 @@ export const TitleContainer = styled.div`
     display: flex;
     align-items: center;
     letter-spacing: 0.2px;
-  
+
     color: #000000;
 
     &:active {
@@ -64,7 +65,7 @@ export const NavContainer = styled.div`
   width: 100%;
 
   &:hover {
-    background: #A6C8FF;
+    background: #a6c8ff;
   }
 
   a {
@@ -75,7 +76,7 @@ export const NavContainer = styled.div`
     width: 100%;
     height: 100%;
 
-    font-family: 'Inter';
+    font-family: "Inter";
     font-style: normal;
     font-weight: 700;
     font-size: 28px;
@@ -86,7 +87,7 @@ export const NavContainer = styled.div`
     color: #424242;
 
     &:hover {
-      color: #3563E9;
+      color: #3563e9;
     }
   }
 `;
@@ -107,7 +108,7 @@ export const ButtonContainer = styled.div`
 
   p {
     margin-right: 15px;
-    font-family: 'Inter';
+    font-family: "Inter";
     font-style: normal;
     font-weight: 600;
     font-size: 28px;
@@ -134,7 +135,7 @@ export const HeaderButton = styled.button`
   width: 130px;
   height: 50px;
 
-  font-family: 'Inter';
+  font-family: "Inter";
   font-style: normal;
   font-weight: 600;
   font-size: 20px;

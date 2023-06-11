@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const PrologueStyle = styled.div`
+export const HomeStyle = styled.div`
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -136,4 +136,4 @@ export const Button = styled.button`
   }
 `;
 
-export default PrologueStyle;
+export default HomeStyle;

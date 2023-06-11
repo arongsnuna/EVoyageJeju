@@ -7,6 +7,8 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
+import { ButtonContainer } from "./ChartStyle";
+import Button from "@mui/material/Button";
 
 const COLORS = {
   서울: "#0088FE",
@@ -20,9 +22,9 @@ const COLORS = {
   경기: "#808080",
   강원: "#000000",
   충북: "#FFD700",
-  충남: "#ADFF2F",
+  충남: "#000080",
   전북: "#008000",
-  전남: "#ADFF2F",
+  전남: "#83A7A3",
   경북: "#FF00FF",
   경남: "#800000",
   제주: "#FF8042",
@@ -101,15 +103,15 @@ function EVPieChart() {
     <ResponsiveContainer width="100%" height="100%">
       <div>
         {year <= 2020 && (
-          <PieChart width={800} height={400}>
+          <PieChart width={800} height={500}>
             <Pie
               dataKey="ratio"
               isAnimationActive={false}
               data={data}
               cx={300}
-              cy={200}
+              cy={220}
               outerRadius={160}
-              innerRadius={120} // 도넛 차트를 만들기 위한 설정
+              innerRadius={80} // 도넛 차트를 만들기 위한 설정
               fill="#8884d8"
               labelLine={false}
               label={({ city, percent }) =>
@@ -122,10 +124,11 @@ function EVPieChart() {
             </Pie>
             <text
               x={300} // 중앙에 텍스트를 위치시키기 위한 x 위치 조정
-              y={200} // 중앙에 텍스트를 위치시키기 위한 y 위치 조정
-              dy={8} // 텍스트를 적절히 중앙에 위치시키기 위한 조정
+              y={220} // 중앙에 텍스트를 위치시키기 위한 y 위치 조정
+              dx={5}
+              dy={15} // 텍스트를 적절히 중앙에 위치시키기 위한 조정
               textAnchor="middle"
-              fill="#8884d8"
+              fill="#000000"
               style={{ fontSize: "2em", fontWeight: "bold" }}
             >
               100%
@@ -133,7 +136,7 @@ function EVPieChart() {
             <text
               style={{ fontSize: "23px", fontWeight: "bold" }}
               x={100}
-              y={20}
+              y={15}
               textAnchor="inner"
               dominantBaseline="middle"
             >
@@ -142,20 +145,24 @@ function EVPieChart() {
             <Tooltip content={renderTooltipItem} />
           </PieChart>
         )}
-        <button
-          onClick={() => {
-            if (year > 2015) setYear(year - 1); // 2015는 이전 연도로 이동할 수 있는 가장 작은 연도로 가정합니다.
-          }}
-        >
-          이전 연도
-        </button>
-        <button
-          onClick={() => {
-            if (year < 2020) setYear(year + 1);
-          }}
-        >
-          다음 연도
-        </button>
+        <ButtonContainer>
+          <Button
+            onClick={() => {
+              if (year > 2015) setYear(year - 1); // 2015는 이전 연도로 이동할 수 있는 가장 작은 연도로 가정합니다.
+            }}
+            variant="outlined"
+          >
+            이전 연도
+          </Button>
+          <Button
+            onClick={() => {
+              if (year < 2020) setYear(year + 1);
+            }}
+            variant="outlined"
+          >
+            다음 연도
+          </Button>
+        </ButtonContainer>
       </div>
     </ResponsiveContainer>
   );
