@@ -6,7 +6,6 @@ import fs from "fs"
 const downloadMiddleware = async (req,res,next)=>{
     let isExist;
     const fileName = req.params.fileid;
-    console.log(fileName)
     try{
         isExist = fs.existsSync(`${fileName}`)
     }catch(err){
