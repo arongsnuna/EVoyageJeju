@@ -5,8 +5,14 @@ function login_required(req, res, next) {
     const userToken = req.headers['authorization']?.split(' ')[1] ?? 'null';
 
     //bearer 토큰인지 검증
+    // 토큰 디코딩
+    const decoded = jwt.decode(userToken , { complete: true });
+    // 디코딩된 페이로드에서 Authorization 헤더의 값 확인
+    const authorizationHeader = decoded.payload.Authorization;
+    if (!authorizationHeader.startsWith('Bearer')) {
+        res.status(401).send('bearer 토근이 아닙니다.');
+    }
     
-
     // 이 토큰은 jwt 토큰 문자열이거나, 혹은 "null" 문자열임.
     // 토큰이 "null" 일 경우, login_required 가 필요한 서비스 사용을 제한함.
     if (userToken === 'null') {
