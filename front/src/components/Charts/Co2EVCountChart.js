@@ -18,7 +18,7 @@ function EVCarChart() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:5001/co2");
+        const response = await fetch("http://localhost:5001/co2Emission");
 
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);

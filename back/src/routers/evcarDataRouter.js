@@ -7,7 +7,7 @@ import jwt from "jsonwebtoken";
 
 const evcarDataRouter = Router();
 
-evcarDataRouter.get("/co2", async function (req, res, next) {
+evcarDataRouter.get("/co2Emission", async function (req, res, next) {
   try {
     const data = await evcarDataService.findJejuEvCar();
     if (data.errorMessage) {

@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useUserDispatch } from "../../UserContext";
 import { Ul, Li } from "./MypageDropDown.style";
-import { ROUTE } from "../../routes/routes";
+import { ROUTE } from "../../routes";
 import { LOGOUT } from "../../reducer/action";
 
 function MypageDropDown() {
@@ -10,14 +10,18 @@ function MypageDropDown() {
 
   const logout = () => {
     dispatch({ type: LOGOUT });
-    alert("로그아웃 되었습니다.")
-    navigate(ROUTE.Home.link)
-  }
-  
+    alert("로그아웃 되었습니다.");
+    navigate(ROUTE.Home.link);
+  };
+
   return (
     <Ul>
-      <Li><button onClick={() => navigate(ROUTE.MYPAGE.link)}>마이페이지</button></Li>
-      <Li><button onClick={logout}>로그아웃</button></Li>
+      <Li>
+        <button onClick={() => navigate(ROUTE.MYPAGE.link)}>마이페이지</button>
+      </Li>
+      <Li>
+        <button onClick={logout}>로그아웃</button>
+      </Li>
     </Ul>
   );
 }

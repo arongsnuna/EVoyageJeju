@@ -1,13 +1,20 @@
-import React, { useState } from 'react';
-import * as Api from '../../../utils/api';
-import { LOGIN_SUCCESS } from '../../../reducer/action';
+import React, { useState } from "react";
+import * as Api from "../../../utils/api";
+import { LOGIN_SUCCESS } from "../../../reducer/action";
 import { Link, useNavigate } from "react-router-dom";
-import { isIDVaild, isPasswordValid } from '../../../utils/util';
-import { useUserDispatch } from '../../../UserContext';
-import { TitleContainer, FormContainer, FormFieldset, ButtonContainer, FormButton, AlreadySignUpText } from './LoginForm.style';
+import { isIDVaild, isPasswordValid } from "../../../utils/util";
+import { useUserDispatch } from "../../../UserContext";
+import {
+  TitleContainer,
+  FormContainer,
+  FormFieldset,
+  ButtonContainer,
+  FormButton,
+  AlreadySignUpText,
+} from "./LoginForm.style";
 
-import logo from '../logo.png'
-import { ROUTE } from '../../../routes/routes';
+import logo from "../logo.png";
+import { ROUTE } from "../../../routes";
 
 function LoginForm() {
   const navigate = useNavigate();
@@ -45,55 +52,53 @@ function LoginForm() {
       navigate(ROUTE.Home.link, { replace: true });
     } catch (err) {
       // 에러메세지 출력
-      alert(err.response.data)
+      alert(err.response.data);
     }
   };
 
   return (
     <>
       <TitleContainer>
-        <img src={logo} alt='EVoyageJeju Logo' />
+        <img src={logo} alt="EVoyageJeju Logo" />
         <Link to={ROUTE.Home.link}>탐라는차다</Link>
       </TitleContainer>
       <FormContainer onSubmit={handleSubmit}>
         <legend>로그인</legend>
         <FormFieldset>
           <label>ID</label>
-          <input 
-            name="id" 
-            type="text" 
-            value={id} 
-            onChange={(e) => setId(e.target.value)} 
+          <input
+            name="id"
+            type="text"
+            value={id}
+            onChange={(e) => setId(e.target.value)}
           />
-          {!isIDVaild(id) && (
-            <p>아이디를 입력해주십시오.</p>
-          )}
+          {!isIDVaild(id) && <p>아이디를 입력해주십시오.</p>}
         </FormFieldset>
         <FormFieldset>
           <label>Password</label>
-          <input 
-            name="password" 
-            type="password" 
-            value={password} 
-            onChange={(e) => setPassword(e.target.value)} 
+          <input
+            name="password"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
           {!isPasswordValid(password) && (
             <p>비밀번호를 4글자 이상 작성해주십시오.</p>
           )}
         </FormFieldset>
         <ButtonContainer>
-          <FormButton 
-            fontColor='#FFFFFF'
-            backgroundColor='#3563E9'
-            type="submit" 
+          <FormButton
+            fontColor="#FFFFFF"
+            backgroundColor="#3563E9"
+            type="submit"
             disabled={!isFormValid}
           >
             LOGIN
           </FormButton>
-          <FormButton 
-            fontColor='#3563E9'
-            backgroundColor='#FFFFFF'
-            type="submit" 
+          <FormButton
+            fontColor="#3563E9"
+            backgroundColor="#FFFFFF"
+            type="submit"
           >
             Log in with Google
           </FormButton>
