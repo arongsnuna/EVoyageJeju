@@ -110,6 +110,10 @@ function Map({ searchPlace }) {
       '            <a class="parkingfee text">주차료 부과 여부</a>' +
       `            <a class="parkingfee">${data.parkingFeeFlag}</a>` +
       '        </div>' +
+      '        <div class="searchpath-box">' +
+      `            <a class="searchpath" href="https://map.kakao.com/link/to/${data.chargingPlace},${data.latitude},${data.longitude}">길찾기 바로가기</a>` +
+      '            <a class="searchpath info">(Drag and Click)</a>' +
+      '        </div>' +
       '    </div>' +
       '</div>';
 
