@@ -26,7 +26,7 @@ function Modal(props) {
           <StyledSlider {...settings}>
             {selectedItem.map((item) => (
               <div>
-                <p>{item.text}</p>
+                <img src={item.cardUrl} />
               </div>
             ))}
           </StyledSlider>

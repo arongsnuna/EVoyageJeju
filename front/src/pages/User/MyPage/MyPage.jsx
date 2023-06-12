@@ -13,8 +13,8 @@ function MyPage() {
   const [password, setPassword] = useState(userPassword);
 
   // EditForm 활성화를 위한 state
-  const [isEditableNickName, setIsEditableNickName] = useState(false);
-  const [isEditablePassword, setIsEditablePassword] = useState(false);
+  const [isEditingNickName, setIsEditingNickName] = useState(false);
+  const [isEditingPassword, setIsEditingPassword] = useState(false);
 
   // 수정 완료 알림을 위한 state
   const [editComplete, setEditComplete] = useState(false);
@@ -60,17 +60,17 @@ function MyPage() {
 
             <div>
               <label>별명</label>
-              {isEditableNickName ? (
+              {isEditingNickName ? (
                 <EditNickName
                   currentNickName={nickname}
-                  setIsEditableNickName={setIsEditableNickName}
+                  setIsEditingNickName={setIsEditingNickName}
                   setEditComplete={setEditComplete}
                 />
               ) : (
                 <>
                   <p>{nickname}</p>
                   <button 
-                    onClick={() => setIsEditableNickName(true)}
+                    onClick={() => setIsEditingNickName(true)}
                   >수정</button>
                 </>
               )}
@@ -83,17 +83,17 @@ function MyPage() {
 
             <div>
               <label>Password</label>
-              {isEditablePassword ? (
+              {isEditingPassword ? (
                 <EditPassword
                   currentPassword={password}
-                  setIsEditablePassword={setIsEditablePassword}
+                  setIsEditingPassword={setIsEditingPassword}
                   setEditComplete={setEditComplete}
                 />
               ) : (
                 <>
                   <p>{password}</p>
                   <button
-                    onClick={() => setIsEditablePassword(true)}
+                    onClick={() => setIsEditingPassword(true)}
                   >수정</button>
                 </>
               )}
@@ -107,11 +107,11 @@ function MyPage() {
             </ButtonContainer>
           </FormUserDiv>
         </fieldset>
-        {editComplete ? (
+        {editComplete && 
           <EditCompletedText> 
             <p><strong>Successfully Saved.</strong> Your profile settings have been saved.</p>
           </EditCompletedText>
-        ) : null }
+        }
       </FormContainer>
     </>
   );

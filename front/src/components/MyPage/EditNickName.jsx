@@ -3,7 +3,7 @@ import { isNickNameValid } from "../../utils/util";
 
 import { FormContainer, ButtonContainer } from "./EditMyPage.style";
 
-function EditNickName({ currentNickName, setIsEditableNickName, setEditComplete }) {
+function EditNickName({ currentNickName, setIsEditingNickName, setEditComplete }) {
   const [nickname, setNickName] = useState(currentNickName);
 
   const handleSubmit = async (e) => {
@@ -15,7 +15,7 @@ function EditNickName({ currentNickName, setIsEditableNickName, setEditComplete 
     // } catch (e) {
     //   console.log("에러 발생 :", e);
     // }
-  setIsEditableNickName(false);
+  setIsEditingNickName(false);
   setEditComplete(true);
   }
 
@@ -35,7 +35,7 @@ function EditNickName({ currentNickName, setIsEditableNickName, setEditComplete 
           disabled={!isNickNameValid(nickname)}
         >확인</button>
         <button
-          onClick={() => setIsEditableNickName(false)}
+          onClick={() => setIsEditingNickName(false)}
         >취소</button>
       </ButtonContainer>
     </FormContainer>

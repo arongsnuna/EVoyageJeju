@@ -61,19 +61,17 @@ export const SliderContainer = styled.div`
   flex-direction: column;
   align-content: center;
   justify-content: center;
-  margin: 0 30px;
+  margin-left: 70px;
 
-  width: 98%;
+  width: 95%;
   height: 100%;
 `;
 
 export const StyledSlider = styled(Slider)`
-  margin: 40px 0 40px 100px;
+  margin: 0 10px 50px 100px;
   
-  width: 88%;
-  height: 90%;
-
-  background: blue;
+  width: 82%;
+  height: 88%;
 
   .slick-prev {
     left: -60px;
@@ -91,8 +89,13 @@ export const StyledSlider = styled(Slider)`
     }
   }
 
-  p {
-    font-size: 50px;
-    text-align: center;
+  div {
+    width: 100%;
+    height: 100%;
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
   }
 `;

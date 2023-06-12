@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useReducer, useState } from "react";
-import * as Api from './api';
-import { loginReducer } from "./reducer";
+import * as Api from './utils/api';
+import { loginReducer } from "./reducer/reducer";
+import { LOGIN_SUCCESS } from "./reducer/action";
 
 const UserStateContext = createContext(null);
 const UserDispatchContext = createContext(null);
@@ -20,7 +21,7 @@ export const UserProvider = ({ children }) => {
       const currentUser = res.data;
       // dispatch 함수를 통해 로그인 성공 상태로 변환
       dispatch({
-        type: "LOGIN_SUCCESS",
+        type: LOGIN_SUCCESS,
         payload: currentUser,
       });
 

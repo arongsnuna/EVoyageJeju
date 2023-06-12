@@ -98,6 +98,7 @@ function Map({ searchPlace }) {
       marker.setMap(map);
 
       // custom-overlay content
+<<<<<<< HEAD
       const content =
         '<div class="wrap">' +
         '    <div class="boxtitle">' +
@@ -122,6 +123,35 @@ function Map({ searchPlace }) {
         "        </div>" +
         "    </div>" +
         "</div>";
+=======
+      const content = '<div class="wrap">' +
+      '    <div class="boxtitle">' + 
+      '        <div class="location-box">' +
+      `            <a class="location">${data.chargingPlace}</a>` +
+      `            <a class="address">${data.addressDoro}</a>` +
+      '        </div>' +
+      `        <button class="close" title="닫기">X</button>` +
+      '    </div>' +
+      '    <div class="boxcontent>'  +
+      '        <div class="time-box">' +
+      '            <a class="time text">운영 시간</a>' +
+      `            <a class="time">${data.startTime} ~ ${data.endTime}</a>` +
+      '        </div>' +
+      '        <div class="quickcharging-box">' +
+      '            <a class="quickcharging text">급속충전 가능여부</a>' +
+      `            <a class="quickcharging">${data.quickChargingFlag}</a>` +
+      '        </div>' +
+      '        <div class="parkingfee-box">' +
+      '            <a class="parkingfee text">주차료 부과 여부</a>' +
+      `            <a class="parkingfee">${data.parkingFeeFlag}</a>` +
+      '        </div>' +
+      '        <div class="searchpath-box">' +
+      `            <a class="searchpath" href="https://map.kakao.com/link/to/${data.chargingPlace},${data.latitude},${data.longitude}">길찾기 바로가기</a>` +
+      '            <a class="searchpath info">(Drag and Click)</a>' +
+      '        </div>' +
+      '    </div>' +
+      '</div>';
+>>>>>>> 6b9265829cbea9477493f134e698b886652cf1e1
 
       // 충전소 정보를 제공할 infowindow를 custom-overlay로 표현
       var customOverlay = new kakao.maps.CustomOverlay({

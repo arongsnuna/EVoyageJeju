@@ -1,13 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  Tooltip,
-  Cell,
-  ResponsiveContainer,
-} from "recharts";
+import { BarChart, Bar, XAxis, YAxis, Tooltip, Cell } from "recharts";
 import { PopulationBarChartTitle } from "./ChartStyle";
 
 function PopulationBarChart() {
@@ -63,7 +55,7 @@ function PopulationBarChart() {
   return (
     <>
       <PopulationBarChartTitle>2020년 도시별 인구수</PopulationBarChartTitle>
-      <ResponsiveContainer>
+      <>
         <BarChart width={600} height={500} layout="vertical" data={data}>
           <XAxis
             type="number"
@@ -86,7 +78,7 @@ function PopulationBarChart() {
             ))}
           </Bar>
         </BarChart>
-      </ResponsiveContainer>
+      </>
     </>
   );
 }

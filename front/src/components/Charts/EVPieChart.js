@@ -63,8 +63,8 @@ const renderCustomizedLabel = ({
   const label = `${payload.city}: ${(percent * 100).toFixed(1)}%`;
   const width = label.length * 8; // Approximate width in characters
 
-  const sx = cx + innerRadius * Math.cos(-midAngle * RADIAN);
-  const sy = cy + innerRadius * Math.sin(-midAngle * RADIAN);
+  const sx = cx + outerRadius * Math.cos(-midAngle * RADIAN);
+  const sy = cy + outerRadius * Math.sin(-midAngle * RADIAN);
 
   return (
     <g>
