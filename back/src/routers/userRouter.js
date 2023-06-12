@@ -1,132 +1,262 @@
-import { Router } from 'express';
+import {pool} from'../config/dbConnect.js';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
-import { login_required } from '../middlewares/login_required.js';
-import { userAuthService } from '../services/userService.js';
-import {wrapper} from '../middlewares/wrapper.js';
-
-const userAuthRouter = Router();
-
-// 회원가입
-userAuthRouter.post('/register', wrapper(async (req, res, next)=> {
-    try {
-        // req (request) 에서 데이터 가져오기
-        const userId = req.body.userId
-        const userName = req.body.userName;
-        const userNickname = req.body.userNickname;
-        const userPassword = req.body.userPassword;
-
-        const newUser = await userAuthService.addUser({
+class userAuthService {
+    // 회원가입
+    static async addUser({ userId,userName,userNickname,userPassword }) {
+        // 비밀번호 해쉬화
+        const hashedPassword = await bcrypt.hash(userPassword, 10);
+        let newUser = {
             userId,
             userName,
             userNickname,
-            userPassword,
-        });
+            userPassword: hashedPassword,
+        };
+        const userCofirmedById = await this.findById({userId});
+        const userConfirmedByNickname = await this.findByNickname({userNickname});
 
-        res.status(201).json(newUser);
-    }
-    catch(error){
-      next(error);
-    }
-}));
+        return new Promise((resolve, reject)=>{
+            if(userCofirmedById){
+                const errorMessage = '이 아이디는 현재 사용중입니다. 다른 아이디를 입력해 주세요.';
+                reject(errorMessage);
+            }
+            else if(userConfirmedByNickname){
+                const errorMessage = '이 닉네임은 현재 사용중입니다. 다른 닉네임을 입력해 주세요.';
+                reject(errorMessage);
+            }
+            else{
+                const sql = `insert into User(userId,userName,userNickname,userPassword) values('${userId}','${userName}','${userNickname}','${hashedPassword}' )`;
+                pool.query(sql, (error, results, fields) => {
+                    if (error) {
+                        reject(error);
+                    }
+                    else{
+                        resolve(newUser);
+                    }
+                }); 
+            }
+            
 
-// 로그인
-userAuthRouter.post('/login', wrapper(async (req, res, next) =>{
-    try {
-        const userId = req.body.userId;
-        const userPassword = req.body.userPassword;
-
-        const user = await userAuthService.getUser({ userId, userPassword });
-
-        res.status(200).send(user);
-    } catch (error) {
-        next(error);
-    }
-}));
-
-// 유저정보 수정
-userAuthRouter.put('/users/:userId', login_required, wrapper(async (req, res, next) =>{
-    try {
-        const currentUser = req.currentUserId;
-        const userId = req.params.userId;
-
-        if(currentUser != userId){
-            throw new Error('수정할 권한이 없습니다.')
-        }
-        const newNickname = req.body.userNickname ;
-        const newPassword = req.body.userPassword ;
-        const confirmPassword = req.body.confirmPassword ;
-
-        if (!newNickname || !newPassword || !confirmPassword) {
-            throw new Error('모든 값이 입력되지 않았습니다');
-        }
+        })
         
-        if (newPassword !== confirmPassword){
-            throw new Error('비밀번호와 확인 비밀번호가 다릅니다');
-        }
-
-        const updatedUser = await userAuthService.setUser({ userId, newNickname, newPassword });
-
-        res.status(200).json(updatedUser);
-    } catch (error) {
-      next(error);
     }
-}));
-
-// 유저의 전체 목록 불러오기
-userAuthRouter.get('/users',  wrapper(async (req, res, next)=> {
-    try {
-        const users = await userAuthService.getUsers();
-        res.status(200).send(users);
-    } catch (error) {
-        next(error);
+    // userId 조회
+    static async findById({ userId  }) {
+        return new Promise((resolve, reject)=>{
+            const sql = `select * from User where userId='${userId}'`;
+            pool.query(sql, (error, results, fields)=>{
+                if(error){
+                    reject(error);
+                }else{
+                    const user = results[0];
+                    resolve(user);
+                }
+            })
+        })
     }
-}));
-
-// 특정 유저의 정보
-userAuthRouter.get('/users/:userId', login_required, wrapper(async (req, res, next)=> {
-    try {
-        const userId = req.params.userId;
-        const currentUserInfo = await userAuthService.getUserInfo({userId});
-        res.status(200).send(currentUserInfo);
-    } catch (error) {
-        next(error);
+    // userNickname 조회
+    static async findByNickname({ userNickname  }) {
+        return new Promise((resolve, reject)=>{
+            const sql = `select * from User where userNickname ='${userNickname}'`;
+            pool.query(sql, (error, results, fields)=>{
+                if(error){
+                    reject(error);
+                }else{
+                    const user = results[0];
+                    resolve(user);
+                }
+            })
+        })
     }
-}));
 
-// 유저정보 삭제
-userAuthRouter.post('/users/:userId', login_required, wrapper(async(req,res,next)=>{
-    try{
-        const currentUser = req.currentUserId;
-        const userId = req.params.userId;
-        if(currentUser != userId){
-            throw new Error('삭제할 권한이 없습니다.');
-        }
-        const userPassword = req.body.userPassword ?? null;
-        if (userPassword === (null || '')) {
-            throw new Error('비밀번호를 입력해주세요');
-        }
-        const status = await userAuthService.deleteUser({userId, userPassword});
-        res.status(200).send(status);
-
-    }catch(error){
-        next(error);
+    //로그인
+    static async getUser({ userId, userPassword }) {
+        const userFound = await this.findById({userId});
+        let user ={
+            userId, 
+            token: null,
+            userName: null,
+            userNickname: null,
+        };
+        return new Promise((resolve, reject)=>{
+            if(!userFound){
+                const errorMessage = '이 아이디는 가입내역이 없습니다. 다시 한 번 확인해주세요.';
+                reject(errorMessage);
+            }
+            else{
+                bcrypt.compare(userPassword, userFound.userPassword, (error, result)=>{
+                    if(!result){
+                      const errorMessage = '비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요.';
+                      reject(errorMessage);
+                    }
+                    else{
+                      const secretKey = process.env.JWT_SECRET_KEY || 'jwt-secret-key';
+                      const token = jwt.sign({ userId: user.userId }, secretKey);
+                      user.token = token;
+                      user.userName = userFound.userName;
+                      user.userNickname = userFound.userNickname;
+                      resolve(user);
+                    }
+                });
+            }
+        })
     }
-}));
+    // 유저정보 수정
+    static async setUser({ userId, newNickname, newPassword }) {
+        const userFound = await this.findById({userId});
+        const userNickname = await this.userNicknameUpdate({userFound, newNickname });
+        const userPassword = await this.userPasswordUpdate({userFound, newPassword });
 
-// 현재 로그인된 사용자 가져오기
-userAuthRouter.get('/current', login_required, wrapper(async (req, res, next) =>{
-    try {
-        const userId = req.currentUserId;
-        const user = await userAuthService.findById({ userId })
-
-        if (!user) {
-            const errorMessage = '현재 사용자를 찾을 수 없습니다.';
-            throw new Error(errorMessage)
-        }
-        res.status(200).send(user);
-    } catch (error) {
-        next(error)
+        let user ={
+            userId, 
+            userNickname,
+            userPassword,
+        };
+    
+        return new Promise((resolve, reject)=>{
+            if(!userFound){
+                const errorMessage = '이 아이디는 가입내역이 없습니다. 다시 한 번 확인해주세요.';
+                reject(errorMessage);
+            }
+            else{
+                let sql = `select * from User where userId='${userId}'`;
+                pool.query(sql, (error, results, fields)=>{
+                    let updatedUser = results[0];
+                    updatedUser.errorMessage = null;
+                    resolve(updatedUser);
+                })
+            }
+        })
     }
-}));
 
-export { userAuthRouter };
+     // 이미지 수정
+     static async setImage({ userId, imageUrl}) {
+        const userFound = await this.findById({userId});
+        const updated = await this.userImageUpadte({userFound, imageUrl });
+    
+        return new Promise((resolve, reject)=>{
+            if(!userFound){
+                const errorMessage = '이 아이디는 가입내역이 없습니다. 다시 한 번 확인해주세요.';
+                reject(errorMessage);
+            }
+            else{
+                updated.errorMessage = null;
+                resolve(updated);
+            }
+        })
+    }
+    // 닉네임 업데이트
+    static async userNicknameUpdate({ userFound, newNickname }) {
+        
+        return new Promise((resolve, reject)=>{
+            if(userFound.userNickname !=  newNickname){
+                const sql = `UPDATE User SET userNickname='${newNickname}' WHERE userId = '${userFound.userId}'`;
+                pool.query(sql, (error, results, fields)=>{
+                    if(error){
+                        reject(error);
+                    }
+                    resolve(results);
+                })
+            }
+            else{
+                resolve();
+            }
+            
+        })
+    }
+    static async userImageUpadte({ userFound, userImage }) {
+        return new Promise((resolve, reject)=>{
+            if(userFound.userImage !=  userImage){
+                const sql = `UPDATE User SET userImage='${userImage}' WHERE userId = '${userFound.userId}'`;
+                pool.query(sql, (error, results, fields)=>{
+                    if(error){
+                        reject(error);
+                    }
+                    resolve(results);
+                })
+            }
+            else{
+                resolve();
+            }
+            
+        })
+    }
+    // 비밀번호 업데이트
+    static async userPasswordUpdate({ userFound, newPassword }) {
+        const hashedPassword = await bcrypt.hash(newPassword , 10);
+        return new Promise((resolve, reject)=>{
+            const userPassword = userFound.userPassword;
+            bcrypt.compare(newPassword, userPassword, (error, result)=>{
+                
+                if(!result){
+                    const sql = `UPDATE User SET userPassword='${hashedPassword}' WHERE userId = '${userFound.userId}'`;
+                    pool.query(sql, (error, results, fields)=>{
+                        if(error){
+                            reject(error);
+                        }
+                        resolve(results);
+                    })
+                }
+                resolve();
+            });
+            
+        })
+    }
+
+    // 전체 유저 불러오기
+    static async getUsers() {
+        return new Promise((resolve, reject) => {
+          const sql = `SELECT * FROM User`;
+          //const sql = 'TRUNCATE table User';
+          pool.query(sql, (error, results, fields) => {
+            if (error) {
+              reject(error);
+            } else {
+              const users = results;
+              resolve(users);
+            }
+          });
+        });
+    }
+
+    // 특정 user 불러오기
+    static async getUserInfo({ userId }) {
+        const user = await this.findById({userId});
+        return new Promise((resolve, reject)=>{
+            resolve(user);
+        })
+    }
+
+    // 유저 삭제
+    static async deleteUser({userId, userPassword}){
+        const userFound = await this.findById({userId});
+        return new Promise((resolve, reject)=>{
+            bcrypt.compare(userPassword, userFound.userPassword, (error, result)=>{
+                if(result){//같으면
+                    const sql = `DELETE from User WHERE userId = '${userId}'`;
+                    pool.query(sql, (error, results, fields)=>{
+                        if(error){
+                            const errorMessage = error;
+                            reject(errorMessage);
+                        }
+                        else{
+                            const status = '성공적으로 삭제되었습니다.';
+                            resolve(status);
+                        }
+                    })
+                }
+                else{// 다르면
+                    const errorMessage = '입력한 비밀번호가 옳지 않습니다';
+                    reject(errorMessage);
+                }
+            })
+            
+            
+        })
+
+    }
+
+}
+
+export { userAuthService };
