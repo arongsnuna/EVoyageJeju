@@ -2,7 +2,7 @@ import multer from "multer"
 import {v4 as uuidv4} from "uuid"
 import path from "path"
 
-const ext = ["image/jpeg","image/png","image/gif","image/bmp","image/jpg"];
+const EXT = ["image/jpeg","image/png","image/gif","image/bmp","image/jpg"];
 
 function checkExt(extarr,mimetype) {
     for (let v of extarr){
@@ -25,7 +25,7 @@ const uploadMiddleware = multer({
         destination(req, file, done){
             console.log(file);
         
-            if(checkExt(extarr,mimetype)){
+            if(checkExt(EXT,file.mimetype)){
                 done(null,'../image');
             }
             else {
