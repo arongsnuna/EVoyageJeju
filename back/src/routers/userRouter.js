@@ -28,6 +28,11 @@ userAuthRouter.post(
         throw new Error(newUser.errorMessage);
       }
       res.status(201).json(newUser);
+
+      if (newUser.errorMessage) {
+        throw new Error(newUser.errorMessage);
+      }
+      res.status(200).send(currentUserInfo);
     } catch (error) {
       next(error);
     }
