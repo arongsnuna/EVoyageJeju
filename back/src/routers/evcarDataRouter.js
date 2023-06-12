@@ -13,7 +13,7 @@ evcarDataRouter.get("/co2", async function (req, res, next) {
     if (data.errorMessage) {
       throw new Error(data.errorMessage);
     }
-    res.status(201).json(data);
+    res.status(200).json(data);
   } catch (error) {
     next(error);
   }
