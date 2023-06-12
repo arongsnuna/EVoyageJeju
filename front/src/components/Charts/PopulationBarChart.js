@@ -63,7 +63,7 @@ function PopulationBarChart() {
   return (
     <>
       <PopulationBarChartTitle>2020년 도시별 인구수</PopulationBarChartTitle>
-      <>
+      <ResponsiveContainer>
         <BarChart width={600} height={500} layout="vertical" data={data}>
           <XAxis
             type="number"
@@ -86,7 +86,7 @@ function PopulationBarChart() {
             ))}
           </Bar>
         </BarChart>
-      </>
+      </ResponsiveContainer>
     </>
   );
 }

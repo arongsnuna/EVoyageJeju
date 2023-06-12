@@ -1,12 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  PieChart,
-  Pie,
-  Cell,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-} from "recharts";
+import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 import { ButtonContainer } from "./ChartStyle";
 import Button from "@mui/material/Button";
 
@@ -51,40 +44,38 @@ const cityNamesInKorean = {
   Jeju: "제주",
 };
 
-const renderTooltipItem = ({ payload }) => {
-  return null; // 페이로드가 비어 있을 때는 아무것도 반환하지 않습니다
-};
-
 const renderCustomizedLabel = ({
   cx,
   cy,
   midAngle,
-
   outerRadius,
+  innerRadius,
   percent,
-
   payload,
 }) => {
   const RADIAN = Math.PI / 180;
-  const radius = outerRadius * 1.2;
+  const radius = outerRadius * 1.1;
   const x = cx + radius * Math.cos(-midAngle * RADIAN);
   const y = cy + radius * Math.sin(-midAngle * RADIAN);
 
-  const labelColor = COLORS[payload.city] || "#000000";
+  const labelColor = "#000000";
 
   const label = `${payload.city}: ${(percent * 100).toFixed(1)}%`;
-  const width = label.length * 8; // 문자 수를 기준으로 한 대략적인 너비
+  const width = label.length * 8; // Approximate width in characters
+
+  const sx = cx + innerRadius * Math.cos(-midAngle * RADIAN);
+  const sy = cy + innerRadius * Math.sin(-midAngle * RADIAN);
 
   return (
     <g>
       <rect
         x={x > cx ? x : x - width}
-        y={y - 7} // center the text vertically
-        rx={5} // this makes the ends of the background rounded
-        ry={5} // this makes the ends of the background rounded
+        y={y - 7}
+        rx={3}
+        ry={3}
         width={width}
-        height={14} // adjust based on font size and desired padding
-        fill="#191970"
+        height={14}
+        fill="#ffffff"
       />
       <text
         x={x}
@@ -92,10 +83,12 @@ const renderCustomizedLabel = ({
         fill={labelColor}
         textAnchor={x > cx ? "start" : "end"}
         dominantBaseline="central"
-        style={{ fontSize: "12px", fontWeight: "bold" }} // 폰트 굵게하기
+        style={{ fontSize: "12px", fontWeight: "bold" }}
       >
         {label}
       </text>
+
+      <line x1={sx} y1={sy} x2={x} y2={y} stroke={labelColor} strokeWidth={1} />
     </g>
   );
 };
@@ -148,28 +141,12 @@ function EVPieChart() {
     <>
       <div>
         {year <= 2020 && (
-          <PieChart width={630} height={700}>
-            <Pie
-              dataKey="ratio"
-              isAnimationActive={false}
-              data={data}
-              cx={300}
-              cy={285}
-              outerRadius={200}
-              innerRadius={100} // 도넛 차트를 만들기 위한 설정
-              fill="#8884d8"
-              labelLine={false}
-              label={renderCustomizedLabel}
-            >
-              {data.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={COLORS[entry.city]} />
-              ))}
-            </Pie>
+          <PieChart width={800} height={800}>
             <text
-              x={300} // 중앙에 텍스트를 위치시키기 위한 x 위치 조정
+              x={320} // 중앙에 텍스트를 위치시키기 위한 x 위치 조정
               y={220} // 중앙에 텍스트를 위치시키기 위한 y 위치 조정
               dx={5}
-              dy={80} // 텍스트를 적절히 중앙에 위치시키기 위한 조정
+              dy={100} // 텍스트를 적절히 중앙에 위치시키기 위한 조정
               textAnchor="middle"
               fill="#000000"
               style={{ fontSize: "2em", fontWeight: "bold" }}
@@ -183,9 +160,24 @@ function EVPieChart() {
               textAnchor="inner"
               dominantBaseline="middle"
             >
-              {year} 전국 각 지역의 전기차 비율
+              {year} 전국 각 도시의 전기차 비율
             </text>
-            <Tooltip content={renderTooltipItem} />
+            <Pie
+              dataKey="ratio"
+              isAnimationActive={false}
+              data={data}
+              cx={320}
+              cy={300}
+              outerRadius={240}
+              innerRadius={120} // 도넛 차트를 만들기 위한 설정
+              fill="#8884d8"
+              labelLine={false}
+              label={renderCustomizedLabel}
+            >
+              {data.map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={COLORS[entry.city]} />
+              ))}
+            </Pie>
           </PieChart>
         )}
         <ButtonContainer>

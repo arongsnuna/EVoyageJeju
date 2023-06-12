@@ -22,7 +22,7 @@ function Home() {
           <Co2EVCountChart />
         </GraphContainer>
         <ExplanationRight>
-          <Title>제주도에서는 지금</Title>
+          <Title>제주도는 지금</Title>
           제주도의 차량 CO2 배출량 증가함과 동시에 제주도 전기차 보유 대수 또한
           증가하고 있습니다. <br />
           이는 전기차 보급량에 비해 전기차 사용이 적다는 문제점을 보여줍니다.
