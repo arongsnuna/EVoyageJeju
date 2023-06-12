@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
-import { Container, TitleContainer, TypeContainer, TypeButton, IndexContainer, ListContainer } from "./Community.style";
+import { Link } from 'react-router-dom';
+import { useUserState } from '../../UserContext';
+import { Container, TitleContainer, TypeContainer, TypeButton, IndexContainer, ListContainer, ButtonContainer } from "./Community.style";
 
 const Community = () => {
+  const { user } = useUserState();
   const [activeTab, setActiveTab] = useState('travel');
   const [posts, setPosts] = useState([
     // 여행 게시글
@@ -67,22 +70,26 @@ const Community = () => {
           </div>
         </IndexContainer>
         <ListContainer>
-          <div>
-            {posts.map((post) => (
-              <div key={post.id}>
-                <p className='index'>{post.id}</p>
-                <p className='title'>{post.title}</p>
-                <p className='author'>{post.author}</p>
-                <p className='date'>{post.date}</p>
-                <p className='likeCount'>{post.likes}</p>
-              </div>
-            ))}
-          </div>
+          {posts.map((post) => (
+            <div key={post.id}>
+              <p className='index'>{post.id}</p>
+              <Link className='title'>{post.title}</Link>
+              <p className='author'>{post.author}</p>
+              <p className='date'>{post.date}</p>
+              <p className='likeCount'>{post.likes}</p>
+            </div>
+          ))}
         </ListContainer>
       </div>
-      <div>
-        <button>글쓰기</button>
-      </div>
+      <ButtonContainer>
+        <div>
+          {user ? (
+            <button>글쓰기</button>
+          ) : (
+            <button onClick={() => alert("로그인 후 이용해 주세요.")}>글쓰기</button>
+          )}
+        </div>
+      </ButtonContainer>
       <div>
         {/* 페이징 넘버링 추가필요 */}
       </div>
