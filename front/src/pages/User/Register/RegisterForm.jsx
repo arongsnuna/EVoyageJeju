@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import * as Api from '../../../api';
-import { useNavigate } from "react-router-dom";
-import { isNameValid, isNickNameValid, isIDVaild, isPasswordValid, isPasswordSame } from '../../../utils/util';
+import * as Api from '../../../utils/api';
+import { Link, useNavigate } from "react-router-dom";
+import { isNameValid, isNickNameValid, isIDVaild, isPasswordValid } from '../../../utils/util';
 import { TitleContainer, FormContainer, FormFieldset, ButtonContainer, FormButton, AlreadySignUpText } from './RegisterForm.style';
 
 import logo from '../logo.png'
+import { ROUTE } from '../../../routes/routes';
 
 function RegisterForm() {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ function RegisterForm() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const isFormValid = isNameValid(id) && isNickNameValid(nickname) && isIDVaild(id) && isPasswordValid(password) && isPasswordSame({password, confirmPassword});
+  const isFormValid = isNameValid(id) && isNickNameValid(nickname) && isIDVaild(id) && isPasswordValid(password);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -30,7 +31,7 @@ function RegisterForm() {
       });
 
       // 로그인 페이지로 이동함.
-      navigate("/login");
+      navigate(ROUTE.LOGIN.link);
     } catch (err) {
       console.log("회원가입에 실패하였습니다.", err);
 
@@ -43,7 +44,7 @@ function RegisterForm() {
     <>
       <TitleContainer>
         <img src={logo} alt='EVoyageJeju Logo' />
-        <a href='/'>탐라는차다</a>
+        <Link to={ROUTE.Home.link}>탐라는차다</Link>
       </TitleContainer>
       <FormContainer onSubmit={handleSubmit}> 
         <legend>회원가입</legend>
@@ -103,7 +104,7 @@ function RegisterForm() {
             value={confirmPassword} 
             onChange={(e) => setConfirmPassword(e.target.value)} 
           />
-          {!isPasswordSame({password, confirmPassword}) && (
+          {password !== confirmPassword && (
             <p>비밀번호가 일치하지 않습니다.</p>
           )}
         </FormFieldset>
@@ -125,7 +126,7 @@ function RegisterForm() {
           </FormButton>
         </ButtonContainer>
         <AlreadySignUpText>
-          <a href='/login'>Already have an account?</a>
+          <Link to={ROUTE.LOGIN.link}>Already have an account?</Link>
         </AlreadySignUpText>
       </FormContainer>
     </>

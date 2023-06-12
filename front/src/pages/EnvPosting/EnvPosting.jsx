@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Modal from "../../components/EnvPosting_Modal/Modal";
-import { postings } from "./posting";
+import { postings } from "./posting.jsx";
 
 import { Container, TitleContainer, PostingContainer } from "./EnvPosting.style";
 

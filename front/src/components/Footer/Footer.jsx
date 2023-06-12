@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { ROUTE } from "../../routes";
+import { ROUTE } from "../../routes/routes";
 import { Container } from "./Footer.style";
 
 function Footer() {

@@ -3,7 +3,7 @@ import { isPasswordValid } from "../../utils/util";
 
 import { FormContainer, ButtonContainer } from "./EditMyPage.style";
 
-function EditPassword({ currentPassword, setIsEditablePassword, setEditComplete }) {
+function EditPassword({ currentPassword, setIsEditingPassword, setEditComplete }) {
   const [password, setPassword] = useState(currentPassword);
 
   const handleSubmit = async (e) => {
@@ -15,7 +15,7 @@ function EditPassword({ currentPassword, setIsEditablePassword, setEditComplete 
     // } catch (e) {
     //   console.log("에러 발생 :", e);
     // }
-    setIsEditablePassword(false);
+    setIsEditingPassword(false);
     setEditComplete(true);
   }
 
@@ -35,7 +35,7 @@ function EditPassword({ currentPassword, setIsEditablePassword, setEditComplete 
           disabled={!isPasswordValid(password)}
         >확인</button>
         <button
-          onClick={() => setIsEditablePassword(false)}
+          onClick={() => setIsEditingPassword(false)}
         >취소</button>
       </ButtonContainer>
     </FormContainer>

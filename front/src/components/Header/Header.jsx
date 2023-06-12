@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { ROUTE } from "../../routes";
+import { ROUTE } from "../../routes/routes";
 import {
   Container,
   TitleContainer,
@@ -32,27 +32,27 @@ function Header() {
       <Container>
         <TitleContainer>
           <img src={logo} alt="EVoyageJeju Logo" />
-          <a href="/">탐라는차다</a>
+          <Link to={ROUTE.Home.link}>탐라는차다</Link>
         </TitleContainer>
 
         <Navigation>
           <NavContainer>
-            <Link to="/" exact="true">
+            <Link to={ROUTE.Home.link} exact="true">
               홈
             </Link>
           </NavContainer>
           <NavContainer>
-            <Link to="/envposting" exact="true">
+            <Link to={ROUTE.ENVINFO.link} exact="true">
               정보
             </Link>
           </NavContainer>
           <NavContainer>
-            <Link to="/community" exact="true">
+            <Link to={ROUTE.COMMUNITY.link} exact="true">
               커뮤니티
             </Link>
           </NavContainer>
           <NavContainer>
-            <Link to="/charger" exac="true">
+            <Link to={ROUTE.CHARGER.link} exac="true">
               가까운 충전소 찾기
             </Link>
           </NavContainer>
@@ -74,14 +74,14 @@ function Header() {
               <HeaderButton
                 fontColor="#3563e9"
                 backgroundColor="#FFFFFF"
-                onClick={() => navigate("/register")}
+                onClick={() => navigate(ROUTE.REGISTER.link)}
               >
                 SignUp
               </HeaderButton>
               <HeaderButton
                 fontColor="#FFFFFF"
                 backgroundColor="#3563e9"
-                onClick={() => navigate("/login")}
+                onClick={() => navigate(ROUTE.LOGIN.link)}
               >
                 Login
               </HeaderButton>
