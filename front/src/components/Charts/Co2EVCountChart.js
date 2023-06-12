@@ -56,9 +56,9 @@ function EVCarChart() {
         data={data}
         margin={{
           top: 20,
-          right: 20,
+          right: 100,
           bottom: 20,
-          left: 20,
+          left: 50,
         }}
       >
         <CartesianGrid stroke="#f5f5f5" />

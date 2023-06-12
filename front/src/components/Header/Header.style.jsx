@@ -2,9 +2,8 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
-  align-content: center;
+  align-items: center;
   border-bottom: 2px solid #dde1e6;
 
   position: fixed;
@@ -15,26 +14,21 @@ export const Container = styled.div`
 
   background: #ffffff;
   z-index: 1000;
+  padding: 0 120px;
 `;
 
 export const TitleContainer = styled.div`
-  display: flex;
-  flex-direction: row;
+  display: fixed;
+  align-items: center;
 
   img {
     width: 57px;
     height: 57px;
-    padding-top: 45px;
-    padding-left: 120px;
+    margin-right: 30px;
   }
 
   a {
-    margin-top: 48px;
-    width: 220px;
-    height: 51px;
-    padding-left: 30px;
     text-decoration: none;
-
     font-family: "Inter";
     font-style: normal;
     font-weight: 700;
@@ -43,7 +37,6 @@ export const TitleContainer = styled.div`
     display: flex;
     align-items: center;
     letter-spacing: 0.2px;
-
     color: #000000;
 
     &:active {
@@ -54,41 +47,28 @@ export const TitleContainer = styled.div`
 `;
 
 export const Navigation = styled.nav`
-  display: flex;
-  flex-direction: row;
-
+  display: fixed;
+  justify-content: space-between;
   width: 50%;
-  height: 100%;
 `;
 
 export const NavContainer = styled.div`
-  width: 100%;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 30px;
+  text-align: center;
+  text-decoration-line: none;
+  color: #424242;
 
   &:hover {
-    background: #a6c8ff;
+    color: #3563e9;
   }
 
   a {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    width: 100%;
-    height: 100%;
-
-    font-family: "Inter";
-    font-style: normal;
-    font-weight: 700;
-    font-size: 28px;
-    line-height: 19px;
-    letter-spacing: 0.2px;
-    text-decoration-line: none;
-
-    color: #424242;
-
-    &:hover {
-      color: #3563e9;
-    }
+    color: inherit;
+    text-decoration: none;
   }
 `;
 

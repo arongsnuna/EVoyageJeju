@@ -1,85 +1,67 @@
 import styled from "styled-components";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 
 export const Container = styled.div`
   padding-top: 200px;
   text-align: center;
   height: auto;
-`;
-
-export const Section = styled.section`
-  margin-bottom: 40px;
-`;
-
-export const Title = styled.h1`
-  color: #444;
-  margin: 20px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 export const ChartContainer = styled.div`
-  height: 500px;
-  width: 500px;
-  margin-right: 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 20px;
+  height: 600px;
+  max-width: 95%; // Adjust this as per your needs
+  margin: 0 auto;
   margin-bottom: 10px;
-  padding: 10px 20px 30px 40px; // 상 우 하 좌
-  background-color: #f5f5f5; // 원하는 배경색으로 변경
+  padding: 10px 20px 30px 40px;
 `;
 
-export const HeadContentContainer = styled.div`
-  display: flex;
-  flex-direction: column;
+export const GraphContainer = styled.div`
+  flex: 1;
+  max-width: 60%; // Adjust this as per your needs
+  height: 600px;
+`;
+
+export const Title = styled.h2`
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
   text-align: center;
 `;
 
-export const SliderContainer = styled.div`
-  margin: 0 30px;
-  // padding: 200px 0;
-  height: 700px;
-  border: 5px solid black;
-
-  background: red;
+export const ExplanationRight = styled.div`
+  font-family: "Noto Sans KR", sans-serif;
+  width: 20%;
+  margin-right: 100px;
+  font-size: 16px;
+  line-height: 1.5;
+  text-align: left;
 `;
 
-export const StyledSlider = styled(Slider)`
-  margin: 30px;
-
-  background: blue;
-
-  p {
-    font-size: 50px;
-    text-align: center;
-  }
+export const ExplanationLeft = styled.div`
+  font-family: "Noto Sans KR", sans-serif;
+  width: 20%;
+  font-size: 16px;
+  line-height: 1.5;
+  text-align: left;
 `;
 
-export const VideoBackgroundContainer = styled.div`
-  position: relative;
-`;
-
-export const VideoBackgroundInner = styled.div`
-  left: 0px;
-  position: absolute;
-  top: 0px;
-  height: 100%;
-  width: 100%;
-  overflow: hidden;
-`;
-
-export const VideoBackgroundVideo = styled.video`
-  object-fit: cover;
-  height: 100%;
-  max-width: 100%;
-`;
-
-export const VideoBackgroundContent = styled.div`
-  left: 0px;
-  position: absolute;
-  top: 0px;
-  height: 100%;
-  width: 100%;
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+export const Description = styled.div`
+  font-family: "Noto Sans KR", sans-serif;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 16px;
+  line-height: 1.5;
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 10px;
 `;

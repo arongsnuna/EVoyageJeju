@@ -5,7 +5,6 @@ import {
   XAxis,
   YAxis,
   Tooltip,
-  CartesianGrid,
   Cell,
   ResponsiveContainer,
 } from "recharts";
@@ -63,9 +62,9 @@ function PopulationBarChart() {
 
   return (
     <>
-      <PopulationBarChartTitle>도시별 인구수</PopulationBarChartTitle>
-      <ResponsiveContainer>
-        <BarChart width={1000} height={600} layout="vertical" data={data}>
+      <PopulationBarChartTitle>2020년 도시별 인구수</PopulationBarChartTitle>
+      <>
+        <BarChart width={600} height={500} layout="vertical" data={data}>
           <XAxis
             type="number"
             tickFormatter={(tickItem) =>
@@ -87,7 +86,7 @@ function PopulationBarChart() {
             ))}
           </Bar>
         </BarChart>
-      </ResponsiveContainer>
+      </>
     </>
   );
 }
