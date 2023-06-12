@@ -11,6 +11,7 @@ export const Li = styled.li`
   list-style: none;
 
   button {
+    cursor: pointer;
     border: none;
     border-bottom: 1px solid #C1C7CD;
     width: 100%;
