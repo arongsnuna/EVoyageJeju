@@ -1,21 +1,16 @@
 import jwt from 'jsonwebtoken';
-function verifyAuthorizationHeader(authorizationHeader) {
-    if (authorizationHeader && authorizationHeader.startsWith("Bearer ")) {
-      return true; // Bearer 토큰이 맞음을 확인
-    } else {
-      return false; // Bearer 토큰이 아님
-    }
-  }
 
 function login_required(req, res, next) {
+    const authorizationHeader = req.headers.authorization;
     try{
-        const authorizationHeader = req.headers.authorization;
-        const isBearerToken = verifyAuthorizationHeader(authorizationHeader);
-
-        if (!isBearerToken) {
+        if(!authorizationHeader){
+            throw new Error('로그인이 필요한 서비스입니다.');
+        }
+        if(!authorizationHeader.startsWith("Bearer ")){
             throw new Error('BearerToken이 아닙니다.')
-        } 
+        }
     }
+
     catch(error){
         next(error);
     }
