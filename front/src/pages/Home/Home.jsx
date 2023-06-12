@@ -1,15 +1,5 @@
 import React from "react";
-import VideoBackground from "../../components/Home/VideoBackground";
-import {
-  Container,
-  HeadContentContainer,
-  SliderContainer,
-  StyledSlider,
-  VideoBackgroundContainer,
-  VideoBackgroundInner,
-  VideoBackgroundVideo,
-  VideoBackgroundContent,
-} from "./Home.style";
+import { Container } from "./Home.style";
 
 function Home() {
   console.log("Rendering Home");
@@ -27,7 +17,7 @@ function Home() {
 
   return (
     <Container>
-      <VideoBackground />
+      
     </Container>
   );
 }

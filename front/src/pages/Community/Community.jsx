@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useUserState } from '../../UserContext';
 import { Container, TitleContainer, TypeContainer, TypeButton, IndexContainer, ListContainer, ButtonContainer } from "./Community.style";
+import { ROUTE } from '../../routes';
 
 const Community = () => {
+  const navigate = useNavigate();
   const { user } = useUserState();
+  
   const [activeTab, setActiveTab] = useState('travel');
   const [posts, setPosts] = useState([
     // 여행 게시글
@@ -83,11 +86,11 @@ const Community = () => {
       </div>
       <ButtonContainer>
         <div>
-          {user ? (
-            <button>글쓰기</button>
-          ) : (
-            <button onClick={() => alert("로그인 후 이용해 주세요.")}>글쓰기</button>
-          )}
+          {/* {user ? ( */}
+            <button onClick={() => navigate(ROUTE.COMMUNITYWRITE.link)}>글쓰기</button>
+          {/* // ) : (
+          //   <button onClick={() => alert("로그인 후 이용해 주세요.")}>글쓰기</button>
+          // )} */}
         </div>
       </ButtonContainer>
       <div>
@@ -98,4 +101,5 @@ const Community = () => {
 };
 
 export default Community;
+
 
