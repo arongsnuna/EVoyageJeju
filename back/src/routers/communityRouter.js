@@ -7,7 +7,10 @@ const communityRouter = Router();
 // 전체 글 가져오기 
 communityRouter.get('', wrapper(async (req, res,next)=>{
     try{
-        const posts = await communityService.getPosts();
+        const page = req.query.page || 1; // 요청한 페이지 번호
+        const pageSize = req.query.pageSize || 10; // 페이지 크기
+
+        const posts = await communityService.getPosts({page, pageSize});
         res.status(200).send(posts);
     }
     catch(error){
