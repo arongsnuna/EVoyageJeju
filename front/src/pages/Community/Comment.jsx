@@ -11,7 +11,7 @@ function Comment({ postId, userId }) {
         const response = await Api.get(`/community/${postId}/comments`);
         setComments(response.data);
       } catch (error) {
-        console.log("Failed to fetch comments", error);
+        console.log("댓글을 가져오지 못했습니다:", error);
       }
     };
 
