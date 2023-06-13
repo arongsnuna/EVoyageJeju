@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import * as Api from "../../../api";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   isNameValid,
   isNickNameValid,
   isIDVaild,
   isPasswordValid,
+  isPasswordSame,
 } from "../../../utils/util";
 import {
   TitleContainer,
@@ -17,7 +18,6 @@ import {
 } from "./RegisterForm.style";
 
 import logo from "../logo.png";
-import { ROUTE } from "../../../routes";
 
 function RegisterForm() {
   const navigate = useNavigate();
@@ -32,7 +32,8 @@ function RegisterForm() {
     isNameValid(id) &&
     isNickNameValid(nickname) &&
     isIDVaild(id) &&
-    isPasswordValid(password);
+    isPasswordValid(password) &&
+    isPasswordSame({ password, confirmPassword });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -47,7 +48,7 @@ function RegisterForm() {
       });
 
       // 로그인 페이지로 이동함.
-      navigate(ROUTE.LOGIN.link);
+      navigate("/login");
     } catch (err) {
       console.log("회원가입에 실패하였습니다.", err);
 
@@ -60,7 +61,7 @@ function RegisterForm() {
     <>
       <TitleContainer>
         <img src={logo} alt="EVoyageJeju Logo" />
-        <Link to={ROUTE.Home.link}>탐라는차다</Link>
+        <a href="/">탐라는차다</a>
       </TitleContainer>
       <FormContainer onSubmit={handleSubmit}>
         <legend>회원가입</legend>
@@ -121,7 +122,9 @@ function RegisterForm() {
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
-          {password !== confirmPassword && <p>비밀번호가 일치하지 않습니다.</p>}
+          {!isPasswordSame({ password, confirmPassword }) && (
+            <p>비밀번호가 일치하지 않습니다.</p>
+          )}
         </FormFieldset>
         <ButtonContainer>
           <FormButton
@@ -141,7 +144,7 @@ function RegisterForm() {
           </FormButton>
         </ButtonContainer>
         <AlreadySignUpText>
-          <Link to={ROUTE.LOGIN.link}>Already have an account?</Link>
+          <a href="/login">Already have an account?</a>
         </AlreadySignUpText>
       </FormContainer>
     </>

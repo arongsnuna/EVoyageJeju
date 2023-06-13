@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import * as Api from "../../../api";
-import { LOGIN_SUCCESS } from "../../../reducer/action";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { isIDVaild, isPasswordValid } from "../../../utils/util";
 import { useUserDispatch } from "../../../UserContext";
 import {
@@ -14,7 +13,6 @@ import {
 } from "./LoginForm.style";
 
 import logo from "../logo.png";
-import { ROUTE } from "../../../routes";
 
 function LoginForm() {
   const navigate = useNavigate();
@@ -44,12 +42,12 @@ function LoginForm() {
       sessionStorage.setItem("userToken", jwtToken);
       // dispatch 함수를 이용해 로그인 성공 상태로 만듦.
       dispatch({
-        type: LOGIN_SUCCESS,
+        type: "LOGIN_SUCCESS",
         payload: user,
       });
 
       // 기본 페이지로 이동함.
-      navigate(ROUTE.Home.link, { replace: true });
+      navigate("/", { replace: true });
     } catch (err) {
       // 에러메세지 출력
       alert(err.response.data);
@@ -60,7 +58,7 @@ function LoginForm() {
     <>
       <TitleContainer>
         <img src={logo} alt="EVoyageJeju Logo" />
-        <Link to={ROUTE.Home.link}>탐라는차다</Link>
+        <a href="/">탐라는차다</a>
       </TitleContainer>
       <FormContainer onSubmit={handleSubmit}>
         <legend>로그인</legend>
@@ -104,8 +102,8 @@ function LoginForm() {
           </FormButton>
         </ButtonContainer>
         <AlreadySignUpText>
-          <Link to={ROUTE.Home.link}>Just Searching.</Link>
-          <Link to={ROUTE.REGISTER.link}>No account yet? Sign Up First.</Link>
+          <a href="/">Just Searching.</a>
+          <a href="/register">No account yet? Sign Up First.</a>
         </AlreadySignUpText>
       </FormContainer>
     </>

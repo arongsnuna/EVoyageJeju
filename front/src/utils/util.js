@@ -13,3 +13,7 @@ export const isIDVaild = (id) => {
 export const isPasswordValid = (password) => {
   return password.length >= 4;
 };
+
+export const isPasswordSame = ({ password, confirmPassword }) => {
+  return password === confirmPassword;
+};
