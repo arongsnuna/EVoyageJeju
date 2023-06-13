@@ -4,9 +4,10 @@ import { userAuthService } from '../services/userService.js';
 class communityService{
 
     // 전체 글 가져오기
-    static async getPosts(){
+    static async getPosts({page, pageSize}){
+        const countTotal = this.getEntireCount();
         return new Promise((resolve, reject)=>{
-            const sql = `select * from Community`;
+            const sql = `select * from Community LIMIT ${pageSize} OFFSET ${(page - 1) * pageSize}`;
             //const sql = 'TRUNCATE table Community';
             pool.query(sql, (error, results, fields)=>{
                 if(error){
@@ -18,6 +19,21 @@ class communityService{
                 }
             })
         })
+    }
+    // 전체 글 개수 구하기
+    static async getEntireCount(){
+         return new Promise((resolve, reject)=>{
+            const sql = 'SELECT COUNT(*) as total FROM Community';
+            pool.query(sql, (error, results, fields)=>{
+                if(error){
+                    reject(error);
+                }
+                else{
+                    const total = results[0].total; 
+                    resolve(total);
+                }
+            })
+         })
     }
 
     // 글 작성하기
