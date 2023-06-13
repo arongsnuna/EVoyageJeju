@@ -33,15 +33,6 @@ const Community = () => {
   const handleTabChange = (tab) => {
     setActiveTab(tab);
   };
-  
-  // const filteredPosts = posts.filter((post) => {
-  //   if (activeTab === 'travel') {
-  //     return post.title.startsWith('여행');
-  //   } else if (activeTab === 'electricCar') {
-  //     return post.title.startsWith('전기차');
-  //   }
-  //   return false;
-  // });
 
   return (
     <Container>
