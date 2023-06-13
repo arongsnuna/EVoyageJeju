@@ -24,15 +24,7 @@ userAuthRouter.post(
         userPassword,
       });
 
-      if (newUser.errorMessage) {
-        throw new Error(newUser.errorMessage);
-      }
-      res.status(201).json(newUser);
-
-      if (newUser.errorMessage) {
-        throw new Error(newUser.errorMessage);
-      }
-      res.status(200).send(currentUserInfo);
+      res.status(200).json(newUser);
     } catch (error) {
       next(error);
     }
@@ -49,9 +41,6 @@ userAuthRouter.post(
 
       const user = await userAuthService.getUser({ userId, userPassword });
 
-      if (user.errorMessage) {
-        throw new Error(user.errorMessage);
-      }
       res.status(200).send(user);
     } catch (error) {
       next(error);
@@ -89,9 +78,6 @@ userAuthRouter.put(
         newPassword,
       });
 
-      if (updatedUser.errorMessage) {
-        throw new Error(updatedUser.errorMessage);
-      }
       res.status(200).json(updatedUser);
     } catch (error) {
       next(error);
@@ -143,10 +129,7 @@ userAuthRouter.post(
         throw new Error("비밀번호를 입력해주세요");
       }
       const status = await userAuthService.deleteUser({ userId, userPassword });
-      if (status.errorMessage) {
-        throw new Error(status.errorMessage);
-      }
-      res.status(200).send(status.message);
+      res.status(200).send(status);
     } catch (error) {
       next(error);
     }
