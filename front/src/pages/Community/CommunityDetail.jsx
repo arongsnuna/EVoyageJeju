@@ -33,15 +33,18 @@ const CommunityDetail = () => {
     <div>
       <h2>게시글 상세 페이지</h2>
       <div>
-        <h3>제목: {title}</h3>
-        <p>글쓴이: {author}</p>
-        <p>등록일: {date}</p>
+        <h3>제목: {postTitle}</h3>
+        <p>글쓴이: {userId}</p>
+        <p>등록일: {createdAt}</p>
         <p>좋아요 수: {likeCount}</p>
-        <p>본문 내용: {content}</p>
+        <p>본문 내용: {postContent}</p>
         <button onClick={handleEdit}>수정</button>
         <button onClick={handleDelete}>삭제</button>
         <button onClick={handleLike}>좋아요</button>
         <button onClick={handleList}>목록</button>
+      </div>
+      <div>
+        <Comment postId={postId} userId={userId} />
       </div>
     </div>
   );
