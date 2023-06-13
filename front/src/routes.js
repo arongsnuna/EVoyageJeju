@@ -5,7 +5,8 @@ import RegisterForm from "./pages/User/Register/RegisterForm";
 import EnvPosting from "./pages/EnvPosting/EnvPosting";
 import Community from "./pages/Community/Community";
 import CommunityWrite from "./pages/Community/CommunityWrite";
-// import CommunityDetail from './pages/Community/CommunityDetail';
+import CommunityDetail from "./pages/Community/CommunityDetail";
+import CommunityEdit from "./pages/Community/CommunityEdit";
 import Charger from "./pages/Charger/Charger";
 
 export const ROUTE = {
@@ -39,15 +40,20 @@ export const ROUTE = {
     link: "/community/write",
     element: CommunityWrite,
   },
-  // COMMUNITYDetail: {
-  //   path: "/community/detail",
-  //   link: "/community/detail",
-  //   element: CommunityDetail,
-  // },
+  COMMUNITYDetail: {
+    path: "/community/detail",
+    link: "/community/detail",
+    element: CommunityDetail,
+  },
   COMMUNITY: {
     path: "/community",
     link: "/community",
     element: Community,
+  },
+  COMMUNITYEdit: {
+    path: "/community/edit",
+    link: "/community/edit",
+    element: CommunityEdit,
   },
   CHARGER: {
     path: "/charger",
