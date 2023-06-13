@@ -13,7 +13,6 @@ const likeRouter = Router();
 likeRouter.get('/:postId', wrapper(async (req,res,next)=>{
     try{
         const postId = req.params.postId;
-        console.log(postId);
         const count = await likeService.getPostLikeCount({postId});
         res.status(200).send(count);
     }
