@@ -1,11 +1,15 @@
 import { Router } from 'express';
 import { login_required } from '../middlewares/login_required.js';
 import { likeService } from '../services/likeService.js';
-import { communityService } from '../services/communityService.js';
 import { wrapper } from '../middlewares/wrapper.js';
 const likeRouter = Router();
 
-// 해당 게시글의 모든 좋아요 조회
+/**
+ * params: 
+ *      postId = 게시글 아이디
+ *  description:
+ *      게시글의 좋아요 수를 조회합니다.
+ */
 likeRouter.get('/:postId', wrapper(async (req,res,next)=>{
     try{
         const postId = req.params.postId;
@@ -19,8 +23,14 @@ likeRouter.get('/:postId', wrapper(async (req,res,next)=>{
 
 }));
 
-// 특정 글의 좋아요 추가
-likeRouter.post('/increment', wrapper(async(req, res, next)=>{
+/**
+ * params: 
+ *      postId = 게시글 아이디
+ *      userId = 유저 아이디
+ *  description:
+ *      게시글 아이디와 유저 아이디를 통해 좋아요를 추가합니다.
+ */
+likeRouter.post('/increment',login_required, wrapper(async(req, res, next)=>{
     try{
         const postId = req.body.postId;
         const userId = req.body.userId;
@@ -41,8 +51,14 @@ likeRouter.post('/increment', wrapper(async(req, res, next)=>{
         next(error);
     }
 }))
-
-likeRouter.post('/decrement', wrapper(async(req, res, next)=>{
+/**
+ * params: 
+ *      postId = 게시글 아이디
+ *      userId = 유저 아이디
+ *  description:
+ *      게시글 아이디와 유저 아이디를 통해 좋아요를 삭제합니다.
+ */
+likeRouter.post('/decrement', login_required, wrapper(async(req, res, next)=>{
     try{
         const postId = req.body.postId;
         const userId = req.body.userId;
