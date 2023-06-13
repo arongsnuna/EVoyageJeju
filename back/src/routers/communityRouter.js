@@ -45,7 +45,7 @@ communityRouter.get(
 
 // 글 작성하기 (글 추가)
 communityRouter.post(
-  "",
+  "/write",
   login_required,
   upload.single("postImage"),
   wrapper(async (req, res, next) => {
@@ -151,7 +151,7 @@ communityRouter.post(
 
 // 글 수정하기
 communityRouter.put(
-  "/:postId",
+  "/:postId/edit",
   login_required,
   upload.single("postImage"),
   wrapper(async (req, res, next) => {

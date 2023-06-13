@@ -21,7 +21,7 @@ commentRouter.get(
 
 // 특정 댓글 조회
 commentRouter.get(
-  ":postId/comments/:commentId",
+  "/:postId/comments/:commentId",
   wrapper(async (req, res, next) => {
     try {
       const commentId = req.params.commentId;
@@ -35,7 +35,7 @@ commentRouter.get(
 
 // 해당 게시글의 댓글 추가
 commentRouter.post(
-  ":postId/comments",
+  "/:postId/comments",
   login_required,
   wrapper(async (req, res, next) => {
     try {
@@ -69,7 +69,7 @@ commentRouter.post(
 
 // 댓글 삭제
 commentRouter.delete(
-  ":postId/comments/:commentId",
+  "/:postId/comments/:commentId",
   login_required,
   wrapper(async (req, res, next) => {
     try {
@@ -95,7 +95,7 @@ commentRouter.delete(
 
 // 댓글 수정
 commentRouter.put(
-  ":postId/comments/:commentId",
+  "/:postId/comments/:commentId",
   login_required,
   wrapper(async (req, res, next) => {
     try {

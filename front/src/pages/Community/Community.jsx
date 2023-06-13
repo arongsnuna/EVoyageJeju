@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useUserState } from "../../UserContext";
+import * as Api from "../../api";
 import {
   Container,
   TitleContainer,
@@ -11,65 +12,42 @@ import {
   ButtonContainer,
 } from "./Community.style";
 import { ROUTE } from "../../routes";
-import Comment from "./Comment";
 
 const Community = () => {
   const navigate = useNavigate();
   const { user } = useUserState();
 
-  const [activeTab, setActiveTab] = useState("travel");
-  const [posts, setPosts] = useState([
-    // 여행 게시글
-    {
-      id: 1,
-      title: "게시글 1",
-      type: "여행",
-      author: "작성자1",
-      date: "2023-06-01",
-      likes: 10,
-    },
-    {
-      id: 2,
-      title: "게시글 2",
-      type: "여행",
-      author: "작성자2",
-      date: "2023-06-02",
-      likes: 5,
-    },
-    // 전기차 게시글
-    {
-      id: 3,
-      title: "게시글 3",
-      type: "전기차",
-      author: "작성자3",
-      date: "2023-06-03",
-      likes: 7,
-    },
-    {
-      id: 4,
-      title: "게시글 4",
-      type: "전기차",
-      author: "작성자4",
-      date: "2023-06-04",
-      likes: 12,
-    },
-  ]);
+  const [activeTab, setActiveTab] = useState(false);
+  const [posts, setPosts] = useState([]);
+  const [travel, setTravel] = useState([]);
+  const [elec, setElec] = useState([]);
 
-  const [posting, setPosting] = useState(false);
+  const updateCommunity = useCallback(async () => {
+    try {
+      await Api.get(ROUTE.COMMUNITYWRITE.link).then((res) =>
+        setPosts(res.data)
+      );
+    } catch (err) {
+      console.log("에러 발생 :", err);
+    }
+  }, []);
 
-  // const handleTravelTab = async () => {
-  //   const res = await Api.get('/community/:postingId');
-  //   setPosts(res.data)
-  //   setActiveTab('travel')
-  // }
+  useEffect(() => {
+    updateCommunity();
+  }, [updateCommunity]);
 
-  // const handleElecTab = async () => {
-  //   const res = await Api.get('/community/:postingId');
-  //   setPosts(res.data)
-  //   setActiveTab('electricCar')
-  // }
-  const handleTabChange = (tab) => {
-    setActiveTab(tab);
+  const likeCount = 0;
+
+  const handleTravelTab = async () => {
+    const travelList = posts.filter((post) => post.postType === "여행");
+    setActiveTab(false);
+    setTravel(travelList);
+  };
+
+  const handleElecTab = async () => {
+    const elecList = posts.filter((post) => post.postType === "전기차");
+    setActiveTab(true);
+    setElec(elecList);
   };
 
   return (
@@ -79,16 +57,10 @@ const Community = () => {
       </TitleContainer>
       <TypeContainer>
         <div>
-          <TypeButton
-            fontColor="#21272A"
-            onClick={() => handleTabChange("travel")}
-          >
+          <TypeButton fontColor="#21272A" onClick={handleTravelTab}>
             여행탭
           </TypeButton>
-          <TypeButton
-            fontColor="#3563E9"
-            onClick={() => handleTabChange("electricCar")}
-          >
+          <TypeButton fontColor="#3563E9" onClick={handleElecTab}>
             전기차탭
           </TypeButton>
         </div>
@@ -104,26 +76,38 @@ const Community = () => {
           </div>
         </IndexContainer>
         <ListContainer>
-          {posts.map((post) => (
-            <div key={post.id}>
-              <p className="index">{post.id}</p>
-              <Link className="title">{post.title}</Link>
-              <p className="author">{post.author}</p>
-              <p className="date">{post.date}</p>
-              <p className="likeCount">{post.likes}</p>
-            </div>
-          ))}
+          {activeTab
+            ? elec.map((post) => (
+                <div key={post.id}>
+                  <p className="index">{post.postId}</p>
+                  <Link className="title">{post.postTitle}</Link>
+                  <p className="author">{user.userNickname}</p>
+                  <p className="date">{post.createdAt}</p>
+                  <p className="likeCount">{likeCount}</p>
+                </div>
+              ))
+            : travel.map((post) => (
+                <div key={post.id}>
+                  <p className="index">{post.postId}</p>
+                  <Link className="title">{post.postTitle}</Link>
+                  <p className="author">{user.userNickname}</p>
+                  <p className="date">{post.createdAt}</p>
+                  <p className="likeCount">{likeCount}</p>
+                </div>
+              ))}
         </ListContainer>
       </div>
       <ButtonContainer>
         <div>
-          {/* {user ? ( */}
-          <button onClick={() => navigate(ROUTE.COMMUNITYWRITE.link)}>
-            글쓰기
-          </button>
-          {/* // ) : (
-          //   <button onClick={() => alert("로그인 후 이용해 주세요.")}>글쓰기</button>
-          // )} */}
+          {user ? (
+            <button onClick={() => navigate(ROUTE.COMMUNITYWRITE.link)}>
+              글쓰기
+            </button>
+          ) : (
+            <button onClick={() => alert("로그인 후 이용해 주세요.")}>
+              글쓰기
+            </button>
+          )}
         </div>
       </ButtonContainer>
       <div>{/* 페이징 넘버링 추가필요 */}</div>

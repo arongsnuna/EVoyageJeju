@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { ROUTE } from "../../routes";
+import * as Api from "../../api";
 
 function Comment({ postId, userId }) {
   const [comments, setComments] = useState([]);
@@ -9,7 +8,7 @@ function Comment({ postId, userId }) {
   useEffect(() => {
     const fetchComments = async () => {
       try {
-        const response = await axios.get(`/community/${postId}/comments`);
+        const response = await Api.get(`/community/${postId}/comments`);
         setComments(response.data);
       } catch (error) {
         console.log("Failed to fetch comments", error);
@@ -19,16 +18,14 @@ function Comment({ postId, userId }) {
     fetchComments();
   }, [postId]);
 
+  // 댓글 작성
   const handleAddComment = async () => {
     const comment = {
       commentContent: newComment,
     };
 
     try {
-      const response = await axios.post(
-        `/community/${postId}/comments`,
-        comment
-      );
+      const response = await Api.post(`/community/${postId}/comments`, comment);
 
       setComments((prevComments) => [...prevComments, response.data]);
 
@@ -40,9 +37,10 @@ function Comment({ postId, userId }) {
     }
   };
 
+  // 댓글 수정
   const handleEditComment = async (commentId, newContent) => {
     try {
-      const response = await axios.put(
+      const response = await Api.put(
         `/community/${postId}/comments/${commentId}`,
         { commentContent: newContent }
       );
@@ -56,9 +54,10 @@ function Comment({ postId, userId }) {
     }
   };
 
+  // 댓글 삭제
   const handleDeleteComment = async (commentId) => {
     try {
-      await axios.delete(`/community/${postId}/comments/${commentId}`);
+      await Api.delete(`/community/${postId}/comments/${commentId}`);
       setComments(comments.filter((comment) => comment.id !== commentId));
     } catch (error) {
       console.error("댓글을 삭제하는데 실패했습니다:", error);
