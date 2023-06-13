@@ -1,11 +1,16 @@
 import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import SearchForm from "./SearchForm";
-import basicMarker from './markerImage/basicMarker.png';
-import currentMarker from './markerImage/currentMarker.png';
-import searchPoint from './markerImage/searchPoint.png';
-import './content.css';
-import { MapContainer, InputContainer, CurrentPositionButton, MapComp } from "./Map.style";
+import basicMarker from "./markerImage/basicMarker.png";
+import currentMarker from "./markerImage/currentMarker.png";
+import searchPoint from "./markerImage/searchPoint.png";
+import "./content.css";
+import {
+  MapContainer,
+  InputContainer,
+  CurrentPositionButton,
+  MapComp,
+} from "./Map.style";
 
 const { kakao } = window;
 
@@ -72,12 +77,16 @@ function Map({ searchPlace }) {
         data.latitude,
         data.longitude
       );
-      
+
       // 기본 마커 이미지 설정
       var imageSrc = basicMarker,
-      imageSize = new kakao.maps.Size(70, 75),
-      imageOption = {offset: new kakao.maps.Point(27, 69)};
-      var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
+        imageSize = new kakao.maps.Size(70, 75),
+        imageOption = { offset: new kakao.maps.Point(27, 69) };
+      var markerImage = new kakao.maps.MarkerImage(
+        imageSrc,
+        imageSize,
+        imageOption
+      );
 
       // 충전소를 마커로 표시
       const marker = new kakao.maps.Marker({
@@ -87,7 +96,7 @@ function Map({ searchPlace }) {
         title: data.chargingPlace,
       });
       marker.setMap(map);
-      
+
       // custom-overlay content
       const content = '<div class="wrap">' +
       '    <div class="boxtitle">' + 
@@ -119,12 +128,12 @@ function Map({ searchPlace }) {
 
       // 충전소 정보를 제공할 infowindow를 custom-overlay로 표현
       var customOverlay = new kakao.maps.CustomOverlay({
-          position: markerPosition,
-          content: content,
-          xAnchor: 0.3,
-          yAnchor: 0.91
+        position: markerPosition,
+        content: content,
+        xAnchor: 0.3,
+        yAnchor: 0.91,
       });
-      
+
       // 충전소 마커 클릭 시 overlay 호출
       kakao.maps.event.addListener(marker, "click", function () {
         customOverlay.setMap(map);
@@ -149,13 +158,17 @@ function Map({ searchPlace }) {
 
         // searchPoint 마커 표시를 위한 이미지 선언
         var imageSrc = searchPoint,
-        imageSize = new kakao.maps.Size(75, 80),
-        imageOption = {offset: new kakao.maps.Point(27, 69)};
-        var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
-        
+          imageSize = new kakao.maps.Size(75, 80),
+          imageOption = { offset: new kakao.maps.Point(27, 69) };
+        var markerImage = new kakao.maps.MarkerImage(
+          imageSrc,
+          imageSize,
+          imageOption
+        );
+
         const marker = new kakao.maps.Marker({
           position: coords,
-          image: markerImage
+          image: markerImage,
         });
         marker.setMap(mapRef.current);
       } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
@@ -184,17 +197,21 @@ function Map({ searchPlace }) {
 
           // 현재 위치 Marker 변경
           var imageSrc = currentMarker,
-              imageSize = new kakao.maps.Size(75, 80),
-              imageOption = {offset: new kakao.maps.Point(27, 69)};
-          var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
+            imageSize = new kakao.maps.Size(75, 80),
+            imageOption = { offset: new kakao.maps.Point(27, 69) };
+          var markerImage = new kakao.maps.MarkerImage(
+            imageSrc,
+            imageSize,
+            imageOption
+          );
 
           const locPosition = new kakao.maps.LatLng(lat, lon);
           mapRef.current.setCenter(locPosition);
-          
+
           const marker = new kakao.maps.Marker({
             map: mapRef.current,
             position: locPosition,
-            image: markerImage
+            image: markerImage,
           });
           marker.setMap(mapRef.current);
         },
@@ -210,16 +227,15 @@ function Map({ searchPlace }) {
   return (
     <MapContainer>
       <InputContainer>
-        <CurrentPositionButton
-          onClick={moveToCurrentLocation}
-        >Where am I</CurrentPositionButton>
+        <CurrentPositionButton onClick={moveToCurrentLocation}>
+          Where am I
+        </CurrentPositionButton>
         <p>|</p>
         <SearchForm
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
           handleSearch={handleSearch}
         />
-
       </InputContainer>
       <MapComp id="map"></MapComp>
     </MapContainer>

@@ -24,12 +24,12 @@ const CommunityEdit = () => {
     console.log('New Content:', content);
     // 수정 로직을 추가하고, 필요한 경우 서버로 데이터를 보내거나 상태를 업데이트하세요.
     // 수정 후 필요한 작업을 수행하고, 예를 들어 상세 페이지로 이동할 수 있습니다.
-    () => navigate(ROUTE.COMMUNITYDetail.link);
+    navigate(ROUTE.COMMUNITYDetail.link);
   };
 
   const handleCancel = () => {
     // 수정 취소 시 상세 페이지로 이동
-    () => navigate(ROUTE.COMMUNITYDetail.link);
+    navigate(ROUTE.COMMUNITYDetail.link);
   };
 
   return (
