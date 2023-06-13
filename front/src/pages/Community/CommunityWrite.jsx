@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import { Container, TitleContainer, InputContainer, RadioContainer, ContentContainer, ButtonContainer } from './CommunityWrite.style';
 import { useNavigate } from 'react-router-dom';
 import { ROUTE } from '../../routes';
+import * as Api from "../../api";
 
 const CommunityWrite = () => {
+  const navigate = useNavigate();
   const [title, setTitle] = useState('뚜룹');
   const [content, setContent] = useState('');
-  const navigate = useNavigate();
 
   const handleTitleChange = (event) => {
     setTitle(event.target.value);
@@ -21,12 +22,18 @@ const CommunityWrite = () => {
     navigate(ROUTE.COMMUNITY.link);
   };
 
-  const handleSave = () => {
-    // TODO: 글 저장 로직 추가
-    console.log('Title:', title);
-    console.log('Content:', content);
-    // 저장 로직을 추가하고, 필요한 경우 서버로 데이터를 보내거나 상태를 업데이트하세요.
-    // 저장 후 필요한 작업을 수행하고, 예를 들어 글 목록 페이지로 이동할 수 있습니다.
+  const handleSave = async (e) => {
+    e.preventDefault();
+
+    try {
+      await Api.post('posts', {
+        postTitle: title,
+        postContent: content,
+        postType: "여행",
+      })
+    } catch (err) {
+      console.log(err)
+    }
     navigate(ROUTE.COMMUNITYDetail.link);
   };
 
