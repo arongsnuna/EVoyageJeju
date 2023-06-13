@@ -36,8 +36,6 @@ class userAuthService {
                     }
                 }); 
             }
-            
-
         })
         
     }
@@ -107,16 +105,52 @@ class userAuthService {
         const userFound = await this.findById({userId});
         const userNickname = await this.userNicknameUpdate({userFound, newNickname });
         const userPassword = await this.userPasswordUpdate({userFound, newPassword });
-
-        let user ={
-            userId, 
-            userNickname,
-            userPassword,
-        };
     
         return new Promise((resolve, reject)=>{
             if(!userFound){
                 const errorMessage = '이 아이디는 가입내역이 없습니다. 다시 한 번 확인해주세요.';
+                reject(errorMessage);
+            }
+            else if(userNickname!='성공'){
+                const errorMessage = '별명을 변경하는데 실패했습니다.';
+                reject(errorMessage);
+            }
+            else if(userPassword!='성공'){
+                const errorMessage ='비밀번호를 변경하는데 실패했습니다.';
+                reject(errorMessage);
+            }
+            else{
+                let sql = `select * from User where userId='${userId}'`;
+                pool.query(sql, (error, results, fields)=>{
+                    let updatedUser = results[0];
+                    updatedUser.errorMessage = null;
+                    resolve(updatedUser);
+                })
+            }
+        })
+    }
+    // 유저정보 수정 with image
+    static async setUserWithImage({ userId, newNickname, newPassword,  imageUri }){
+        const userFound = await this.findById({userId});
+        const userNickname = await this.userNicknameUpdate({userFound, newNickname });
+        const userPassword = await this.userPasswordUpdate({userFound, newPassword });
+        const userImage = await this.userImageUpdate({userFound, imageUri});
+    
+        return new Promise((resolve, reject)=>{
+            if(!userFound){
+                const errorMessage = '이 아이디는 가입내역이 없습니다. 다시 한 번 확인해주세요.';
+                reject(errorMessage);
+            }
+            else if(userNickname!='성공'){
+                const errorMessage = '별명을 변경하는데 실패했습니다.';
+                reject(errorMessage);
+            }
+            else if(userPassword!='성공'){
+                const errorMessage ='비밀번호를 변경하는데 실패했습니다.';
+                reject(errorMessage);
+            }
+            else if(userImage!='성공'){
+                const errorMessage ='사진을 변경하는데 실패했습니다.';
                 reject(errorMessage);
             }
             else{
@@ -139,13 +173,14 @@ class userAuthService {
                     if(error){
                         reject(error);
                     }
-                    resolve(results);
+                    else{
+                        resolve('성공');
+                    }  
                 })
             }
             else{
-                resolve();
+                resolve('성공');
             }
-            
         })
     }
     // 비밀번호 업데이트
@@ -161,15 +196,37 @@ class userAuthService {
                         if(error){
                             reject(error);
                         }
-                        resolve(results);
+                        else{
+                            resolve('성공');
+                        }
                     })
-
                 }
-                resolve();
+                else{
+                    resolve('성공');
+                }
             });
-            
         })
     }
+    // 이미지 업데이트
+    static async userImageUpdate({ userFound, imageUri }) {
+        return new Promise((resolve, reject)=>{
+            if(userFound.userImage !=  imageUri){
+                const sql = `UPDATE User SET userImage='${imageUri}' WHERE userId = '${userFound.userId}'`;
+                pool.query(sql, (error, results, fields)=>{
+                    if(error){
+                        reject(error);
+                    }
+                    else{
+                        resolve('성공');
+                    }  
+                })
+            }
+            else{
+                resolve('성공');
+            }
+        })
+    }
+    
 
     // 전체 유저 불러오기
     static async getUsers() {

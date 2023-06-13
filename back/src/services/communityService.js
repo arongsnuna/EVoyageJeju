@@ -62,6 +62,33 @@ class communityService{
             })
         })
     }
+    // 글 작성하기 with image
+    static async writePostWithImage({userId, postTitle, postContent, postType, imageUri}){
+
+        return new Promise((resolve, reject)=>{
+            const sql = `insert into Community(postTitle, postContent, postType, userId, postImage) values ('${postTitle}','${ postContent}','${postType}','${userId}', '${imageUri}')`;
+
+            pool.query(sql, (error, results, fields)=>{
+                if(error){
+                    reject(error);
+                }
+                else{
+                    const postId = results.insertId;
+                    const sql2 =`select * from Community where postId = '${postId}'`;
+                    pool.query(sql2, (error, results, fields)=>{
+                        if(error){
+                            reject(error);
+                        }
+                        else{
+                            const newPost = results[0];
+                            resolve(newPost);
+                        }
+                    })
+                }
+            })
+        })
+    }
+    
 
     // 특정 글 불러오기
     static async getOnePost({postId}){
@@ -125,20 +152,63 @@ class communityService{
         })
     }
 
+    // 글 수정하기 with Image
+    static async setPostWithImage({postId, newTitle, newContent, newType, imageUri, userId}){
+        const postFound = await this.getOnePost({postId});
+        const postTitle = await this.titleUpdate({postFound, newTitle});
+        const postContent = await this.contentUpdate({postFound, newContent});
+        const postType = await this.typeUpdate({postFound, newType});
+        const postImage = await this.imageUpdate({postFound, imageUri});
+
+        return new Promise((resolve, reject)=>{
+            if(postTitle!='성공'){
+                const errorMessage = '제목을 변경하는데 실패했습니다.';
+                reject(errorMessage);
+            }
+            else if(postContent!='성공'){
+                const errorMessage ='내용을 변경하는데 실패했습니다.';
+                reject(errorMessage);
+            }
+            else if(postType!='성공'){
+                const errorMessage ='타입을 변경하는데 실패했습니다.';
+                reject(errorMessage);
+            }
+            else if(postImage!='성공'){
+                const errorMessage ='이미지를 변경하는데 실패했습니다.';
+                reject(errorMessage);
+            }
+            else{
+                let sql = `select * from Community where postId = '${postId}'`;
+                pool.query(sql, (error, results, fields)=>{
+                    if(error){
+                        reject(error);
+                    }
+                    else{
+                        let updatedPost = results[0];
+                        resolve(updatedPost);
+                    }
+                })
+            }
+        })
+    }
+
     // 제목 업데이트
     static async titleUpdate({postFound, newTitle}){
         return new Promise((resolve, reject)=>{
+            console.log(postFound);
             if(postFound.postTitle != newTitle){
                 const sql = `update Community SET postTitle ='${newTitle}' where postId = '${postFound.postId}'`;
                 pool.query(sql, (error, results, fields)=>{
                     if(error){
                         reject(error);
                     }
-                    resolve(results);
+                    else{
+                        resolve('성공');
+                    }
                 })
             }
             else{
-                resolve('업데이트할 내용이 없습니다.');
+                resolve('성공');
             }
 
         })
@@ -152,11 +222,13 @@ class communityService{
                     if(error){
                         reject(error)
                     }
-                    resolve(results);
+                    else{
+                        resolve('성공');
+                    }
                 })
             }
             else{
-                resolve('업데이트할 내용이 없습니다.');
+                resolve('성공');
             }
 
         })
@@ -171,15 +243,40 @@ class communityService{
                     if(error){
                         reject(error)
                     }
-                    resolve(results);
+                    else{
+                        resolve('성공');
+                    }
                 })
             }
             else{
-                resolve('업데이트할 내용이 없습니다.');
+                resolve('성공');
             }
 
         })
     }
+    
+    //이미지 업데이트
+    static async imageUpdate({postFound, imageUri}){
+        return new Promise((resolve, reject)=>{
+            if(postFound.postImage != imageUri){
+                const sql = `update Community SET postImage ='${imageUri}' where postId = '${postFound.postId}'`;
+                pool.query(sql, (error, results, fields)=>{
+                    if(error){
+                        reject(error)
+                    }
+                    else{
+                        resolve('성공');
+                    }
+                })
+            }
+            else{
+                resolve('성공');
+            }
+
+        })
+
+    }
+
     
 }
 
