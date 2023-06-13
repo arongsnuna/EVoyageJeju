@@ -27,29 +27,32 @@ const CommunityWrite = () => {
   return (
     <Container>
       <div>
-        <label>
-          <input type="radio" value="electricCar" name="tab" />
-          전기차탭
-        </label>
-        <label>
-          <input type="radio" value="travel" name="tab" />
-          여행탭
-        </label>
-      </div>
-      <div>
-        <label>
-          제목:
-          <input type="text" value={title} onChange={handleTitleChange} />
-        </label>
-      </div>
-      <div>
-        <label>
-          본문:
-          <textarea value={content} onChange={handleContentChange} />
-        </label>
-      </div>
-      <div>
-        <button onClick={handleSave}>저장</button>
+        <div>
+          <label>
+            <input type="radio" value="electricCar" name="tab" />
+            전기차탭
+          </label>
+          <label>
+            <input type="radio" value="travel" name="tab" />
+            여행탭
+          </label>
+        </div>
+        <div>
+          <label>
+            제목:
+          </label>
+            <input type="text" value={title} onChange={handleTitleChange} />
+        </div>
+        <div>
+          <label>
+            본문:
+          </label>
+            <textarea value={content} onChange={handleContentChange} />
+          
+        </div>
+        <div>
+          <button onClick={handleSave}>저장</button>
+        </div>
       </div>
     </Container>
   );

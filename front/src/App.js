@@ -28,8 +28,7 @@ function App() {
         {user && <Route path="/mypage" element={<MyPage />} />} */}
         {ROUTE_ARR.map((route, index) => {
           return (
-            <Route path={route.path} element={<route.element />} key={index}>
-            </Route>
+            <Route path={route.path} element={<route.element />} key={index} />
           )
         })}
       </Routes>
