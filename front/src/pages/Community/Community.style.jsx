@@ -145,8 +145,10 @@ export const ButtonContainer = styled.div`
     button {
       width: 150px;
       height: 50px;
+
+      border: none;
       border-radius: 5px;
-      background: #2851E3;
+      background: #3563E9;
   
       font-family: 'Inter';
       font-style: normal;

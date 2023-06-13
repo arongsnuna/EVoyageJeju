@@ -1,18 +1,31 @@
 import React, { useState } from "react";
-import { Container } from "./CommunityWrite.style";
+import {
+  Container,
+  TitleContainer,
+  InputContainer,
+  RadioContainer,
+  ContentContainer,
+  ButtonContainer,
+} from "./CommunityWrite.style";
 import { useNavigate } from "react-router-dom";
 import { ROUTE } from "../../routes";
 
 const CommunityWrite = () => {
-  const [title, setTitle] = useState("");
+  const [title, setTitle] = useState("뚜룹");
   const [content, setContent] = useState("");
   const navigate = useNavigate();
+
   const handleTitleChange = (event) => {
     setTitle(event.target.value);
   };
 
   const handleContentChange = (event) => {
     setContent(event.target.value);
+  };
+
+  const handleList = () => {
+    // 목록으로 이동
+    navigate(ROUTE.COMMUNITY.link);
   };
 
   const handleSave = () => {
@@ -26,29 +39,36 @@ const CommunityWrite = () => {
 
   return (
     <Container>
-      <div>
-        <div>
-          <label>
+      <TitleContainer>
+        <p>게시판</p>
+      </TitleContainer>
+      <InputContainer>
+        <RadioContainer>
+          <p>유형</p>
+          <div>
             <input type="radio" value="electricCar" name="tab" />
-            전기차탭
-          </label>
-          <label>
+            <label>전기차탭</label>
+          </div>
+          <div>
             <input type="radio" value="travel" name="tab" />
-            여행탭
-          </label>
-        </div>
-        <div>
-          <label>제목:</label>
-          <input type="text" value={title} onChange={handleTitleChange} />
-        </div>
-        <div>
-          <label>본문:</label>
-          <textarea value={content} onChange={handleContentChange} />
-        </div>
-        <div>
+            <label>여행탭</label>
+          </div>
+        </RadioContainer>
+        <ContentContainer>
+          <div>
+            <label>제목</label>
+            <input type="text" value={title} onChange={handleTitleChange} />
+          </div>
+          <div>
+            <label>본문</label>
+            <textarea value={content} onChange={handleContentChange} />
+          </div>
+        </ContentContainer>
+        <ButtonContainer>
+          <button onClick={handleList}>목록</button>
           <button onClick={handleSave}>저장</button>
-        </div>
-      </div>
+        </ButtonContainer>
+      </InputContainer>
     </Container>
   );
 };
