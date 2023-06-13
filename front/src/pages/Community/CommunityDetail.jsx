@@ -16,7 +16,7 @@ const CommunityDetail = () => {
     isEdit = "0",
     isDelete = "0",
     postImage = null,
-    userId = "id2",
+    userId = "wonn22",
     likeCount = 0,
   } = location.state || {};
 

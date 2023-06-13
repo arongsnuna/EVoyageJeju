@@ -1,5 +1,11 @@
-import React, { createContext, useContext, useEffect, useReducer, useState } from "react";
-import * as Api from './utils/api';
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useReducer,
+  useState,
+} from "react";
+import * as Api from "./api";
 import { loginReducer } from "./reducer/reducer";
 import { LOGIN_SUCCESS } from "./reducer/action";
 
@@ -37,8 +43,8 @@ export const UserProvider = ({ children }) => {
   }, []);
 
   if (!isFetching) {
-    return 'loading...'
-  };
+    return "loading...";
+  }
 
   return (
     <UserStateContext.Provider value={userState}>
@@ -46,7 +52,7 @@ export const UserProvider = ({ children }) => {
         {children}
       </UserDispatchContext.Provider>
     </UserStateContext.Provider>
-  );  
+  );
 };
 
 export const useUserState = () => {

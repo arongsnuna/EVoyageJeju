@@ -8,6 +8,7 @@ import CommunityWrite from "./pages/Community/CommunityWrite";
 import CommunityDetail from "./pages/Community/CommunityDetail";
 import CommunityEdit from "./pages/Community/CommunityEdit";
 import Charger from "./pages/Charger/Charger";
+import Comment from "./pages/Community/Comment";
 
 export const ROUTE = {
   Home: {
@@ -51,8 +52,8 @@ export const ROUTE = {
     element: Community,
   },
   COMMUNITYEdit: {
-    path: "/community/edit",
-    link: "/community/edit",
+    path: "/community/:postId/edit",
+    link: "/community/:postId/edit",
     element: CommunityEdit,
   },
   CHARGER: {

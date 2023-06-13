@@ -221,3 +221,5 @@ communityRouter.put(
     }
   })
 );
+
+export { communityRouter };

@@ -9,9 +9,7 @@ function Comment({ postId, userId }) {
   useEffect(() => {
     const fetchComments = async () => {
       try {
-        const response = await axios.get(
-          `${ROUTE.COMMUNITYDetail.link}/${postId}`
-        );
+        const response = await axios.get(`/community/${postId}/comments`);
         setComments(response.data);
       } catch (error) {
         console.log("Failed to fetch comments", error);
@@ -28,7 +26,7 @@ function Comment({ postId, userId }) {
 
     try {
       const response = await axios.post(
-        `${ROUTE.COMMUNITYDetail.link}/${postId}`,
+        `/community/${postId}/comments`,
         comment
       );
 
@@ -45,7 +43,7 @@ function Comment({ postId, userId }) {
   const handleEditComment = async (commentId, newContent) => {
     try {
       const response = await axios.put(
-        `${ROUTE.COMMUNITYDetail.link}/comment/${commentId}`,
+        `/community/${postId}/comments/${commentId}`,
         { commentContent: newContent }
       );
       setComments(
@@ -60,7 +58,7 @@ function Comment({ postId, userId }) {
 
   const handleDeleteComment = async (commentId) => {
     try {
-      await axios.delete(`${ROUTE.COMMUNITYDetail.link}/comment/${commentId}`);
+      await axios.delete(`/community/${postId}/comments/${commentId}`);
       setComments(comments.filter((comment) => comment.id !== commentId));
     } catch (error) {
       console.error("댓글을 삭제하는데 실패했습니다:", error);

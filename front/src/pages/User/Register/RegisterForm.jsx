@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import * as Api from "../../../utils/api";
+import * as Api from "../../../api";
 import { Link, useNavigate } from "react-router-dom";
 import {
   isNameValid,
