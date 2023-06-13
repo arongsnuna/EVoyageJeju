@@ -1,60 +1,89 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { ROUTE } from "../../routes";
 
-function Comment({ postId }) {
-  const [comments, setComments] = useState([
-    {
-      id: 1,
-      postId: 1,
-      author: "Author 1",
-      text: "Nice post!",
-      date: "2023-06-01",
-    },
-    {
-      id: 2,
-      postId: 1,
-      author: "Author 2",
-      text: "I agree!",
-      date: "2023-06-02",
-    },
-    {
-      id: 3,
-      postId: 2,
-      author: "Author 3",
-      text: "Great info.",
-      date: "2023-06-03",
-    },
-    // 더미 데이터
-  ]);
+function Comment({ postId, userId }) {
+  const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
 
-  // 이 게시물에만 댓글이 보여야함
-  const postComments = comments.filter((comment) => comment.postId === postId);
+  useEffect(() => {
+    const fetchComments = async () => {
+      try {
+        const response = await axios.get(
+          `${ROUTE.COMMUNITYDetail.link}/${postId}`
+        );
+        setComments(response.data);
+      } catch (error) {
+        console.log("Failed to fetch comments", error);
+      }
+    };
 
-  const handleAddComment = () => {
-    // 새 댓글 추가
-    setComments([
-      ...comments,
-      {
-        id: comments.length + 1,
-        postId,
-        author: "User", // 로그인한 사용자
-        text: newComment,
-        date: new Date().toISOString().split("T")[0], // 오늘 날짜
-      },
-    ]);
+    fetchComments();
+  }, [postId]);
 
-    // 댓글 작성 후 댓글창 비우기
-    setNewComment("");
+  const handleAddComment = async () => {
+    const comment = {
+      commentContent: newComment,
+    };
+
+    try {
+      const response = await axios.post(
+        `${ROUTE.COMMUNITYDetail.link}/${postId}`,
+        comment
+      );
+
+      setComments((prevComments) => [...prevComments, response.data]);
+
+      setNewComment("");
+    } catch (error) {
+      console.error("댓글 등록에 실패했습니다:", error);
+      console.error("request에 문제가 있습니다", error.request);
+      console.error("response에 문제가 있습니다", error.response);
+    }
+  };
+
+  const handleEditComment = async (commentId, newContent) => {
+    try {
+      const response = await axios.put(
+        `${ROUTE.COMMUNITYDetail.link}/comment/${commentId}`,
+        { commentContent: newContent }
+      );
+      setComments(
+        comments.map((comment) =>
+          comment.id === commentId ? response.data : comment
+        )
+      );
+    } catch (error) {
+      console.error("댓글을 수정하는데 실패했습니다:", error);
+    }
+  };
+
+  const handleDeleteComment = async (commentId) => {
+    try {
+      await axios.delete(`${ROUTE.COMMUNITYDetail.link}/comment/${commentId}`);
+      setComments(comments.filter((comment) => comment.id !== commentId));
+    } catch (error) {
+      console.error("댓글을 삭제하는데 실패했습니다:", error);
+    }
   };
 
   return (
     <div>
-      <h2>Comments</h2>
-      {postComments.map((comment) => (
+      {comments.map((comment) => (
         <div key={comment.id}>
           <h3>{comment.author}</h3>
           <p>{comment.text}</p>
           <p>{comment.date}</p>
+          {userId === comment.userId && (
+            <>
+              <button onClick={() => handleEditComment(comment.id, newComment)}>
+                수정
+              </button>
+              <button onClick={() => handleDeleteComment(comment.id)}>
+                삭제
+              </button>
+            </>
+          )}
         </div>
       ))}
       <div>
@@ -63,7 +92,7 @@ function Comment({ postId }) {
           value={newComment}
           onChange={(e) => setNewComment(e.target.value)}
         />
-        <button onClick={handleAddComment}>Add Comment</button>
+        <button onClick={handleAddComment}>등록</button>
       </div>
     </div>
   );
