@@ -18,7 +18,9 @@ const Community = () => {
   const { user } = useUserState();
 
   const [activeTab, setActiveTab] = useState(false);
+  // 전체 조회한 post 저장
   const [posts, setPosts] = useState([]);
+  // 탭 전환 시 postType에 맞게 post 저장
   const [travel, setTravel] = useState([]);
   const [elec, setElec] = useState([]);
 
@@ -82,6 +84,9 @@ const Community = () => {
                   <p className="index">{post.postId}</p>
                   <Link className="title">{post.postTitle}</Link>
                   <p className="author">{user.userNickname}</p>
+                  {/* {authors.map((author) => {
+                  <p className='author'>{author.userNickname}</p>
+                })} */}
                   <p className="date">{post.createdAt}</p>
                   <p className="likeCount">{likeCount}</p>
                 </div>

@@ -9,11 +9,12 @@ import {
 } from "./CommunityWrite.style";
 import { useNavigate } from "react-router-dom";
 import { ROUTE } from "../../routes";
+import * as Api from "../../api";
 
 const CommunityWrite = () => {
+  const navigate = useNavigate();
   const [title, setTitle] = useState("뚜룹");
   const [content, setContent] = useState("");
-  const navigate = useNavigate();
 
   const handleTitleChange = (event) => {
     setTitle(event.target.value);
