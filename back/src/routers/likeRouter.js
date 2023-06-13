@@ -13,8 +13,16 @@ const likeRouter = Router();
 likeRouter.get('/:postId', wrapper(async (req,res,next)=>{
     try{
         const postId = req.params.postId;
+        console.log(postId);
         const count = await likeService.getPostLikeCount({postId});
-        res.status(200).send(count);
+        if(count.length){
+            res.status(200).send(count);   
+            return; 
+        }
+        else{
+            res.status(400).send("데이터 조회에 실패했습니다.");
+        }
+        
     }
     catch(error){
         next(error);
