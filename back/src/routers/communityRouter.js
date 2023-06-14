@@ -43,7 +43,7 @@ communityRouter.get('', wrapper(async (req, res,next)=>{
 }));
 
 // 글 작성하기 (글 추가)
-communityRouter.post('', login_required, upload.single('postImage'), wrapper(async (req,res,next)=>{
+communityRouter.post('/write', login_required, upload.single('postImage'), wrapper(async (req,res,next)=>{
     try{
         const userId = req.currentUserId;
         const postTitle = req.body.postTitle;
@@ -136,7 +136,7 @@ communityRouter.post('/:postId', login_required, wrapper(async (req, res, next)=
 }));
 
 // 글 수정하기 
-communityRouter.put('/:postId', login_required, upload.single('postImage'), wrapper(async (req, res, next)=>{
+communityRouter.put('/:postId/edit', login_required, upload.single('postImage'), wrapper(async (req, res, next)=>{
     try{
         const userId = req.currentUserId;
         const postId = req.params.postId;

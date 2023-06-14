@@ -6,7 +6,7 @@ import {wrapper} from '../middlewares/wrapper.js';
 const commentRouter = Router();
 
 // 해당 게시글의 모든 댓글 조회
-commentRouter.get('/:postId', wrapper(async (req,res,next)=>{
+commentRouter.get('', wrapper(async (req,res,next)=>{
     try{
         const postId = req.params.postId;
         const comments = await commentService.getComments({postId});
@@ -18,20 +18,20 @@ commentRouter.get('/:postId', wrapper(async (req,res,next)=>{
 
 }));
 
-// 특정 댓글 조회
-commentRouter.get('/comment/:commentId', wrapper(async(req, res, next)=>{
-    try{
-        const commentId = req.params.commentId;
-        const comment = await commentService.getOneComment({commentId});
-        res.status(200).send(comment);
-    }
-    catch(error){
-        next(error);
-    }
-}))
+// // 특정 댓글 조회
+// commentRouter.get('/comment/:commentId', wrapper(async(req, res, next)=>{
+//     try{
+//         const commentId = req.params.commentId;
+//         const comment = await commentService.getOneComment({commentId});
+//         res.status(200).send(comment);
+//     }
+//     catch(error){
+//         next(error);
+//     }
+// }))
 
 // 해당 게시글의 댓글 추가
-commentRouter.post('/:postId', login_required, wrapper(async (req, res, next)=>{
+commentRouter.post('', login_required, wrapper(async (req, res, next)=>{
     try{
         const userId = req.currentUserId;
         const postId = req.params.postId;
@@ -55,7 +55,7 @@ commentRouter.post('/:postId', login_required, wrapper(async (req, res, next)=>{
 }));
 
 // 댓글 삭제
-commentRouter.post('/comment/:commentId', login_required, wrapper(async (req, res, next)=>{
+commentRouter.post('/:commentId', login_required, wrapper(async (req, res, next)=>{
     try{
         const userId = req.currentUserId;
         const commentId = req.params.commentId;
@@ -78,7 +78,7 @@ commentRouter.post('/comment/:commentId', login_required, wrapper(async (req, re
 }));
 
 // 댓글 수정
-commentRouter.put('/comment/:commentId', login_required, wrapper(async (req, res, next)=>{
+commentRouter.put('/:commentId', login_required, wrapper(async (req, res, next)=>{
     try{
         const userId = req.currentUserId;
         const commentId = req.params.commentId;
