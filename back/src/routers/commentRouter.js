@@ -6,7 +6,7 @@ import {wrapper} from '../middlewares/wrapper.js';
 const commentRouter = Router();
 
 // 해당 게시글의 모든 댓글 조회
-commentRouter.get('', wrapper(async (req,res,next)=>{
+commentRouter.get('/:postId/comments', wrapper(async (req,res,next)=>{
     try{
         const postId = req.params.postId;
         const comments = await commentService.getComments({postId});
@@ -31,7 +31,7 @@ commentRouter.get('', wrapper(async (req,res,next)=>{
 // }))
 
 // 해당 게시글의 댓글 추가
-commentRouter.post('', login_required, wrapper(async (req, res, next)=>{
+commentRouter.post('/:postId/comments', login_required, wrapper(async (req, res, next)=>{
     try{
         const userId = req.currentUserId;
         const postId = req.params.postId;
@@ -55,7 +55,7 @@ commentRouter.post('', login_required, wrapper(async (req, res, next)=>{
 }));
 
 // 댓글 삭제
-commentRouter.post('/:commentId', login_required, wrapper(async (req, res, next)=>{
+commentRouter.post('/:postId/comments/:commentId', login_required, wrapper(async (req, res, next)=>{
     try{
         const userId = req.currentUserId;
         const commentId = req.params.commentId;
@@ -78,7 +78,7 @@ commentRouter.post('/:commentId', login_required, wrapper(async (req, res, next)
 }));
 
 // 댓글 수정
-commentRouter.put('/:commentId', login_required, wrapper(async (req, res, next)=>{
+commentRouter.put('/:postId/comments/:commentId', login_required, wrapper(async (req, res, next)=>{
     try{
         const userId = req.currentUserId;
         const commentId = req.params.commentId;

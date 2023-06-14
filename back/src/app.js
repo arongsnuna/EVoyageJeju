@@ -25,7 +25,7 @@ app.use('', userAuthRouter);
 app.use('', fileRouter);
 app.use('', evcarDataRouter);
 app.use('/community', communityRouter);
-app.use('/community/:postId/comments',commentRouter);
+app.use('/community',commentRouter);
 app.use(errorMiddleware);
 
 
