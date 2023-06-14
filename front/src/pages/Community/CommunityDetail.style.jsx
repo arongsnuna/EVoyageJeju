@@ -13,23 +13,23 @@ export const TitleContainer = styled.div`
     padding: 0 30px 35px;
     width: 2300px;
 
-    font-family: 'Roboto';
+    font-family: "Roboto";
     font-style: normal;
     font-weight: 700;
     font-size: 60px;
     line-height: 110%;
     text-align: center;
-    color: #21272A;
+    color: #21272a;
   }
 `;
 
-export const TypeContainer =  styled.div`
+export const TypeContainer = styled.div`
   display: flex;
   justify-content: center;
 
   div {
     width: 2316px;
-    border-bottom: 3px solid #DDE1E6;
+    border-bottom: 3px solid #dde1e6;
   }
 `;
 
@@ -39,7 +39,7 @@ export const TypeButton = styled.button`
   border: none;
   background: none;
 
-  font-family: 'Roboto';
+  font-family: "Roboto";
   font-style: normal;
   font-weight: 700;
   font-size: 28px;
@@ -48,7 +48,7 @@ export const TypeButton = styled.button`
   color: ${(props) => props.fontColor};
 
   &:hover {
-    background: #A6C8FF;
+    background: #a6c8ff;
   }
 `;
 
@@ -66,7 +66,7 @@ export const ContentContainer = styled.div`
     align-items: center;
     width: 2300px;
 
-    font-family: 'Roboto';
+    font-family: "Roboto";
     font-style: normal;
     font-weight: 600;
     font-size: 24px;
@@ -131,22 +131,22 @@ export const ButtonContainer = styled.div`
       height: 50px;
 
       margin-left: 15px;
-      border: 1px solid #3563E9;
+      border: 1px solid #3563e9;
       border-radius: 5px;
-      background: #FFFFFF;
+      background: #ffffff;
 
-      font-family: 'Inter';
+      font-family: "Inter";
       font-style: normal;
       font-weight: 600;
       font-size: 24px;
       line-height: 19px;
       text-align: center;
       letter-spacing: 0.46px;
-      color: #3563E9;
+      color: #3563e9;
 
       &:hover {
-        background: #3563E9;
-        color: #FFFFFF;
+        background: #3563e9;
+        color: #ffffff;
       }
 
       &:active {
@@ -156,24 +156,35 @@ export const ButtonContainer = styled.div`
     }
 
     .delete {
-      border: 1px solid #FC1010;
-      background: #FFFFFF;
-      color: #FC1010;
-      
+      border: 1px solid #fc1010;
+      background: #ffffff;
+      color: #fc1010;
+
       &:hover {
-        background: #FC1010;
-        color: #FFFFFF;
+        background: #fc1010;
+        color: #ffffff;
       }
     }
 
     .like {
-      border: 1px solid #FCCE10;
-      background: #FFFFFF;
-      color: #FCCE10;
-      
+      border: 1px solid #fcce10;
+      background: #ffffff;
+      color: #fcce10;
+
       &:hover {
-        background: #FCCE10;
-        color: #FFFFFF;
+        background: #fcce10;
+        color: #ffffff;
+      }
+    }
+
+    .tolist {
+      border: 1px solid #15be51;
+      background: #ffffff;
+      color: #15be51;
+
+      &:hover {
+        background: #15be51;
+        color: #ffffff;
       }
     }
   }

@@ -21,17 +21,16 @@ const CommunityWrite = () => {
     e.preventDefault();
 
     try {
-      await Api.post("posts", {
+      const res1 = await Api.post("posts", {
         postTitle: title,
         postContent: content,
         postType: type,
       });
-      await Api.get(`posts`);
+      const newPostId = res1.data.postId;
+      navigate(`/community/${newPostId}`);
     } catch (err) {
       console.log(err);
     }
-    // navigate(`/community/${}`);
-    navigate(ROUTE.COMMUNITYDetail.link);
   };
 
   return (

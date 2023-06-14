@@ -27,7 +27,7 @@ app.use("", fileRouter);
 app.use("", evcarDataRouter);
 app.use("/community", communityRouter);
 app.use("/community", commentRouter);
-app.use("/like", likeRouter);
+app.use("/likes", likeRouter);
 app.use(errorMiddleware);
 
 export { app };

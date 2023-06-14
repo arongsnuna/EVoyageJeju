@@ -1,13 +1,36 @@
-import React, { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { ROUTE } from "../../routes";
+import * as Api from "../../api";
 
 const CommunityEdit = () => {
-  const location = useLocation();
+  // const location = useLocation();
   const navigate = useNavigate();
-  const { id, title: initialTitle, content: initialContent } = location.state;
-  const [title, setTitle] = useState(initialTitle);
-  const [content, setContent] = useState(initialContent);
+  // const { id, title: initialTitle, content: initialContent } = location.state;
+  const { postId } = useParams();
+
+  // postId에 해당하는 게시글 정보
+  const [title, setTitle] = useState("");
+  const [author, setAuthor] = useState("");
+  const [content, setContent] = useState("");
+  const [date, setDate] = useState("");
+
+  const getPostInfo = async () => {
+    try {
+      const res1 = await Api.get(`posts/${postId}`);
+      const res2 = await Api.get(`users/${res1.data.userId}`);
+      setTitle(res1.data.postTitle);
+      setAuthor(res2.data.userNickname);
+      setContent(res1.data.postContent);
+      setDate(res1.data.createdAt.substr(0, 10)); // 0000-00-00 형식으로 자르기
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    getPostInfo();
+  }, []);
 
   const handleTitleChange = (event) => {
     setTitle(event.target.value);
@@ -19,7 +42,7 @@ const CommunityEdit = () => {
 
   const handleSave = () => {
     // TODO: 글 수정 로직 추가
-    console.log("ID:", id);
+    // console.log('ID:', id);
     console.log("New Title:", title);
     console.log("New Content:", content);
     // 수정 로직을 추가하고, 필요한 경우 서버로 데이터를 보내거나 상태를 업데이트하세요.
