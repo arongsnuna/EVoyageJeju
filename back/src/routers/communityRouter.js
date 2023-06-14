@@ -111,7 +111,7 @@ communityRouter.get('/:postId', wrapper(async (req,res,next)=>{
 }));
 
 // 글 삭제하기
-communityRouter.post('/:postId', login_required, wrapper(async (req, res, next)=>{
+communityRouter.delete('/:postId', login_required, wrapper(async (req, res, next)=>{
     try{
         const userId = req.currentUserId;
         const postId = req.params.postId;

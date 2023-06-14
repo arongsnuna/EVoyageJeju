@@ -55,7 +55,7 @@ commentRouter.post('/:postId/comments', login_required, wrapper(async (req, res,
 }));
 
 // 댓글 삭제
-commentRouter.post('/:postId/comments/:commentId', login_required, wrapper(async (req, res, next)=>{
+commentRouter.delete('/:postId/comments/:commentId', login_required, wrapper(async (req, res, next)=>{
     try{
         const userId = req.currentUserId;
         const commentId = req.params.commentId;

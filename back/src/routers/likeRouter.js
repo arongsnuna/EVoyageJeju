@@ -67,7 +67,7 @@ likeRouter.post('/:postId/increment',login_required, wrapper(async(req, res, nex
  *  description:
  *      게시글 아이디와 유저 아이디를 통해 좋아요를 삭제합니다.
  */
-likeRouter.post('/:postId/decrement', login_required, wrapper(async(req, res, next)=>{
+likeRouter.delete('/:postId/decrement', login_required, wrapper(async(req, res, next)=>{
     try{
         const postId = req.params.postId;
         const postFound = communityService.getOnePost({postId});

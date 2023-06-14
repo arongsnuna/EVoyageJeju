@@ -104,7 +104,7 @@ userAuthRouter.put('/users/:userId', login_required, upload.single('userImage'),
             // 데이터 URI로 변환
             const imageUri = `data:${mimeType};base64,${imageData.toString('base64')}`;
 
-            updatedUser = await userAuthService.setUserWithImage({ userId, newNickname, newPassword, imageUri });
+            updatedUser = await userAuthService.setUserWithImage({ userId, newNickname, newPassword, uploadImage, imageUri });
 
         } else {
             updatedUser = await userAuthService.setUser({ userId, newNickname, newPassword});
@@ -138,7 +138,7 @@ userAuthRouter.get('/users/:userId', login_required, wrapper(async (req, res, ne
 }));
 
 // 유저정보 삭제
-userAuthRouter.post('/users/:userId', login_required, wrapper(async(req,res,next)=>{
+userAuthRouter.delete('/users/:userId', login_required, wrapper(async(req,res,next)=>{
     try{
         const currentUser = req.currentUserId;
         const userId = req.params.userId;
