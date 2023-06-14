@@ -7,6 +7,7 @@ import { fileRouter} from './routers/fileRouter.js';
 import { evcarDataRouter } from "./routers/evcarDataRouter.js";
 import { communityRouter } from './routers/communityRouter.js';
 import { commentRouter } from './routers/commentRouter.js';
+import { likeRouter } from './routers/likeRouter.js';
 
 const app = express();
 
@@ -26,6 +27,7 @@ app.use('', fileRouter);
 app.use('', evcarDataRouter);
 app.use('/community', communityRouter);
 app.use('/community',commentRouter);
+app.use('/likes',likeRouter);
 app.use(errorMiddleware);
 
 
