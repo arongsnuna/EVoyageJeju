@@ -45,10 +45,14 @@ export const TypeButton = styled.button`
   font-size: 28px;
   line-height: 100%;
   letter-spacing: 0.5px;
-  color: ${(props) => props.fontColor};
+  color: #21272A;
 
   &:hover {
     background: #A6C8FF;
+  }
+
+  &:disabled {
+    color: #3563E9;
   }
 `;
 

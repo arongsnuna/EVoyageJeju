@@ -15,6 +15,7 @@ const CommunityDetail = () => {
   const [author, setAuthor] = useState('');
   const [content, setContent] = useState('');
   const [date, setDate] = useState('');
+  const [type, setType] = useState(');')
   const [postUserId, setPostUserId] = useState('');
   // postId에 해당하는 게시물에 좋아요를 누른 userId 저장
   const [followers, setFollowers] = useState([]);
@@ -30,8 +31,9 @@ const CommunityDetail = () => {
       setTitle(res1.data.postTitle)
       setAuthor(res2.data.userNickname)
       setContent(res1.data.postContent)
-      setPostUserId(userIdOrigin)
       setDate(res1.data.createdAt.substr(0, 10))  // 0000-00-00 형식으로 자르기
+      setType(res1.data.postType)
+      setPostUserId(userIdOrigin)
     } catch (err) {
       console.log(err)
     }
@@ -94,25 +96,13 @@ const CommunityDetail = () => {
       <TitleContainer>
         <p>게시판</p>
       </TitleContainer>
-      {/* <TypeContainer>
-        <div>
-          <TypeButton 
-            fontColor='#21272A'
-            // onClick={() => handleTabChange('travel')}
-          >여행탭
-          </TypeButton>
-          <TypeButton
-            fontColor='#3563E9'
-            // onClick={() => handleTabChange('electricCar')}
-          >전기차탭
-          </TypeButton>
-        </div>
-      </TypeContainer> */}
       <ContentContainer>
         <div className='title-box'>
           <div>{title}</div>
         </div>
         <div className='posting-infobox'>
+          <div className='info'>구분</div>
+          <div>{type}</div>
           <div className='info'>글쓴이</div>
           <div>{author}</div>
           <div className='info'>등록일</div>

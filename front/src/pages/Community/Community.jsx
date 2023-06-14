@@ -61,12 +61,12 @@ const Community = () => {
       <TypeContainer>
         <div>
           <TypeButton 
-            fontColor='#21272A'
+            disabled={activeTab===false}
             onClick={handleTravelTab}
           >여행
           </TypeButton>
           <TypeButton
-            fontColor='#3563E9'
+            disabled={activeTab===true}
             onClick={handleElecTab}
           >전기차
           </TypeButton>
