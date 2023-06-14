@@ -62,11 +62,13 @@ function Header() {
           {user ? (
             <>
               <p>🍊{user.userNickname}님 반갑습니다🚜</p>
-              <img
-                src={mypagelogo}
-                alt="Login user"
-                onClick={() => setClick(!click)}
-              />
+              <div className="profilebox">
+                <img
+                  src={user.userImage ? user.userImage : mypagelogo}
+                  alt="Login user"
+                  onClick={() => setClick(!click)}
+                />
+              </div>
               {click && <MypageDropDown />}
             </>
           ) : (

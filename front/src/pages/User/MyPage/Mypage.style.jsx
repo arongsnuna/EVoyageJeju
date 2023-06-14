@@ -37,7 +37,7 @@ export const FormContainer = styled.form`
     width: 1200px;
   
     legend {
-      padding-bottom: 80px;
+      padding-bottom: 50px;
       width: 100%;
   
       font-family: 'Roboto';
@@ -56,7 +56,7 @@ export const FormPhotoDiv = styled.div`
 
   border: 1px solid #DDE1E6;
   margin-bottom: 20px;
-  padding: 35px 50px;
+  padding: 50px;
 
   div {
     display: flex;
@@ -65,19 +65,24 @@ export const FormPhotoDiv = styled.div`
 `;
 
 export const FormPhotoContent = styled.form`
+  display: flex;
+  flex-direction: row;
   width: 50%;
+  border-right: 1px solid #DDE1E6;
   
   .profilebox {
+    margin-right: 35px;    
     width: 250px;
     height: 250px; 
     border-radius: 70%;
     overflow: hidden;
-    background: blue;
 
     img {
+      // position: absolute;
       width: 100%;
       height: 100%;
       object-fit: cover;
+      background-size: cover;
     }
   }
 
@@ -85,35 +90,88 @@ export const FormPhotoContent = styled.form`
     display: flex;
     flex-direction: column;
     justify-content: center;
+    width: 40%;
 
-    label {
+    label, button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
       cursor: pointer;
-      border: 1px solid black;
-      text-align: center;
-    }
+      margin-bottom: 20px;
+      border: 1px solid #3563e9;
+      border-radius: 5px;
+      height: 50px;
 
+      text-align: center;
+      font-family: 'Roboto';
+      font-style: normal;
+      font-weight: 700;
+      font-size: 25px;
+      line-height: 100%;
+      letter-spacing: 0.5px;
+      color: #3563e9;
+
+      &:hover {
+        background: #F6F9FF;
+        color: #3563e9;
+      }
+
+      &:active {
+        position: relative;
+        top: 3px;
+      }
+    }
+    
+    .save {
+      background: #3563e9;
+      color: #FFFFFF;
+
+      &:hover {
+        background: #2D50B9;
+        color: #FFFFFF;
+      }
+    }
     input { display: none; }
   }
 
 `;
 
 export const FormPhotoInfo = styled.div`
-  width: 50%;
+  // display: flex;
+
   div {
     display: flex;
     flex-direction: column;
+    margin-left: 40px;
+
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 30px;
+    line-height: 140%;
+    color: #21272A;
+
+    p {
+      margin: 20px 0 10px;
+      font-weight: 600;
+      font-size: 33px;
+    }
+
+    ol {
+      margin-top: 20px;
+    }
   }
 `;
 
 export const FormUserDiv = styled.div`
   border: 1px solid #DDE1E6;
   margin-bottom: 20px;
-  padding: 35px 50px;
+  padding: 60px 50px;
 
   div {
     display: flex;
     flex-direction: row;
-    margin: 0 0 30px;
+    margin: 0 0 10px;
   }
 
   label {
@@ -175,7 +233,7 @@ export const ButtonContainer = styled.div`
   margin-top: 30px;
 
   button {
-    margin: 42px 0 8px;
+    margin: 42px 30px 8px 0;
     
     width: 120px;
     height: 45px;

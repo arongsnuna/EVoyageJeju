@@ -1,26 +1,32 @@
 import React, { useState } from "react";
 import { isNickNameValid } from "../../utils/util";
-
+import * as Api from '../../utils/api';
+import { useUserState } from "../../UserContext";
 import { FormContainer, ButtonContainer } from "./EditMyPage.style";
 
-function EditNickName({ currentNickName, setIsEditingNickName, setEditComplete }) {
+function EditNickName({ currentNickName, setIsEditableNickName, setEditComplete }) {
+  const { user } = useUserState();
   const [nickname, setNickName] = useState(currentNickName);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // e.stopPropagation();
+    e.stopPropagation();
 
-    // try {
-
-    // } catch (e) {
-    //   console.log("에러 발생 :", e);
-    // }
-  setIsEditingNickName(false);
+    try {
+      await Api.put(`users/${user.userId}`, {
+        userNickname: nickname,
+        userPassword: user.userPassword,
+        confirmPassword: user.userPassword
+      })
+    } catch (e) {
+      console.log("에러 발생 :", e);
+    }
+    setIsEditableNickName(false);
   setEditComplete(true);
   }
 
   return (
-    <FormContainer onSubmit={handleSubmit}>
+    <FormContainer>
       <div>
         <input 
           name="name" 
@@ -31,11 +37,11 @@ function EditNickName({ currentNickName, setIsEditingNickName, setEditComplete }
       </div>
       <ButtonContainer>
         <button
-          type='submit'
           disabled={!isNickNameValid(nickname)}
+          onClick={handleSubmit}
         >확인</button>
         <button
-          onClick={() => setIsEditingNickName(false)}
+          onClick={() => setIsEditableNickName(false)}
         >취소</button>
       </ButtonContainer>
     </FormContainer>

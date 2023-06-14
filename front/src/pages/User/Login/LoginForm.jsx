@@ -44,6 +44,7 @@ function LoginForm() {
       // 기본 페이지로 이동함.
       navigate(ROUTE.Home.link, { replace: true });
     } catch (err) {
+      console.log('err', err.response.data.message)
       // 에러메세지 출력
       alert(err.response.data)
     }
@@ -90,13 +91,13 @@ function LoginForm() {
           >
             LOGIN
           </FormButton>
-          <FormButton 
+          {/* <FormButton 
             fontColor='#3563E9'
             backgroundColor='#FFFFFF'
             type="submit" 
           >
             Log in with Google
-          </FormButton>
+          </FormButton> */}
         </ButtonContainer>
         <AlreadySignUpText>
           <Link to={ROUTE.Home.link}>Just Searching.</Link>

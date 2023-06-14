@@ -117,13 +117,13 @@ function RegisterForm() {
           >
             Register
           </FormButton>
-          <FormButton 
+          {/* <FormButton 
             fontColor='#3563E9'
             backgroundColor='#FFFFFF'
             type="submit" 
           >
             Login with Google
-          </FormButton>
+          </FormButton> */}
         </ButtonContainer>
         <AlreadySignUpText>
           <Link to={ROUTE.LOGIN.link}>Already have an account?</Link>
