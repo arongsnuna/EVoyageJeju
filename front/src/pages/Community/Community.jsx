@@ -20,10 +20,15 @@ const Community = () => {
 
   const updateCommunity = async () => {
     try {
-      await Api.get("posts").then((res) => setPosts(res.data))
-      posts.map((post) => {
-        Api.get(`users/${post.userId}`).then((res) => post['author'] = res.data.userNickname)
-      })
+      const res = await Api.get('posts');
+      const dataWithAuthor = await Promise.all(
+        res.data.map(async (post) => {
+          const userRes = await Api.get(`users/${post.userId}`);
+          // const likeRes = await Api.get(`like/${post.postId}`);
+          return { ...post, author: userRes.data.userNickname };
+        })
+      );
+      setPosts(dataWithAuthor);
     } catch (err) {
       console.log("에러 발생 :", err);
     }
