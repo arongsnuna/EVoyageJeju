@@ -16,25 +16,18 @@ const CommunityWrite = () => {
   const [title, setTitle] = useState("뚜룹");
   const [content, setContent] = useState("");
 
-  const handleTitleChange = (event) => {
-    setTitle(event.target.value);
-  };
+  const handleSave = async (e) => {
+    e.preventDefault();
 
-  const handleContentChange = (event) => {
-    setContent(event.target.value);
-  };
-
-  const handleList = () => {
-    // 목록으로 이동
-    navigate(ROUTE.COMMUNITY.link);
-  };
-
-  const handleSave = () => {
-    // TODO: 글 저장 로직 추가
-    console.log("Title:", title);
-    console.log("Content:", content);
-    // 저장 로직을 추가하고, 필요한 경우 서버로 데이터를 보내거나 상태를 업데이트하세요.
-    // 저장 후 필요한 작업을 수행하고, 예를 들어 글 목록 페이지로 이동할 수 있습니다.
+    try {
+      await Api.post("posts", {
+        postTitle: title,
+        postContent: content,
+        postType: "여행",
+      });
+    } catch (err) {
+      console.log(err);
+    }
     navigate(ROUTE.COMMUNITYDetail.link);
   };
 
@@ -58,15 +51,22 @@ const CommunityWrite = () => {
         <ContentContainer>
           <div>
             <label>제목</label>
-            <input type="text" value={title} onChange={handleTitleChange} />
+            <input
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
           </div>
           <div>
             <label>본문</label>
-            <textarea value={content} onChange={handleContentChange} />
+            <textarea
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+            />
           </div>
         </ContentContainer>
         <ButtonContainer>
-          <button onClick={handleList}>목록</button>
+          <button onClick={() => navigate(ROUTE.COMMUNITY.link)}>목록</button>
           <button onClick={handleSave}>저장</button>
         </ButtonContainer>
       </InputContainer>

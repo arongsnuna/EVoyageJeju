@@ -21,24 +21,24 @@ const Community = () => {
   const [activeTab, setActiveTab] = useState(false);
   // 전체 조회한 post 저장
   const [posts, setPosts] = useState([]);
+  // 작성자(닉네임) 조회 후 저장
+  const [authors, setAuthors] = useState([]);
   // 탭 전환 시 postType에 맞게 post 저장
   const [travel, setTravel] = useState([]);
   const [elec, setElec] = useState([]);
   const [searchResult, setSearchResult] = useState([]);
 
-  const updateCommunity = useCallback(async () => {
+  const updateCommunity = async () => {
     try {
-      await Api.get(ROUTE.COMMUNITYWRITE.link).then((res) =>
-        setPosts(res.data)
-      );
+      await Api.get("posts").then((res) => setPosts(res.data));
     } catch (err) {
       console.log("에러 발생 :", err);
     }
-  }, []);
+  };
 
   useEffect(() => {
     updateCommunity();
-  }, [updateCommunity]);
+  }, []);
 
   const likeCount = 0;
 
@@ -96,17 +96,7 @@ const Community = () => {
           </div>
         </IndexContainer>
         <ListContainer>
-          {searchResult.length > 0
-            ? searchResult.map((post) => (
-                <div key={post.id}>
-                  <p className="index">{post.postId}</p>
-                  <Link className="title">{post.postTitle}</Link>
-                  <p className="author">{user.userNickname}</p>
-                  <p className="date">{post.createdAt}</p>
-                  <p className="likeCount">{likeCount}</p>
-                </div>
-              ))
-            : activeTab
+          {activeTab
             ? elec.map((post) => (
                 <div key={post.id}>
                   <p className="index">{post.postId}</p>
