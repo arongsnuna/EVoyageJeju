@@ -258,15 +258,40 @@ class userAuthService {
         return new Promise((resolve, reject)=>{
             bcrypt.compare(userPassword, userFound.userPassword, (error, result)=>{
                 if(result){//같으면
-                    const sql = `DELETE from User WHERE userId = '${userId}'`;
-                    pool.query(sql, (error, results, fields)=>{
+                    const sql1 = `DELETE from Comment WHERE userId = '${userId}'`;
+                    pool.query(sql1, (error, results, fields)=>{
                         if(error){
-                            const errorMessage = error;
-                            reject(errorMessage);
+                            reject(error);
                         }
                         else{
-                            const status = '성공적으로 삭제되었습니다.';
-                            resolve(status);
+                            const sql2 = `DELETE from Community WHERE userId = '${userId}'`;
+                            pool.query(sql2, (error, results, fields)=>{
+                                if(error){
+                                    reject(error);
+                                }
+                                else{ 
+                                    const sql3 = `DELETE from LikeCount WHERE userId = '${userId}'`;
+                                    pool.query(sql3, (error, results, fields)=>{
+                                        if(error){
+                                            reject(error);
+                                        }
+                                        else{
+                                            const sql4 = `DELETE from User WHERE userId = '${userId}'`;
+                                            query.pool(sql4, (error, results, fields)=>{
+                                                if(error){
+                                                    reject(error);
+                                                }
+                                                else{
+                                                    const status = '성공적으로 삭제되었습니다.';
+                                                    resolve(status);
+                                                }
+                                            })
+                                        }
+                                    })
+
+                                    
+                                }
+                            })
                         }
                     })
                 }

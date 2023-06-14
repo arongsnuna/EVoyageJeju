@@ -15,16 +15,7 @@ class communityService{
                 }
                 else{
                     const posts = results;
-                    const sql2 = `select userId, userNickname from User`;
-                    pool.query(sql2, (error, results, fields)=>{
-                        if(error){
-                            reject(error);
-                        }
-                        else{
-                            const users = results;
-                            resolve([posts, users]);
-                        }
-                    })
+                    resolve(posts);
                 }
             })
         })
@@ -119,17 +110,34 @@ class communityService{
     // 글 삭제하기 
     static async deletePost({postId}){
         return new Promise((resolve, reject)=>{
-            const sql = `DELETE from Community WHERE postId = '${postId}'`;
-            pool.query(sql,(error, results, fields)=>{
+            const sql1 = `DELETE from Comment WHERE postId = '${postId}'`
+            pool.query(sql1, (error, results, fields)=>{
                 if(error){
                     reject(error);
                 }
                 else{
-                    const message = '삭제되었습니다';
-                    resolve(message);
+                    const sql2 = `DELETE from LikeCount WHERE postId = '${postId}'`
+                    pool.query(sql2, (error, results, fields)=>{
+                        if(error){
+                            reject(error);
+                        }
+                        else{
+                            const sql3 = `DELETE from Community WHERE postId = '${postId}'`
+                            pool.query(sql3, (error, results, fields)=>{
+                                if(error){
+                                    reject(error);
+                                }
+                                else{
+                                    const message = '삭제되었습니다';
+                                    resolve(message); 
+                                }
+                            })
+                            
+                            
+                        }
+                    })
                 }
             })
-
         })
     }
 
