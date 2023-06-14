@@ -34,8 +34,11 @@ communityRouter.get('', wrapper(async (req, res,next)=>{
         const page = req.query.page || 1; // 요청한 페이지 번호
         const pageSize = req.query.pageSize || 10; // 페이지 크기
 
-        const posts = await communityService.getPosts({page, pageSize});
-        res.status(200).send(posts);
+        const results = await communityService.getPosts({page, pageSize});
+        const posts = results[0];
+        const users = results[1];
+        console.log(users);
+        res.status(200).send({posts, users});
     }
     catch(error){
         next(error);

@@ -15,7 +15,16 @@ class communityService{
                 }
                 else{
                     const posts = results;
-                    resolve(posts);
+                    const sql2 = `select userId, userNickname from User`;
+                    pool.query(sql2, (error, results, fields)=>{
+                        if(error){
+                            reject(error);
+                        }
+                        else{
+                            const users = results;
+                            resolve([posts, users]);
+                        }
+                    })
                 }
             })
         })
