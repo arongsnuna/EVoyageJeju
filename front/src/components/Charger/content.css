@@ -1,0 +1,84 @@
+.wrap {
+  position: relative;
+  top: -120px;
+  left: -95px;
+  width: 95%;
+  height: 416px;
+  border: 3px solid darkgrey;
+
+  text-align: right;
+  overflow: hidden;
+  font-size: 21px;
+  font-family: 'Malgun Gothic', 'dotum', '돋움', sans-serif;
+  line-height: 1.5;
+  
+  background-color: whitesmoke;
+}
+
+.wrap > div {
+  display: flex;
+  margin: 0 25px;
+  padding: 15px 20px 15px;
+}
+
+.boxtitle {
+  border-bottom: 1px solid grey;
+}
+
+.location-box {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.location {
+  padding: 15px 100px 5px 0;
+  font-size: 28px;
+  font-weight: 900;
+  letter-spacing: 0.8px;
+}
+
+.address {
+  padding: 10px 100px 5px 0;
+}
+
+.close {
+  width: 100%;
+  border: none;
+  padding: 10px 0 70px 30px;
+
+  cursor: pointer;
+
+  font-size: 18px;
+  background-color: whitesmoke;
+}
+
+.time {
+  padding-top: 10px;
+  padding-right: 120px;
+}
+
+.quickcharging {
+  padding-right: 40px;
+}
+
+.parkingfee {
+  padding-right: 53px;
+}
+
+.text {
+  padding-left: 10px;
+  color: navy;
+  font-weight: 700;
+} 
+
+.searchpath {
+  padding-left: 10px;
+}
+
+.info {
+  padding-top: 4.1px;
+  padding-left: 10px;
+  font-size: 18px;
+  color: grey;
+}
