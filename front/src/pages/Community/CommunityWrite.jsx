@@ -9,19 +9,6 @@ const CommunityWrite = () => {
   const [title, setTitle] = useState('뚜룹');
   const [content, setContent] = useState('');
 
-  const handleTitleChange = (event) => {
-    setTitle(event.target.value);
-  };
-
-  const handleContentChange = (event) => {
-    setContent(event.target.value);
-  };
-
-  const handleList = () => {
-    // 목록으로 이동
-    navigate(ROUTE.COMMUNITY.link);
-  };
-
   const handleSave = async (e) => {
     e.preventDefault();
 
@@ -57,15 +44,15 @@ const CommunityWrite = () => {
         <ContentContainer>
           <div>
             <label>제목</label>
-            <input type="text" value={title} onChange={handleTitleChange} />
+            <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
           </div>
           <div>
             <label>본문</label>
-            <textarea value={content} onChange={handleContentChange} />
+            <textarea value={content} onChange={(e) => setContent(e.target.value)} />
           </div>
         </ContentContainer>
         <ButtonContainer>
-          <button onClick={handleList}>목록</button>
+          <button onClick={() => navigate(ROUTE.COMMUNITY.link)}>목록</button>
           <button onClick={handleSave}>저장</button>
         </ButtonContainer>
       </InputContainer>

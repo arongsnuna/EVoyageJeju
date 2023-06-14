@@ -12,21 +12,26 @@ const Community = () => {
   const [activeTab, setActiveTab] = useState(false);
   // 전체 조회한 post 저장
   const [posts, setPosts] = useState([]);
+  // 작성자(닉네임) 조회 후 저장
+  const [authors, setAuthors] = useState([]);
   // 탭 전환 시 postType에 맞게 post 저장
   const [travel, setTravel] = useState([]);
   const [elec, setElec] = useState([]);
 
-  const updateCommunity = useCallback(async () => {
+  const updateCommunity = async () => {
     try {
       await Api.get("posts").then((res) => setPosts(res.data))
+      posts.map((post) => {
+        Api.get(`users/${post.userId}`).then((res) => post['author'] = res.data.userNickname)
+      })
     } catch (err) {
       console.log("에러 발생 :", err);
     }
-  }, []);
+  };
 
   useEffect(() => {
     updateCommunity();
-  }, [updateCommunity]);
+  }, []);
 
   const likeCount = 0;
 
@@ -76,12 +81,12 @@ const Community = () => {
             elec.map((post) => (
               <div key={post.id}>
                 <p className='index'>{post.postId}</p>
-                <Link className='title'>{post.postTitle}</Link>
-                <p className='author'>{user.userNickname}</p>
-                {/* {authors.map((author) => {
+                <Link to={`/community/${post.postId}`} className='title'>{post.postTitle}</Link>
+                {authors.map((author) => {
                   <p className='author'>{author.userNickname}</p>
-                })} */}
-                <p className='date'>{post.createdAt}</p>
+                })}
+                <p className='author'>{post.author}</p>
+                <p className='date'>{post.createdAt.substr(0, 10)}</p>
                 <p className='likeCount'>{likeCount}</p>
               </div>
             ))
@@ -89,9 +94,12 @@ const Community = () => {
             travel.map((post) => (
               <div key={post.id}>
                 <p className='index'>{post.postId}</p>
-                <Link className='title'>{post.postTitle}</Link>
-                <p className='author'>{user.userNickname}</p>
-                <p className='date'>{post.createdAt}</p>
+                <Link to={`/community/${post.postId}`} className='title'>{post.postTitle}</Link>
+                {authors.map((author) => {
+                  <p className='author'>{author.userNickname}</p>
+                })}
+                <p className='author'>{post.author}</p>
+                <p className='date'>{post.createdAt.substr(0, 10)}</p>
                 <p className='likeCount'>{likeCount}</p>
               </div>
             ))
