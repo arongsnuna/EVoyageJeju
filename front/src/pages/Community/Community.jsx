@@ -35,7 +35,7 @@ const Community = () => {
   const updateCommunity = async () => {
     try {
       console.log("updateCommunity 안입니다");
-      const res = await Api.get(`community?page=${page}&pageSize=${pageSize}`);
+      const res = await Api.get(`community`); // ?page=${page}&pageSize=${pageSize}
       console.log("updateCommunity res", res);
       const dataWithAuthor = await Promise.all(
         res.data.posts.map(async (post) => {

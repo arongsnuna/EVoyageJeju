@@ -25,8 +25,8 @@ app.get("/", (req, res) => {
 app.use("", userAuthRouter);
 app.use("", fileRouter);
 app.use("", evcarDataRouter);
-app.use("/posts", communityRouter);
-app.use("/comments", commentRouter);
+app.use("/community", communityRouter);
+app.use("/community", commentRouter);
 app.use("/like", likeRouter);
 app.use(errorMiddleware);
 

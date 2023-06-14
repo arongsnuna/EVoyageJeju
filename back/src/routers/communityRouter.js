@@ -37,7 +37,7 @@ communityRouter.get(
       const posts = await communityService.getPosts({ page, pageSize });
       const totalPosts = await communityService.getEntireCount();
       console.log(users);
-      res.status(200).send({ posts, users, page, pageSize, totalPosts });
+      res.status(200).send({ posts, page, pageSize, totalPosts });
     } catch (error) {
       next(error);
     }
