@@ -13,23 +13,23 @@ export const TitleContainer = styled.div`
     padding: 0 30px 35px;
     width: 2300px;
 
-    font-family: 'Roboto';
+    font-family: "Roboto";
     font-style: normal;
     font-weight: 700;
     font-size: 60px;
     line-height: 110%;
     text-align: center;
-    color: #21272A;
+    color: #21272a;
   }
 `;
 
-export const TypeContainer =  styled.div`
+export const TypeContainer = styled.div`
   display: flex;
   justify-content: center;
 
   div {
     width: 2316px;
-    border-bottom: 3px solid #DDE1E6;
+    border-bottom: 3px solid #dde1e6;
   }
 `;
 
@@ -39,7 +39,7 @@ export const TypeButton = styled.button`
   border: none;
   background: none;
 
-  font-family: 'Roboto';
+  font-family: "Roboto";
   font-style: normal;
   font-weight: 700;
   font-size: 28px;
@@ -48,7 +48,7 @@ export const TypeButton = styled.button`
   color: ${(props) => props.fontColor};
 
   &:hover {
-    background: #A6C8FF;
+    background: #a6c8ff;
   }
 `;
 
@@ -57,7 +57,7 @@ export const IndexContainer = styled.div`
   justify-content: center;
   margin-top: 40px;
 
-  font-family: 'Roboto';
+  font-family: "Roboto";
   font-style: normal;
   font-weight: 550;
   font-size: 26px;
@@ -67,7 +67,7 @@ export const IndexContainer = styled.div`
   div {
     display: flex;
     flex-direction: row;
-    background: #F2F4F8;
+    background: #f2f4f8;
 
     p {
       display: flex;
@@ -77,14 +77,24 @@ export const IndexContainer = styled.div`
       height: 40px;
       margin: 0;
       padding: 10px 0;
-      border: 1px solid #DDE1E6;
+      border: 1px solid #dde1e6;
     }
 
-    .index { width: 150px; }
-    .title { width: 1200px;}
-    .author { width: 400px; }
-    .date { width: 400px; }
-    .likeCount { width: 150px; }
+    .index {
+      width: 150px;
+    }
+    .title {
+      width: 1200px;
+    }
+    .author {
+      width: 400px;
+    }
+    .date {
+      width: 400px;
+    }
+    .likeCount {
+      width: 150px;
+    }
   }
 `;
 
@@ -93,18 +103,19 @@ export const ListContainer = styled.div`
   flex-wrap: wrap;
   justify-content: center;
 
-  font-family: 'Roboto';
+  font-family: "Roboto";
   font-style: normal;
   font-size: 26px;
   line-height: 110%;
-  color: #21272A;
+  color: #21272a;
 
   div {
     display: flex;
     flex-direction: row;
     justify-content: center;
 
-    p, a  {
+    p,
+    a {
       display: flex;
       align-items: center;
       justify-content: center;
@@ -112,10 +123,10 @@ export const ListContainer = styled.div`
       height: 40px;
       margin: 0;
       padding: 10px 0;
-      border: 1px solid #DDE1E6;
+      border: 1px solid #dde1e6;
 
       text-decoration: none;
-      color: #21272A;
+      color: #21272a;
 
       &:active {
         position: relative;
@@ -123,11 +134,21 @@ export const ListContainer = styled.div`
       }
     }
 
-    .index { width: 150px; }
-    .title { width: 1200px;}
-    .author { width: 400px; }
-    .date { width: 400px; }
-    .likeCount { width: 150px; }
+    .index {
+      width: 150px;
+    }
+    .title {
+      width: 1200px;
+    }
+    .author {
+      width: 400px;
+    }
+    .date {
+      width: 400px;
+    }
+    .likeCount {
+      width: 150px;
+    }
   }
 `;
 
@@ -148,21 +169,48 @@ export const ButtonContainer = styled.div`
 
       border: none;
       border-radius: 5px;
-      background: #3563E9;
-  
-      font-family: 'Inter';
+      background: #3563e9;
+
+      font-family: "Inter";
       font-style: normal;
       font-weight: 600;
       font-size: 24px;
       line-height: 19px;
       text-align: center;
       letter-spacing: 0.46px;
-      color: #FFFFFF;
-  
+      color: #ffffff;
+
       &:active {
         position: relative;
         top: 3px;
       }
+    }
+  }
+`;
+
+export const SearchContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin: 20px 0; // 상하 여백 조정
+
+  select,
+  input {
+    margin: 0 10px; // 좌우 여백 조정
+    padding: 10px;
+    font-size: 16px;
+  }
+
+  button {
+    padding: 10px;
+    background: #3563e9;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+
+    &:active {
+      position: relative;
+      top: 2px;
     }
   }
 `;

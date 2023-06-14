@@ -41,8 +41,8 @@ export const ROUTE = {
     element: CommunityWrite,
   },
   COMMUNITYDetail: {
-    path: "/community/detail",
-    link: "/community/detail",
+    path: "/community/:postId",
+    link: "/community/:postId",
     element: CommunityDetail,
   },
   COMMUNITY: {
