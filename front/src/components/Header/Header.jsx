@@ -19,7 +19,6 @@ function Header() {
   const { user } = useUserState();
   const navigate = useNavigate();
   const [click, setClick] = useState(false);
-  console.log(click);
 
   if (window.location.pathname === ROUTE.LOGIN.link) {
     return <></>;

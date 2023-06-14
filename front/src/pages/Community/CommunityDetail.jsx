@@ -29,17 +29,17 @@ const CommunityDetail = () => {
   const [likeCount, setLikeCount] = useState(0);
 
   // const getPostInfo = async () => {
-  //   await Api.get(`posts/${postId}`).then((res) => {
-  //     setTitle(res.data.postTitle)
-  //     setAuthor(res.data.userId)
-  //     setContent(res.data.postContent)
-  //     setDate(res.data.createdAt.substr(0, 10))  // 0000-00-00 형식으로 자르기
-  //   })
+  //   await Api.get(ROUTE.COMMUNITYDetail.link).then((res) => {
+  //     setTitle(res.data.postTitle);
+  //     setAuthor(res.data.userId);
+  //     setContent(res.data.postContent);
+  //     setDate(res.data.createdAt.substr(0, 10)); // 0000-00-00 형식으로 자르기
+  //   });
   // };
 
   // const getLikeCount = async () => {
   //   await Api.get(`like/${postId}`).then((res) => setFollowers(res.data));
-  //   setLikeCount(followers.length)
+  //   setLikeCount(followers.length);
   // };
 
   // useEffect(() => {

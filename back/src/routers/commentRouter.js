@@ -19,19 +19,17 @@ commentRouter.get(
   })
 );
 
-// 특정 댓글 조회
-commentRouter.get(
-  "/:postId/comments/:commentId",
-  wrapper(async (req, res, next) => {
-    try {
-      const commentId = req.params.commentId;
-      const comment = await commentService.getOneComment({ commentId });
-      res.status(200).send(comment);
-    } catch (error) {
-      next(error);
-    }
-  })
-);
+// // 특정 댓글 조회
+// commentRouter.get('/comment/:commentId', wrapper(async(req, res, next)=>{
+//     try{
+//         const commentId = req.params.commentId;
+//         const comment = await commentService.getOneComment({commentId});
+//         res.status(200).send(comment);
+//     }
+//     catch(error){
+//         next(error);
+//     }
+// }))
 
 // 해당 게시글의 댓글 추가
 commentRouter.post(
@@ -48,8 +46,7 @@ commentRouter.post(
           "이 게시글은 존재하지 않습니다. 다시 한 번 확인해주세요."
         );
       }
-      console.log("userId", userId);
-      console.log("postId", postId);
+
       const commentContent = req.body.commentContent;
       if (!commentContent) {
         throw new Error("댓글을 작성해주세요.");
@@ -68,7 +65,7 @@ commentRouter.post(
 );
 
 // 댓글 삭제
-commentRouter.delete(
+commentRouter.post(
   "/:postId/comments/:commentId",
   login_required,
   wrapper(async (req, res, next) => {

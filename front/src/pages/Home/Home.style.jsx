@@ -7,12 +7,6 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-width: 300px;
-
-  @media (max-width: 800px) {
-    flex-direction: row;
-    justify-content: center;
-  }
 `;
 
 export const ChartContainer = styled.div`
@@ -66,13 +60,8 @@ export const Description = styled.div`
   margin-right: auto;
   font-size: 16px;
   line-height: 1.5;
-  text-align: left;
+  text-align: center;
   margin-top: 20px;
   margin-bottom: 20px;
   padding: 10px;
-  min-width: 300px;
-  @media (max-width: 800px) {
-    flex-direction: row;
-    justify-content: center;
-  }
 `;

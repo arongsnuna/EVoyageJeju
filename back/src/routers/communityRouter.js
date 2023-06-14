@@ -31,12 +31,13 @@ const upload = multer({ storage: storage });
 communityRouter.get(
   "",
   wrapper(async (req, res, next) => {
+    const page = Number(req.query.page) || 1; // 요청한 페이지 번호
+    const pageSize = Number(req.query.pageSize) || 10; // 페이지 크기
     try {
-      const page = req.query.page || 1; // 요청한 페이지 번호
-      const pageSize = req.query.pageSize || 10; // 페이지 크기
-
       const posts = await communityService.getPosts({ page, pageSize });
-      res.status(200).send(posts);
+      const totalPosts = await communityService.getEntireCount();
+      console.log(users);
+      res.status(200).send({ posts, users, page, pageSize, totalPosts });
     } catch (error) {
       next(error);
     }
