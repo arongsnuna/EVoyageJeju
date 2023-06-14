@@ -9,7 +9,7 @@ function Comment({ postId, userId }) {
   useEffect(() => {
     const fetchComments = async () => {
       try {
-        const response = await Api.get(`/community/${postId}/comments`);
+        const response = await Api.get(`community/${postId}/comments`);
         setComments(response.data);
       } catch (error) {
         console.log("댓글을 가져오지 못했습니다:", error);
@@ -26,7 +26,7 @@ function Comment({ postId, userId }) {
     };
 
     try {
-      const response = await Api.post(`/community/${postId}/comments`, comment);
+      const response = await Api.post(`community/${postId}/comments`, comment);
 
       setComments((prevComments) => [...prevComments, response.data]);
 
@@ -42,7 +42,7 @@ function Comment({ postId, userId }) {
   const handleEditComment = async (commentId, newContent) => {
     try {
       const response = await Api.put(
-        `/community/${postId}/comments/${commentId}`,
+        `community/${postId}/comments/${commentId}`,
         { commentContent: newContent }
       );
       setComments(
@@ -58,7 +58,7 @@ function Comment({ postId, userId }) {
   // 댓글 삭제
   const handleDeleteComment = async (commentId) => {
     try {
-      await Api.delete(`/community/${postId}/comments/${commentId}`);
+      await Api.delete(`community/${postId}/comments/${commentId}`);
       setComments(comments.filter((comment) => comment.id !== commentId));
     } catch (error) {
       console.error("댓글을 삭제하는데 실패했습니다:", error);
@@ -67,6 +67,16 @@ function Comment({ postId, userId }) {
 
   return (
     <Container>
+      <ButtonContainer>
+        <div>
+          <input
+            type="text"
+            value={newComment}
+            onChange={(e) => setNewComment(e.target.value)}
+          />
+          <button onClick={handleAddComment}>등록</button>
+        </div>
+      </ButtonContainer>
       {comments.map((comment) => (
         <ButtonContainer>
           <div key={comment.id}>
@@ -88,14 +98,6 @@ function Comment({ postId, userId }) {
           </div>
         </ButtonContainer>
       ))}
-      <ButtonContainer>
-        <input
-          type="text"
-          value={newComment}
-          onChange={(e) => setNewComment(e.target.value)}
-        />
-        <button onClick={handleAddComment}>등록</button>
-      </ButtonContainer>
     </Container>
   );
 }

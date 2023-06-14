@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ROUTE } from "../../routes";
+import Comment from "./Comment";
 import {
   Container,
   TitleContainer,
@@ -31,7 +32,7 @@ const CommunityDetail = () => {
   // 해당 postId의 게시물 정보 불러오기
   const getPostInfo = async () => {
     try {
-      const res1 = await Api.get(`posts/${postId}`);
+      const res1 = await Api.get(`community/${postId}`);
       const userIdOrigin = res1.data.userId;
       const res2 = await Api.get(`users/${userIdOrigin}`);
       setTitle(res1.data.postTitle);
@@ -131,6 +132,7 @@ const CommunityDetail = () => {
           <div>{content}</div>
         </div>
       </ContentContainer>
+      <Comment postId={postId} userId={user.userId} />
       <ButtonContainer>
         <div>
           <button

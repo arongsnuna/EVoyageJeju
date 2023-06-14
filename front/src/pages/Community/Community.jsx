@@ -39,7 +39,7 @@ const Community = () => {
       console.log("updateCommunity res", res);
       const dataWithAuthor = await Promise.all(
         res.data.map(async (post) => {
-          const userRes = await Api.get(`users/${post.data.userId}`);
+          const userRes = await Api.get(`users/${post.userId}`);
           // const likeRes = await Api.get(`like/${post.postId}`);
           return { ...post, author: userRes.data.userNickname };
         })

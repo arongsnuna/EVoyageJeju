@@ -38,7 +38,7 @@ communityRouter.get(
 
       console.log("커뮤니티 라우터 page :", page);
       console.log("커뮤니티 라우터 pageSize :", pageSize);
-      console.log("커뮤니티 라우터 posts :", posts);
+
       res.status(200).send(posts);
     } catch (error) {
       next(error);
