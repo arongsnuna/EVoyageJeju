@@ -13,8 +13,9 @@ import * as Api from "../../api";
 
 const CommunityWrite = () => {
   const navigate = useNavigate();
-  const [title, setTitle] = useState("뚜룹");
+  const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [type, setType] = useState("");
 
   const handleSave = async (e) => {
     e.preventDefault();
@@ -23,11 +24,13 @@ const CommunityWrite = () => {
       await Api.post("posts", {
         postTitle: title,
         postContent: content,
-        postType: "여행",
+        postType: type,
       });
+      await Api.get(`posts`);
     } catch (err) {
       console.log(err);
     }
+    // navigate(`/community/${}`);
     navigate(ROUTE.COMMUNITYDetail.link);
   };
 
@@ -40,12 +43,12 @@ const CommunityWrite = () => {
         <RadioContainer>
           <p>유형</p>
           <div>
-            <input type="radio" value="electricCar" name="tab" />
-            <label>전기차탭</label>
+            <input type="radio" onChange={() => setType("전기차")} />
+            <label>전기차</label>
           </div>
           <div>
-            <input type="radio" value="travel" name="tab" />
-            <label>여행탭</label>
+            <input type="radio" onChange={() => setType("여행")} />
+            <label>여행</label>
           </div>
         </RadioContainer>
         <ContentContainer>
@@ -66,8 +69,15 @@ const CommunityWrite = () => {
           </div>
         </ContentContainer>
         <ButtonContainer>
-          <button onClick={() => navigate(ROUTE.COMMUNITY.link)}>목록</button>
-          <button onClick={handleSave}>저장</button>
+          <button
+            className="tolist"
+            onClick={() => navigate(ROUTE.COMMUNITY.link)}
+          >
+            목록
+          </button>
+          <button className="save" onClick={handleSave}>
+            저장
+          </button>
         </ButtonContainer>
       </InputContainer>
     </Container>

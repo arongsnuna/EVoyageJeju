@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useParams } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ROUTE } from "../../routes";
+import Comment from "./Comment";
 import {
   Container,
   TitleContainer,
@@ -16,7 +17,8 @@ const CommunityDetail = () => {
   // const location = useLocation();
   const navigate = useNavigate();
   const { user } = useUserState();
-
+  const { postId } = useParams();
+  const userId = user;
   // const { title = '제목입니다', author = '제주도전기차', date = '2023-05-06', content = '내용입니다', likeCount = 0 } = location.state || {};
   // postId에 해당하는 게시글 정보
   const [title, setTitle] = useState("");
@@ -28,24 +30,24 @@ const CommunityDetail = () => {
   // 좋아요를 누른 userId 수(length) 저장
   const [likeCount, setLikeCount] = useState(0);
 
-  // const getPostInfo = async () => {
-  //   await Api.get(ROUTE.COMMUNITYDetail.link).then((res) => {
-  //     setTitle(res.data.postTitle);
-  //     setAuthor(res.data.userId);
-  //     setContent(res.data.postContent);
-  //     setDate(res.data.createdAt.substr(0, 10)); // 0000-00-00 형식으로 자르기
-  //   });
-  // };
+  const getPostInfo = async () => {
+    await Api.get(ROUTE.COMMUNITYDetail.link).then((res) => {
+      setTitle(res.data.postTitle);
+      setAuthor(res.data.userId);
+      setContent(res.data.postContent);
+      setDate(res.data.createdAt.substr(0, 10)); // 0000-00-00 형식으로 자르기
+    });
+  };
 
   // const getLikeCount = async () => {
   //   await Api.get(`like/${postId}`).then((res) => setFollowers(res.data));
   //   setLikeCount(followers.length);
   // };
 
-  // useEffect(() => {
-  //   getPostInfo();
-  //   getLikeCount();
-  // }, []);
+  useEffect(() => {
+    getPostInfo();
+    //   getLikeCount();
+  }, []);
 
   const handleEdit = () => {
     // 수정 기능 구현
@@ -125,6 +127,7 @@ const CommunityDetail = () => {
           <div>{content}</div>
         </div>
       </ContentContainer>
+      <Comment postId={postId} userId={userId} />
       <ButtonContainer>
         <div>
           <button onClick={() => navigate(ROUTE.COMMUNITY.link)}>목록</button>

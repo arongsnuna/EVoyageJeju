@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Container, ButtonContainer } from "./Comment.style";
 import * as Api from "../../api";
 
 function Comment({ postId, userId }) {
@@ -65,33 +66,37 @@ function Comment({ postId, userId }) {
   };
 
   return (
-    <div>
+    <Container>
       {comments.map((comment) => (
-        <div key={comment.id}>
-          <h3>{comment.author}</h3>
-          <p>{comment.text}</p>
-          <p>{comment.date}</p>
-          {userId === comment.userId && (
-            <>
-              <button onClick={() => handleEditComment(comment.id, newComment)}>
-                수정
-              </button>
-              <button onClick={() => handleDeleteComment(comment.id)}>
-                삭제
-              </button>
-            </>
-          )}
-        </div>
+        <ButtonContainer>
+          <div key={comment.id}>
+            <h3>{comment.author}</h3>
+            <p>{comment.text}</p>
+            <p>{comment.date}</p>
+            {userId === comment.userId && (
+              <>
+                <button
+                  onClick={() => handleEditComment(comment.id, newComment)}
+                >
+                  수정
+                </button>
+                <button onClick={() => handleDeleteComment(comment.id)}>
+                  삭제
+                </button>
+              </>
+            )}
+          </div>
+        </ButtonContainer>
       ))}
-      <div>
+      <ButtonContainer>
         <input
           type="text"
           value={newComment}
           onChange={(e) => setNewComment(e.target.value)}
         />
         <button onClick={handleAddComment}>등록</button>
-      </div>
-    </div>
+      </ButtonContainer>
+    </Container>
   );
 }
 
