@@ -51,8 +51,8 @@ export const ROUTE = {
     element: Community,
   },
   COMMUNITYEdit: {
-    path: "/community/edit",
-    link: "/community/edit",
+    path: "/community/:postId/edit",
+    link: "/community/:postId/edit",
     element: CommunityEdit,
   },
   CHARGER: {

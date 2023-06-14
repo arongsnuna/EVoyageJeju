@@ -176,5 +176,16 @@ export const ButtonContainer = styled.div`
         color: #FFFFFF;
       }
     }
+    
+    .tolist {
+      border: 1px solid #15BE51;
+      background: #FFFFFF;
+      color: #15BE51;
+  
+      &:hover {
+        background: #15BE51;
+        color: #FFFFFF;
+      }
+    }
   }
 `;

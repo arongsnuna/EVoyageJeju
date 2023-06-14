@@ -18,6 +18,8 @@ const Community = () => {
   const [travel, setTravel] = useState([]);
   const [elec, setElec] = useState([]);
 
+  const likeCount = 0;
+
   const updateCommunity = async () => {
     try {
       const res = await Api.get('posts');
@@ -37,8 +39,6 @@ const Community = () => {
   useEffect(() => {
     updateCommunity();
   }, []);
-
-  const likeCount = 0;
 
   const handleTravelTab = async () => {
     const travelList = posts.filter((post) => post.postType === '여행')
@@ -62,12 +62,12 @@ const Community = () => {
           <TypeButton 
             fontColor='#21272A'
             onClick={handleTravelTab}
-          >여행탭
+          >여행
           </TypeButton>
           <TypeButton
             fontColor='#3563E9'
             onClick={handleElecTab}
-          >전기차탭
+          >전기차
           </TypeButton>
         </div>
       </TypeContainer>

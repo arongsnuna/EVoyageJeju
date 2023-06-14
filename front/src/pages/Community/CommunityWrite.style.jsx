@@ -52,6 +52,7 @@ export const RadioContainer = styled.div`
 
     border: 1px solid #3563E9;
     border-radius: 5px;
+    background: #3563E9;
 
     font-family: 'Inter';
     font-style: normal;
@@ -60,7 +61,7 @@ export const RadioContainer = styled.div`
     line-height: 17px;
     text-align: center;
     letter-spacing: 0.46px;
-    color: #3563E9;
+    color: #FFFFFF;
   }
 
   div {
@@ -112,6 +113,7 @@ export const ContentContainer = styled.div`
   
       border: 1px solid #3563E9;
       border-radius: 5px;
+      background: #3563E9;
   
       font-family: 'Inter';
       font-style: normal;
@@ -120,7 +122,7 @@ export const ContentContainer = styled.div`
       line-height: 17px;
       text-align: center;
       letter-spacing: 0.46px;
-      color: #3563E9;
+      color: #FFFFFF;
     }
 
     input, textarea {
@@ -156,9 +158,9 @@ export const ButtonContainer = styled.div`
     height: 50px;
 
     margin-left: 15px;
-    border: none;
+    border: 1px solid #3563E9;
     border-radius: 5px;
-    background: #3563E9;
+    background: #FFFFFF;
 
     font-family: 'Inter';
     font-style: normal;
@@ -167,11 +169,27 @@ export const ButtonContainer = styled.div`
     line-height: 19px;
     text-align: center;
     letter-spacing: 0.46px;
-    color: #FFFFFF;
+    color: #3563E9;
+
+    &:hover {
+      background: #3563E9;
+      color: #FFFFFF;
+    }
 
     &:active {
       position: relative;
       top: 2px;
+    }
+  }
+
+  .tolist {
+    border: 1px solid #15BE51;
+    background: #FFFFFF;
+    color: #15BE51;
+
+    &:hover {
+      background: #15BE51;
+      color: #FFFFFF;
     }
   }
 `;
