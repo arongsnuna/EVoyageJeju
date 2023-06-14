@@ -34,8 +34,11 @@ communityRouter.get(
     try {
       const page = req.query.page || 1; // 요청한 페이지 번호
       const pageSize = req.query.pageSize || 10; // 페이지 크기
-
       const posts = await communityService.getPosts({ page, pageSize });
+
+      console.log("커뮤니티 라우터 page :", page);
+      console.log("커뮤니티 라우터 pageSize :", pageSize);
+      console.log("커뮤니티 라우터 posts :", posts);
       res.status(200).send(posts);
     } catch (error) {
       next(error);
