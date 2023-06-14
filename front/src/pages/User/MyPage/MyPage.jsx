@@ -10,13 +10,12 @@ function MyPage() {
   const imgRef = useRef();
 
   const [currentUser, setCurrentUser] = useState(user);
-  console.log(currentUser)
   const { userName, userNickname, userId, userPassword, userImage } = currentUser;
   
   // 프로필 이미지 변경을 위한 state
   const [profileImage, setProfileImage] = useState(userImage);
   const [previewPhoto, setPreviewPhoto] = useState('');
-  console.log(profileImage)
+  // console.log(profileImage)
   
   // useEffect(() => {
   //     Api.get(`users/${user.userId}`).then((res) => setCurrentUser(res.data))
@@ -34,12 +33,12 @@ function MyPage() {
     e.preventDefault();
     try {
       const formData = new FormData();
-      formData.append('userImage', profileImage);
+      formData.append('uploadImage', profileImage);
       formData.append('userNickname', user.userNickname);
       formData.append('userPassword', user.userPassword);
       formData.append('confirmPassword', user.userPassword);
-      console.log(formData)
-
+      console.log(formData.get('uploadImage'))
+      alert("값 넣었다!")
       const res = await Api.put(`users/${user.userId}`, formData);
       alert('성공')
       const updatedUser = res.data;
@@ -68,7 +67,7 @@ function MyPage() {
       </TitleContainer>
       <FormContainer>
         <fieldset>
-          <FormPhotoDiv onSubmit={handleSubmit}>
+          <FormPhotoDiv>
             <legend>Profile Photo</legend>
             <div>
               <FormPhotoContent>
@@ -85,7 +84,7 @@ function MyPage() {
                     onChange={saveImgFile}
                     ref={imgRef}
                   />
-                  <button type="submit">저장</button>
+                  <button onClick={handleSubmit}>저장</button>
                 </div>
               </FormPhotoContent>
               <FormPhotoInfo>
