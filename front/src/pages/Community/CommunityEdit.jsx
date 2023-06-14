@@ -40,6 +40,7 @@ const CommunityEdit = () => {
       navigate(`/community/${newPostId}`);
     } catch (err) {
       console.log(err)
+      alert(err.response.data)
     }
   };
 

@@ -85,8 +85,9 @@ export const IndexContainer = styled.div`
     }
 
     .index { width: 150px; }
-    .title { width: 1200px;}
+    .title { width: 1000px;}
     .author { width: 400px; }
+    .type { width: 200px; }
     .date { width: 400px; }
     .likeCount { width: 150px; }
   }
@@ -128,8 +129,9 @@ export const ListContainer = styled.div`
     }
 
     .index { width: 150px; }
-    .title { width: 1200px;}
+    .title { width: 1000px;}
     .author { width: 400px; }
+    .type { width: 200px; }
     .date { width: 400px; }
     .likeCount { width: 150px; }
   }

@@ -101,14 +101,16 @@ const CommunityDetail = () => {
           <div>{title}</div>
         </div>
         <div className='posting-infobox'>
+          <div className='info'>번호</div>
+          <div className='index'>{postId}</div>
           <div className='info'>구분</div>
-          <div>{type}</div>
+          <div className='type'>{type}</div>
           <div className='info'>글쓴이</div>
-          <div>{author}</div>
+          <div className='author'>{author}</div>
           <div className='info'>등록일</div>
-          <div>{date}</div> 
+          <div className='date'>{date}</div> 
           <div className='info'>좋아요 수</div>
-          <div>{likeCount}</div>
+          <div className='likeCount'>{likeCount}</div>
         </div>
         <div className='content-box'>
           <div>{content}</div>

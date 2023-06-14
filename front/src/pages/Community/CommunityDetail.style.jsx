@@ -93,12 +93,16 @@ export const ContentContainer = styled.div`
     div {
       justify-content: center;
       height: 60px;
-      width: 16.67%;
       text-align: center;
     }
-
-    .info {
-      background: #f2f2f2;
+    .index { width: 150px; }
+    .type { width: 200px; }
+    .author { width: 400px; }
+    .date { width: 400px; }
+    .likeCount { width: 150px; }
+    .info { 
+      width: 200px;
+      background: #f2f2f2; 
     }
   }
 
@@ -107,6 +111,7 @@ export const ContentContainer = styled.div`
     div {
       align-items: start;
       padding: 40px 30px;
+      background: #F9F8F3;
 
       width: 100%;
       height: 800px;
