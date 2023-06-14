@@ -1,28 +1,65 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import EditNickName from '../../../components/MyPage/EditNickName';
 import EditPassword from '../../../components/MyPage/EditPassword';
 import { useUserState } from "../../../UserContext";
-import { TitleContainer, FormContainer, FormPhotoDiv, FormUserDiv, ButtonContainer, EditCompletedText } from "./Mypage.style";
+import * as Api from '../../../utils/api';
+import { TitleContainer, FormContainer, FormPhotoDiv, FormPhotoContent, FormPhotoInfo, FormUserDiv, ButtonContainer, EditCompletedText } from "./Mypage.style";
 
 function MyPage() {
   const { user } = useUserState();
-  const { userName, userNickname, userId, userPassword } = user;
+  const imgRef = useRef();
+
+  const [currentUser, setCurrentUser] = useState(user);
+  console.log(currentUser)
+  const { userName, userNickname, userId, userPassword, userImage } = currentUser;
   
-  const [Photo, setPhoto] = useState(null);
-  const [nickname, setNickName] = useState(userNickname);
-  const [password, setPassword] = useState(userPassword);
+  // 프로필 이미지 변경을 위한 state
+  const [profileImage, setProfileImage] = useState(userImage);
+  const [previewPhoto, setPreviewPhoto] = useState('');
+  console.log(profileImage)
+  
+  // useEffect(() => {
+  //     Api.get(`users/${user.userId}`).then((res) => setCurrentUser(res.data))
+  // }, [user.userId])
 
   // EditForm 활성화를 위한 state
-  const [isEditingNickName, setIsEditingNickName] = useState(false);
-  const [isEditingPassword, setIsEditingPassword] = useState(false);
+  const [isEditableNickName, setIsEditableNickName] = useState(false);
+  const [isEditablePassword, setIsEditablePassword] = useState(false);
 
   // 수정 완료 알림을 위한 state
   const [editComplete, setEditComplete] = useState(false);
 
+  // 이미지 업로드 버튼 함수
   const handleSubmit = async (e) => {
     e.preventDefault();
+    try {
+      const formData = new FormData();
+      formData.append('userImage', profileImage);
+      formData.append('userNickname', user.userNickname);
+      formData.append('userPassword', user.userPassword);
+      formData.append('confirmPassword', user.userPassword);
+      console.log(formData)
 
+      const res = await Api.put(`users/${user.userId}`, formData);
+      alert('성공')
+      const updatedUser = res.data;
+      setCurrentUser(updatedUser)
+    } catch (err) {
+      alert("실패")
+    }
+    console.log(currentUser)
   }
+
+  // 업로드된 이미지 파일 state 저장, 이미지 미리보기
+  const saveImgFile = (e) => {
+    setProfileImage(e.target.files[0])
+
+    const reader = new FileReader();
+    reader.readAsDataURL(e.target.files[0]);
+    reader.onloadend = () => {
+      setPreviewPhoto(reader.result);
+    };
+  };
 
   return (
     <>
@@ -31,24 +68,38 @@ function MyPage() {
       </TitleContainer>
       <FormContainer>
         <fieldset>
-          <FormPhotoDiv>
+          <FormPhotoDiv onSubmit={handleSubmit}>
             <legend>Profile Photo</legend>
             <div>
-              <img src={Photo} />
-              <input 
-                type='file'
-                accept='Photo/*'
-                name='profilePicture'
-              />
-              <button>remove</button>
-            </div>
-            <div>
-              <p>Photo requirements:</p>
-              <ol>
-                <li>Min. 400px x 400px</li>
-                <li>Max. 2MB</li>
-                <li>Your Face or Company Logo</li>
-              </ol>
+              <FormPhotoContent>
+                <div className="profilebox">
+                  <img src={previewPhoto} />
+                </div>
+                <div className="buttonbox">
+                  <label htmlFor='input-file'>Upload Phote</label>
+                  <input 
+                    id='input-file'
+                    type='file'
+                    accept='Photo/*'
+                    name='profilePicture'
+                    onChange={saveImgFile}
+                    ref={imgRef}
+                  />
+                  <button type="submit">저장</button>
+                </div>
+              </FormPhotoContent>
+              <FormPhotoInfo>
+                <div>
+                  <p>Photo requirements:</p>
+                </div>
+                <div>
+                  <ol>
+                    <li>Min. 400px x 400px</li>
+                    <li>Max. 2MB</li>
+                    <li>Your Face or Company Logo</li>
+                  </ol>
+                </div>
+              </FormPhotoInfo>
             </div>
           </FormPhotoDiv>
           <FormUserDiv>
@@ -60,17 +111,17 @@ function MyPage() {
 
             <div>
               <label>별명</label>
-              {isEditingNickName ? (
+              {isEditableNickName ? (
                 <EditNickName
-                  currentNickName={nickname}
-                  setIsEditingNickName={setIsEditingNickName}
+                  currentNickName={userNickname}
+                  setIsEditableNickName={setIsEditableNickName}
                   setEditComplete={setEditComplete}
                 />
               ) : (
                 <>
-                  <p>{nickname}</p>
+                  <p>{userNickname}</p>
                   <button 
-                    onClick={() => setIsEditingNickName(true)}
+                    onClick={() => setIsEditableNickName(true)}
                   >수정</button>
                 </>
               )}
@@ -83,17 +134,17 @@ function MyPage() {
 
             <div>
               <label>Password</label>
-              {isEditingPassword ? (
+              {isEditablePassword ? (
                 <EditPassword
-                  currentPassword={password}
-                  setIsEditingPassword={setIsEditingPassword}
+                  currentPassword={userPassword}
+                  setIsEditablePassword={setIsEditablePassword}
                   setEditComplete={setEditComplete}
                 />
               ) : (
                 <>
-                  <p>{password}</p>
+                  <p>{userPassword}</p>
                   <button
-                    onClick={() => setIsEditingPassword(true)}
+                    onClick={() => setIsEditablePassword(true)}
                   >수정</button>
                 </>
               )}
@@ -107,11 +158,11 @@ function MyPage() {
             </ButtonContainer>
           </FormUserDiv>
         </fieldset>
-        {editComplete && 
+        {editComplete ? (
           <EditCompletedText> 
             <p><strong>Successfully Saved.</strong> Your profile settings have been saved.</p>
           </EditCompletedText>
-        }
+        ) : null }
       </FormContainer>
     </>
   );

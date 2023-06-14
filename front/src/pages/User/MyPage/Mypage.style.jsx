@@ -51,6 +51,9 @@ export const FormContainer = styled.form`
 `;
 
 export const FormPhotoDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+
   border: 1px solid #DDE1E6;
   margin-bottom: 20px;
   padding: 35px 50px;
@@ -58,6 +61,47 @@ export const FormPhotoDiv = styled.div`
   div {
     display: flex;
     flex-direction: row;
+  }
+`;
+
+export const FormPhotoContent = styled.form`
+  width: 50%;
+  
+  .profilebox {
+    width: 250px;
+    height: 250px; 
+    border-radius: 70%;
+    overflow: hidden;
+    background: blue;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .buttonbox {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    label {
+      cursor: pointer;
+      border: 1px solid black;
+      text-align: center;
+    }
+
+    input { display: none; }
+  }
+
+`;
+
+export const FormPhotoInfo = styled.div`
+  width: 50%;
+  div {
+    display: flex;
+    flex-direction: column;
   }
 `;
 
