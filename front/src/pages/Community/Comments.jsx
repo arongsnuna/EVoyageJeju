@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Container, ButtonContainer } from "./Comment.style";
+import { Container, ButtonContainer } from "./Comments.style";
 import * as Api from "../../api";
 
-function Comment({ postId, userId }) {
+function Comments({ postId, userId }) {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
   const [editingCommentId, setEditingCommentId] = useState(null);
@@ -113,4 +113,4 @@ function Comment({ postId, userId }) {
   );
 }
 
-export default Comment;
+export default Comments;

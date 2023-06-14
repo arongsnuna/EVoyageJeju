@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ROUTE } from "../../routes";
+import Comments from "./Comments";
 import {
   Container,
   TitleContainer,
@@ -123,7 +124,7 @@ const CommunityDetail = () => {
           <div>{content}</div>
         </div>
       </ContentContainer>
-      <Comment postId={postId} userId={user.userId} />
+      <Comments postId={postId} userId={user.userId} />
       <ButtonContainer>
         <div>
           <button
