@@ -39,15 +39,17 @@ commentRouter.post(
     try {
       const userId = req.currentUserId;
       const postId = req.params.postId;
-
+      console.log("userId", userId);
+      console.log("postId", postId);
       const postFound = await communityService.getOnePost({ postId });
       if (!postFound) {
         throw new Error(
           "이 게시글은 존재하지 않습니다. 다시 한 번 확인해주세요."
         );
       }
-
+      console.log("postFound", postFound);
       const commentContent = req.body.commentContent;
+      console.log("commentContent", commentContent);
       if (!commentContent) {
         throw new Error("댓글을 작성해주세요.");
       }

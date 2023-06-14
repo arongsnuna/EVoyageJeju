@@ -25,7 +25,7 @@ function Comments({ postId, userId }) {
   const handleAddComment = async () => {
     try {
       const response = await Api.post(`community/${postId}/comments`, {
-        content: newComment,
+        commentContent: newComment,
       });
 
       setComments([...comments, response.data]);
@@ -36,16 +36,16 @@ function Comments({ postId, userId }) {
   };
 
   // 댓글 수정
-  const handleEditComment = async (commentId, content) => {
+  const handleEditComment = async (commentId, commentContent) => {
     try {
       const response = await Api.put(
         `community/${postId}/comments/${commentId}`,
-        { content }
+        { commentContent }
       );
       setComments(
         comments.map((comment) =>
           comment.id === commentId
-            ? { ...comment, content: response.data.content }
+            ? { ...comment, commentContent: response.data.commentContent }
             : comment
         )
       );
@@ -69,7 +69,7 @@ function Comments({ postId, userId }) {
 
   return (
     <div>
-      <h2>Comments</h2>
+      <h2>댓글창</h2>
       {comments.map((comment) => (
         <div key={comment.id}>
           {editingCommentId === comment.id ? (
@@ -79,21 +79,21 @@ function Comments({ postId, userId }) {
               onChange={(e) => setNewComment(e.target.value)}
             />
           ) : (
-            <p>{comment.content}</p>
+            <p>{comment.commentContent}</p>
           )}
 
           {comment.userId === userId && (
             <>
               <button onClick={() => setEditingCommentId(comment.id)}>
-                Edit
+                수정
               </button>
               <button onClick={() => handleDeleteComment(comment.id)}>
-                Delete
+                삭제
               </button>
 
               {editingCommentId === comment.id && (
                 <button onClick={() => handleEditComment(comment.id)}>
-                  Submit Edit
+                  수정 완료
                 </button>
               )}
             </>
@@ -107,7 +107,7 @@ function Comments({ postId, userId }) {
           value={newComment}
           onChange={(e) => setNewComment(e.target.value)}
         />
-        <button onClick={handleAddComment}>Add comment</button>
+        <button onClick={handleAddComment}>등록</button>
       </div>
     </div>
   );
