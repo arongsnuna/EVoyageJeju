@@ -18,24 +18,25 @@ import { ROUTE } from "../../routes";
 const Community = () => {
   const navigate = useNavigate();
   const { user } = useUserState();
-
-  const [activeTab, setActiveTab] = useState(false);
+  // 전체 || (여행&전기차) 구분을 위한 state
+  const [activeTab, setActiveTab] = useState(true);
+  // 여행 || 전기차 구분을 위한 state
+  const [activeSpecificTab, setActiveSpecificTab] = useState(false);
   // 전체 조회한 post 저장
   const [posts, setPosts] = useState([]);
-  // 작성자(닉네임) 조회 후 저장
-  const [authors, setAuthors] = useState([]);
   // 탭 전환 시 postType에 맞게 post 저장
   const [travel, setTravel] = useState([]);
   const [elec, setElec] = useState([]);
-  const [page, setPage] = useState([]);
-  const pageSize = 10;
 
   const likeCount = 0;
+
+  const [page, setPage] = useState(1);
+  const pageSize = 10;
 
   const updateCommunity = async () => {
     try {
       console.log("updateCommunity 안입니다");
-      const res = await Api.get(`community`); // ?page=${page}&pageSize=${pageSize}
+      const res = await Api.get(`community?page=${page}&pageSize=${pageSize}`); //
       console.log("updateCommunity res", res);
       const dataWithAuthor = await Promise.all(
         res.data.map(async (post) => {
@@ -52,17 +53,23 @@ const Community = () => {
 
   useEffect(() => {
     updateCommunity();
-  }, []);
+  }, [activeTab, activeSpecificTab]);
+
+  const handleAllTab = () => {
+    setActiveTab(true);
+  };
 
   const handleTravelTab = async () => {
     const travelList = posts.filter((post) => post.postType === "여행");
     setActiveTab(false);
+    setActiveSpecificTab(false);
     setTravel(travelList);
   };
 
   const handleElecTab = async () => {
     const elecList = posts.filter((post) => post.postType === "전기차");
-    setActiveTab(true);
+    setActiveTab(false);
+    setActiveSpecificTab(true);
     setElec(elecList);
   };
 
@@ -78,10 +85,20 @@ const Community = () => {
       </TitleContainer>
       <TypeContainer>
         <div>
-          <TypeButton fontColor="#21272A" onClick={handleTravelTab}>
+          <TypeButton disabled={activeTab} onClick={handleAllTab}>
+            전체
+          </TypeButton>
+
+          <TypeButton
+            disabled={!activeTab && activeSpecificTab === false}
+            onClick={handleTravelTab}
+          >
             여행
           </TypeButton>
-          <TypeButton fontColor="#3563E9" onClick={handleElecTab}>
+          <TypeButton
+            disabled={!activeTab && activeSpecificTab === true}
+            onClick={handleElecTab}
+          >
             전기차
           </TypeButton>
         </div>
@@ -92,22 +109,34 @@ const Community = () => {
             <p className="index">글 번호</p>
             <p className="title">제목</p>
             <p className="author">글쓴이</p>
+            <p className="type">구분</p>
             <p className="date">등록일</p>
             <p className="likeCount">좋아요</p>
           </div>
         </IndexContainer>
         <ListContainer>
-          {activeTab
+          {activeTab &&
+            posts.map((post) => (
+              <div key={post.id}>
+                <p className="index">{post.postId}</p>
+                <Link to={`/community/${post.postId}`} className="title">
+                  {post.postTitle}
+                </Link>
+                <p className="author">{post.author}</p>
+                <p className="type">{post.postType}</p>
+                <p className="date">{post.createdAt.substr(0, 10)}</p>
+                <p className="likeCount">{likeCount}</p>
+              </div>
+            ))}
+          {activeSpecificTab
             ? elec.map((post) => (
                 <div key={post.id}>
                   <p className="index">{post.postId}</p>
                   <Link to={`/community/${post.postId}`} className="title">
                     {post.postTitle}
                   </Link>
-                  {authors.map((author) => {
-                    <p className="author">{author.userNickname}</p>;
-                  })}
                   <p className="author">{post.author}</p>
+                  <p className="type">{post.postType}</p>
                   <p className="date">{post.createdAt.substr(0, 10)}</p>
                   <p className="likeCount">{likeCount}</p>
                 </div>
@@ -118,10 +147,8 @@ const Community = () => {
                   <Link to={`/community/${post.postId}`} className="title">
                     {post.postTitle}
                   </Link>
-                  {authors.map((author) => {
-                    <p className="author">{author.userNickname}</p>;
-                  })}
                   <p className="author">{post.author}</p>
+                  <p className="type">{post.postType}</p>
                   <p className="date">{post.createdAt.substr(0, 10)}</p>
                   <p className="likeCount">{likeCount}</p>
                 </div>

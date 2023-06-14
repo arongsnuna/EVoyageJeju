@@ -65,7 +65,7 @@ commentRouter.post(
 );
 
 // 댓글 삭제
-commentRouter.post(
+commentRouter.delete(
   "/:postId/comments/:commentId",
   login_required,
   wrapper(async (req, res, next) => {

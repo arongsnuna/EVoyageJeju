@@ -32,8 +32,12 @@ communityRouter.get(
   "",
   wrapper(async (req, res, next) => {
     try {
-      const page = req.query.page || 1; // 요청한 페이지 번호
-      const pageSize = req.query.pageSize || 10; // 페이지 크기
+      const page = typeof req.query.page === "number" ? req.query.page : 1; // 요청한 페이지 번호
+      const pageSize =
+        typeof req.query.pageSize === "number" ? req.query.pageSize : 10; // 페이지 크기
+
+      console.log("page", typeof page);
+      console.log("pageSize", typeof pageSize);
       const posts = await communityService.getPosts({ page, pageSize });
 
       console.log("커뮤니티 라우터 page :", page);
@@ -124,7 +128,7 @@ communityRouter.get(
 );
 
 // 글 삭제하기
-communityRouter.post(
+communityRouter.delete(
   "/:postId",
   login_required,
   wrapper(async (req, res, next) => {

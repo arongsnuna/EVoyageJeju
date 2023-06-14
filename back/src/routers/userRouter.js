@@ -60,7 +60,6 @@ userAuthRouter.post(
     try {
       const userId = req.body.userId;
       const userPassword = req.body.userPassword;
-
       const user = await userAuthService.getUser({ userId, userPassword });
 
       res.status(200).send(user);
@@ -157,7 +156,7 @@ userAuthRouter.get(
       const currentUserInfo = await userAuthService.getUserInfo({ userId });
 
       console.log("유저 라우터 userId :", userId);
-      console.log("유저 라우터 currentUserInfo :", currentUserInfo);
+
       res.status(200).send(currentUserInfo);
     } catch (error) {
       next(error);
@@ -166,7 +165,7 @@ userAuthRouter.get(
 );
 
 // 유저정보 삭제
-userAuthRouter.post(
+userAuthRouter.delete(
   "/users/:userId",
   login_required,
   wrapper(async (req, res, next) => {

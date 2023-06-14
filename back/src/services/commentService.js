@@ -22,6 +22,7 @@ class commentService {
   static async getOneComment({ commentId }) {
     return new Promise((resolve, reject) => {
       const sql = `select * from Comment where commentId = '${commentId}'`;
+      console.log(sql);
       pool.query(sql, (error, results, fields) => {
         if (error) {
           reject(error);
