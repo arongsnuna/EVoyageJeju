@@ -22,7 +22,7 @@ const Community = () => {
 
   const updateCommunity = async () => {
     try {
-      const res = await Api.get('posts');
+      const res = await Api.get('community');
       const dataWithAuthor = await Promise.all(
         res.data.map(async (post) => {
           const userRes = await Api.get(`users/${post.userId}`);
@@ -30,6 +30,7 @@ const Community = () => {
           return { ...post, author: userRes.data.userNickname };
         })
       );
+      console.log(dataWithAuthor)
       setPosts(dataWithAuthor);
     } catch (err) {
       console.log("에러 발생 :", err);

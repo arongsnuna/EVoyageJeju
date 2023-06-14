@@ -14,7 +14,7 @@ const CommunityWrite = () => {
     e.preventDefault();
 
     try {
-      const res1 = await Api.post('posts', {
+      const res1 = await Api.post('community/write', {
         postTitle: title,
         postContent: content,
         postType: type,

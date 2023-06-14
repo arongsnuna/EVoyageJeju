@@ -10,6 +10,7 @@ import {
   ExplanationRight,
   ExplanationLeft,
   Description,
+
 } from "./Home.style";
 
 function Home() {

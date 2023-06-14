@@ -24,7 +24,7 @@ const CommunityDetail = () => {
   // 해당 postId의 게시물 정보 불러오기
   const getPostInfo = async () => {
     try {
-      const res1 = await Api.get(`posts/${postId}`);
+      const res1 = await Api.get(`community/${postId}`);
       const userIdOrigin = res1.data.userId
       const res2 = await Api.get(`users/${userIdOrigin}`);
       setTitle(res1.data.postTitle)
@@ -52,7 +52,7 @@ const CommunityDetail = () => {
   // 삭제 기능 구현
   const handleDelete = async () => {
     try {
-      await Api.post(`posts/${postId}`)
+      await Api.post(`community/${postId}`)
       alert('해당 게시물이 삭제되었습니다.')
     } catch (err) {
       console.log(err)
@@ -127,9 +127,11 @@ const CommunityDetail = () => {
       <ButtonContainer>
         <div>
           <button className='tolist' onClick={() => navigate(ROUTE.COMMUNITY.link)}>목록</button>
-          <button onClick={() => navigate(`/community/${postId}/edit`)}>수정</button>
           {postUserId === user.userId &&
-            <button className='delete' onClick={handleDelete}>삭제</button>
+            <>
+              <button onClick={() => navigate(`/community/${postId}/edit`)}>수정</button>
+              <button className='delete' onClick={handleDelete}>삭제</button>
+            </>
           }
           {!isClicked ? (
             <button className='like' onClick={handleLikeClick}>❤️</button>
