@@ -7,10 +7,10 @@ export const TitleContainer = styled.div`
 
   p {
     padding: 0 30px 35px;
-    border-bottom: 1px solid #DDE1E6;
+    border-bottom: 1px solid #dde1e6;
     width: 1400px;
 
-    font-family: 'Inter';
+    font-family: "Inter";
     font-style: normal;
     font-weight: 700;
     font-size: 40px;
@@ -35,23 +35,26 @@ export const FormContainer = styled.form`
     border: none;
 
     width: 1200px;
-  
+
     legend {
       padding-bottom: 80px;
       width: 100%;
-  
-      font-family: 'Roboto';
+
+      font-family: "Roboto";
       font-style: normal;
       font-weight: 700;
       font-size: 36px;
       line-height: 110%;
-      color: #21272A;
+      color: #21272a;
     }
   }
 `;
 
 export const FormPhotoDiv = styled.div`
-  border: 1px solid #DDE1E6;
+  display: flex;
+  flex-direction: column;
+
+  border: 1px solid #dde1e6;
   margin-bottom: 20px;
   padding: 35px 50px;
 
@@ -61,8 +64,52 @@ export const FormPhotoDiv = styled.div`
   }
 `;
 
+export const FormPhotoContent = styled.form`
+  width: 50%;
+
+  .profilebox {
+    width: 250px;
+    height: 250px;
+    border-radius: 70%;
+    overflow: hidden;
+    background: blue;
+
+    img {
+      // position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      background-size: cover;
+    }
+  }
+
+  .buttonbox {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    label {
+      cursor: pointer;
+      border: 1px solid black;
+      text-align: center;
+    }
+
+    input {
+      display: none;
+    }
+  }
+`;
+
+export const FormPhotoInfo = styled.div`
+  width: 50%;
+  div {
+    display: flex;
+    flex-direction: column;
+  }
+`;
+
 export const FormUserDiv = styled.div`
-  border: 1px solid #DDE1E6;
+  border: 1px solid #dde1e6;
   margin-bottom: 20px;
   padding: 35px 50px;
 
@@ -77,12 +124,12 @@ export const FormUserDiv = styled.div`
 
     width: 130px;
 
-    font-family: 'Roboto';
+    font-family: "Roboto";
     font-style: normal;
     font-weight: 600;
     font-size: 26px;
     line-height: 140%;
-    color: #21272A;
+    color: #21272a;
   }
 
   p {
@@ -90,12 +137,12 @@ export const FormUserDiv = styled.div`
 
     width: 300px;
 
-    font-family: 'Roboto';
+    font-family: "Roboto";
     font-style: normal;
     font-weight: 500;
     font-size: 26px;
     line-height: 140%;
-    color: #21272A;
+    color: #21272a;
   }
 
   button {
@@ -109,12 +156,12 @@ export const FormUserDiv = styled.div`
 
     background: #3563e9;
 
-    font-family: 'Roboto';
+    font-family: "Roboto";
     font-style: normal;
     font-size: 20px;
     line-height: 140%;
-    color: #FFFFFF;
-    box-shadow: 1px 3px 2px #7F848D;
+    color: #ffffff;
+    box-shadow: 1px 3px 2px #7f848d;
 
     :active {
       position: relative;
@@ -132,21 +179,21 @@ export const ButtonContainer = styled.div`
 
   button {
     margin: 42px 0 8px;
-    
+
     width: 120px;
     height: 45px;
-  
+
     background: none;
     box-shadow: none;
 
-    font-family: 'Roboto';
+    font-family: "Roboto";
     font-style: normal;
     font-weight: 500;
     font-size: 24px;
     line-height: 100%;
     letter-spacing: 0.5px;
     color: #3563e9;
-  
+
     &:active {
       position: relative;
       top: 3px;
@@ -156,17 +203,17 @@ export const ButtonContainer = styled.div`
 
 export const EditCompletedText = styled.div`
   width: 1200px;
-  border-left: 5px solid #25A249;
+  border-left: 5px solid #25a249;
 
   background: #eaf6ed;
   p {
     padding: 0 15px;
-    font-family: 'Roboto';
+    font-family: "Roboto";
     font-style: normal;
     font-weight: 400;
     font-size: 18px;
     line-height: 140%;
     letter-spacing: 0.1px;
-    color: #21272A;
+    color: #21272a;
   }
 `;

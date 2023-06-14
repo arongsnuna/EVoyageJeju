@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import EditNickName from "../../../components/MyPage/EditNickName";
 import EditPassword from "../../../components/MyPage/EditPassword";
 import { useUserState } from "../../../UserContext";
-import * as Api from "../../../utils/api";
+import * as Api from "../../../api";
 import {
   TitleContainer,
   FormContainer,
@@ -14,7 +14,7 @@ import {
   ButtonContainer,
   EditCompletedText,
 } from "./Mypage.style";
-import { ROUTE } from "../../../routes/routes";
+import { ROUTE } from "../../../routes";
 import { useUserDispatch } from "../../../UserContext";
 import { LOGOUT } from "../../../reducer/action";
 

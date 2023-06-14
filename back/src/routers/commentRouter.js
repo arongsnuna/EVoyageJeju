@@ -39,17 +39,16 @@ commentRouter.post(
     try {
       const userId = req.currentUserId;
       const postId = req.params.postId;
-      console.log("userId", userId);
-      console.log("postId", postId);
+
       const postFound = await communityService.getOnePost({ postId });
       if (!postFound) {
         throw new Error(
           "이 게시글은 존재하지 않습니다. 다시 한 번 확인해주세요."
         );
       }
-      console.log("postFound", postFound);
+
       const commentContent = req.body.commentContent;
-      console.log("commentContent", commentContent);
+
       if (!commentContent) {
         throw new Error("댓글을 작성해주세요.");
       }
@@ -100,8 +99,10 @@ commentRouter.put(
     try {
       const userId = req.currentUserId;
       const commentId = req.params.commentId;
-
+      consol.log("userId", userId);
+      console.log("commentId", commentId);
       const commentFound = await commentService.getOneComment({ commentId });
+      console.log("commentFound", commentFound);
       if (!commentFound) {
         const errorMessage = "이 댓글은 존재하지 않습니다.";
         throw new Error(errorMessage);
@@ -112,6 +113,8 @@ commentRouter.put(
       }
 
       const newContent = req.body.commentContent;
+      console.log("newContent,newContent");
+
       if (!newContent) {
         const errorMessage = "값을 입력해주세요.";
         throw new Error(errorMessage);
@@ -120,6 +123,7 @@ commentRouter.put(
         commentId,
         newContent,
       });
+      console.log("updatedComment", updatedComment);
       res.status(200).json(updatedComment);
     } catch (error) {
       next(error);
