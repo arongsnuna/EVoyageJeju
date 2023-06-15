@@ -36,12 +36,15 @@ const CommunityDetail = () => {
       setDate(res1.data.createdAt.substr(0, 10))  // 0000-00-00 형식으로 자르기
       setType(res1.data.postType)
       setPostUserId(userIdOrigin)
-      setPostImage(res1.data.userImage)
+      setPostImage(res1.data.postImage)
     } catch (err) {
       console.log(err)
     }
   };
-  useEffect(() => { getPostInfo() }, []);
+  useEffect(() => { 
+    getPostInfo();
+    getFollower();
+  }, []);
 
 
   // 해당 페이지의 '좋아요'를 누른 followerlist 불러오기
@@ -50,11 +53,9 @@ const CommunityDetail = () => {
     setFollowers(res.data);
   };
 
-    // followers(좋아요를 누른 사람들 모음)에 현재 로그인된 유저가 포함됐는지 확인
+  // followers(좋아요를 누른 사람들 모음)에 현재 로그인된 유저가 포함됐는지 확인
   // True(포함됨): already clicked, False(불포함): not clicked.
   const isClicked = followers.filter((follower) => follower.userId === user.userId)
-
-  useEffect(() => { getFollower() }, [ isClicked ])
 
   // 불러온 해당 페이지의 좋아요 수 update
   const getLikeCount = useCallback(() => { 
@@ -81,6 +82,7 @@ const CommunityDetail = () => {
     e.preventDefault();
     try  {
       await Api.post(`likes/${postId}/increment`, { postId: postId, userId: user.userId })
+      getFollower();
       getLikeCount();
       alert('해당 게시물에 좋아요를 누르셨습니다.')
     } catch (err) {
@@ -94,7 +96,8 @@ const CommunityDetail = () => {
     e.preventDefault();
 
     try  {
-      await Api.delete(`likes/${postId}/decrement`);   
+      await Api.delete(`likes/${postId}/decrement`); 
+      getFollower();  
       getLikeCount();
       alert('해당 게시물에 좋아요를 취소하셨습니다.');
     } catch (err) {
@@ -126,7 +129,7 @@ const CommunityDetail = () => {
         </div>
         <div className='content-box'>
           <div className='content'>{content}</div>
-          <div>{postImage}</div>
+          <div><img src={postImage} /></div>
         </div>
       </ContentContainer>
       <ButtonContainer>
