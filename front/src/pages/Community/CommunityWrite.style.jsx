@@ -143,6 +143,29 @@ export const ContentContainer = styled.div`
       padding-top: 15px;
     }
   }
+
+  .buttonbox {
+    
+    label {
+
+    }
+
+    input[type="file"] {
+      padding-top: 6px;
+      
+      font-family: 'Roboto';
+      font-style: normal;
+      font-weight: 500;
+      font-size: 24px;
+      line-height: 140%;
+      color: #000000;
+
+      &::file-selector-button {
+        margin-right: 20px;
+        height: 40px;
+      }
+    }
+  }
 `;
 
 export const ButtonContainer = styled.div`

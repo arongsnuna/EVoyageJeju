@@ -17,6 +17,8 @@ const Community = () => {
   // 탭 전환 시 postType에 맞게 post 저장
   const [travel, setTravel] = useState([]);
   const [elec, setElec] = useState([]);
+  // 검색을 위한 state
+  const [search, setSearch] = useState('');
 
   const updateCommunity = async () => {
     try {
@@ -58,6 +60,36 @@ const Community = () => {
     setActiveTab(false)
     setActiveSpecificTab(true)
     setElec(elecList)
+  }
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+
+    if (!search) {
+      return alert('검색어를 입력해주세요.')
+    }
+    
+    const filteredpost = posts.filter((post) => post.postTitle.includes(search));
+    if (filteredpost.length === 0) {
+      return alert('해당 검색어가 포함된 게시글이 없습니다.')
+    }
+    setPosts(filteredpost)
+
+    if (!activeTab) {
+      if (!activeSpecificTab) {
+        const filteredpost = travel.filter((post) => post.postTitle.includes(search));
+        if (filteredpost.length === 0) {
+          return alert('해당 검색어가 포함된 게시글이 없습니다.')
+        }
+        setTravel(filteredpost)
+      } else {
+        const filteredpost = elec.filter((post) => post.postTitle.includes(search));
+        if (filteredpost.length === 0) {
+          return alert('해당 검색어가 포함된 게시글이 없습니다.')
+        }
+        setElec(filteredpost)
+      }
+    }
   }
 
   return (
@@ -136,11 +168,24 @@ const Community = () => {
       </div>
       <ButtonContainer>
         <div>
-          {user ? (
-            <button onClick={() => navigate(ROUTE.COMMUNITYWRITE.link)}>글쓰기</button>
-          ) : (
-            <button onClick={() => alert("로그인 후 이용해 주세요.")}>글쓰기</button>
-          )}
+          <div className='searchform'>
+            <input
+              type='text'
+              placeholder='검색어를 입력하세요.'
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            <button
+              onClick={handleSearch}
+            >검색</button>
+          </div>
+          <div className='addform'>
+            {user ? (
+              <button onClick={() => navigate(ROUTE.COMMUNITYWRITE.link)}>글쓰기</button>
+            ) : (
+              <button onClick={() => alert("로그인 후 이용해 주세요.")}>글쓰기</button>
+            )}
+          </div>
         </div>
       </ButtonContainer>
       <div>

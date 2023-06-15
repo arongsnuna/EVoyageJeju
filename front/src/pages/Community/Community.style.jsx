@@ -143,10 +143,28 @@ export const ButtonContainer = styled.div`
 
   div {
     display: flex;
-    justify-content: flex-end;
     margin: 40px 0;
 
     width: 2316px;
+
+    .addform {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    input {
+      width: 350px;
+      border-radius: 5px;
+      margin-right: 15px;
+
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 500;
+      font-size: 24px;
+      line-height: 19px;
+      text-align: center;
+      letter-spacing: 0.46px;
+    }
 
     button {
       width: 150px;
@@ -170,5 +188,6 @@ export const ButtonContainer = styled.div`
         top: 3px;
       }
     }
+
   }
 `;
