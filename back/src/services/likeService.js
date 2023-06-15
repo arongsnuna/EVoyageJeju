@@ -11,7 +11,7 @@ class likeService{
 
     static async getPostLikeCount({postId}){
         return new Promise((resolve, reject)=>{
-            const sql = `select * from PostLikeCount where postId = '${postId}'`;
+            const sql = `select * from LikeCount where postId = '${postId}'`;
             //const sql = `select * from PostLikeCount `;
             //const sql = 'TRUNCATE table LikeCount';
             pool.query(sql, (error, results, fields)=>{
@@ -93,7 +93,7 @@ class likeService{
                     reject(error);
                 }
                 else{
-                    const sql2 = `select * from PostLikeCount where postId = '${postId}'`;
+                    const sql2 = `select * from LikeCount where postId = '${postId}'`;
                     pool.query(sql2, (error, results, fields)=>{
                         if(error){
                             reject(error);
