@@ -16,7 +16,7 @@ const CommunityDetail = () => {
   const [author, setAuthor] = useState('');
   const [content, setContent] = useState('');
   const [date, setDate] = useState('');
-  const [type, setType] = useState(');')
+  const [type, setType] = useState('');
   const [postUserId, setPostUserId] = useState('');
   const [postImage, setPostImage] = useState('');
   // postId에 해당하는 게시물에 좋아요를 누른 userId 저장

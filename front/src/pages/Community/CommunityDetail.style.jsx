@@ -49,9 +49,7 @@ export const ContentContainer = styled.div`
   }
 
   .title-box {
-    padding-top: 70px;
     background: #f9f8f7;
-    border-top: 53px dotted #4fc174;
     border-bottom: 1px solid #FDB551;
     div {
       padding-left: 80px;
