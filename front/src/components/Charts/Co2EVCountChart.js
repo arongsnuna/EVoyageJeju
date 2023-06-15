@@ -18,7 +18,7 @@ function EVCarChart() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:5001/co2");
+        const response = await fetch("http://localhost:5001/co2Emission");
 
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -43,6 +43,10 @@ function EVCarChart() {
 
   const numberFormatter = (number) => new Intl.NumberFormat().format(number);
 
+  const tickFormatter = (number) => {
+    return number >= 1000 ? `${(number / 1000).toFixed(0)}k` : number;
+  };
+
   const tooltipFormatter = (value, name) => {
     const unit = name === "전기차 수" ? " 대" : " 천톤CO2eq";
     return [numberFormatter(value) + unit, name];
@@ -56,18 +60,14 @@ function EVCarChart() {
         data={data}
         margin={{
           top: 20,
-          right: 20,
+          right: 100,
           bottom: 20,
-          left: 20,
+          left: 50,
         }}
       >
         <CartesianGrid stroke="#f5f5f5" />
         <XAxis dataKey="year" />
-        <YAxis
-          yAxisId="left"
-          dataKey="전기차 수"
-          tickFormatter={numberFormatter}
-        >
+        <YAxis yAxisId="left" dataKey="전기차 수" tickFormatter={tickFormatter}>
           <Label
             value="전기차 수"
             angle={-90}

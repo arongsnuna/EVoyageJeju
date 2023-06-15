@@ -1,14 +1,6 @@
 import React, { useState, useEffect } from "react";
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  Tooltip,
-  CartesianGrid,
-  Cell,
-  ResponsiveContainer,
-} from "recharts";
+import { BarChart, Bar, XAxis, YAxis, Tooltip, Cell } from "recharts";
+import { PopulationBarChartTitle } from "./chartStyle";
 
 function PopulationBarChart() {
   const [data, setData] = useState([]);
@@ -61,31 +53,33 @@ function PopulationBarChart() {
   }, []);
 
   return (
-    <ResponsiveContainer>
-      <BarChart width={1000} height={600} layout="vertical" data={data}>
-        <XAxis
-          type="number"
-          tickFormatter={(tickItem) => new Intl.NumberFormat().format(tickItem)}
-        />
-        <YAxis dataKey="city" type="category" />
-
-        {/* CartesianGrid 컴포넌트를 제거합니다 */}
-
-        <Tooltip
-          formatter={(value) => {
-            return [new Intl.NumberFormat().format(value) + "명"];
-          }}
-        />
-        <Bar dataKey="인구수">
-          {data.map((entry, index) => (
-            <Cell
-              key={`cell-${index}`}
-              fill={entry.city === "제주" ? "orange" : "skyblue"}
-            />
-          ))}
-        </Bar>
-      </BarChart>
-    </ResponsiveContainer>
+    <>
+      <PopulationBarChartTitle>2020년 도시별 인구수</PopulationBarChartTitle>
+      <>
+        <BarChart width={600} height={500} layout="vertical" data={data}>
+          <XAxis
+            type="number"
+            tickFormatter={(tickItem) =>
+              new Intl.NumberFormat().format(tickItem)
+            }
+          />
+          <YAxis dataKey="city" type="category" />
+          <Tooltip
+            formatter={(value) => {
+              return [new Intl.NumberFormat().format(value) + "명"];
+            }}
+          />
+          <Bar dataKey="인구수">
+            {data.map((entry, index) => (
+              <Cell
+                key={`cell-${index}`}
+                fill={entry.city === "제주" ? "orange" : "skyblue"}
+              />
+            ))}
+          </Bar>
+        </BarChart>
+      </>
+    </>
   );
 }
 

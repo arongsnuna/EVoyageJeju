@@ -1,75 +1,77 @@
 import styled from "styled-components";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 
 export const Container = styled.div`
+  padding-top: 200px;
   text-align: center;
-  height: 2000px;
-`;
-
-export const Title = styled.h1`
-  color: #444;
-  margin: 20px 0;
-`;
-export const ChartContainer = styled.div`
-  height: 400px; // 원하는 높이로 조절
-  margin-bottom: 20px; // 그래프 사이의 간격 조절
-`;
-
-export const HeadContentContainer = styled.div`
+  height: auto;
   display: flex;
   flex-direction: column;
-  text-align: center;
-`;
-
-export const SliderContainer = styled.div`
-  margin: 0 30px;
-  // padding: 200px 0;
-  height: 700px;
-  border: 5px solid black;
-
-  background: red;
-`;
-
-export const StyledSlider = styled(Slider)`
-  margin: 30px;
-
-  background: blue;
-
-  p {
-    font-size: 50px;
-    text-align: center;
-  }
-`;
-
-export const VideoBackgroundContainer = styled.div`
-  position: relative;
-`;
-
-export const VideoBackgroundInner = styled.div`
-  left: 0px;
-  position: absolute;
-  top: 0px;
-  height: 100%;
-  width: 100%;
-  overflow: hidden;
-`;
-
-export const VideoBackgroundVideo = styled.video`
-  object-fit: cover;
-  height: 100%;
-  max-width: 100%;
-`;
-
-export const VideoBackgroundContent = styled.div`
-  left: 0px;
-  position: absolute;
-  top: 0px;
-  height: 100%;
-  width: 100%;
   align-items: center;
+`;
+
+export const ChartContainer = styled.div`
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 20px;
+  height: 600px;
+  max-width: 95%; // Adjust this as per your needs
+  margin: 0 auto;
+  margin-bottom: 10px;
+  padding: 10px 20px 30px 40px;
+`;
+
+export const GraphContainer = styled.div`
+  flex: 1;
+  max-width: 60%; // Adjust this as per your needs
+  height: 600px;
+  width: 400px;
+`;
+
+export const Title = styled.h2`
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-align: center;
+`;
+
+export const ExplanationRight = styled.div`
+  width: 40%;
+  margin-right: 100px;
+
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 23px;
+  line-height: 1.5;
+  text-align: left;
+  font-style: normal;
+  letter-spacing: 0.2px;
+  color: #212121;
+`;
+
+export const ExplanationLeft = styled.div`
+  width: 34%;
+
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 23px;
+  line-height: 1.5;
+  text-align: left;
+  font-style: normal;
+  letter-spacing: 0.2px;
+  color: #212121;
+`;
+
+export const Description = styled.div`
+  max-width: 1900px;
+  margin: 20px auto;
+  padding: 10px;
+
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 23px;
+  line-height: 1.5;
+  text-align: center;
+  font-style: normal;
+  letter-spacing: 0.2px;
+  color: #212121;
 `;
