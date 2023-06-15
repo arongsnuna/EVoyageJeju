@@ -46,7 +46,6 @@ likeRouter.post('/:postId/increment',login_required, wrapper(async(req, res, nex
         }
 
         const check = await likeService.checkPostLikeCount({postId,userId})
-        console.log(check);
         if(check){
             const errorMessage = '이미 좋아요를 누른 유저입니다.';
             throw new Error(errorMessage); 
