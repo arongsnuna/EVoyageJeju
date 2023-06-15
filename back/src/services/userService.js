@@ -187,24 +187,30 @@ class userAuthService {
     static async userPasswordUpdate({ userFound, newPassword }) {
         const hashedPassword = await bcrypt.hash(newPassword , 10);
         return new Promise((resolve, reject)=>{
-            const userPassword = userFound.userPassword;
-            bcrypt.compare(newPassword, userPassword, (error, result)=>{
-                
-                if(!result){
-                    const sql = `UPDATE User SET userPassword='${hashedPassword}' WHERE userId = '${userFound.userId}'`;
-                    pool.query(sql, (error, results, fields)=>{
-                        if(error){
-                            reject(error);
-                        }
-                        else{
-                            resolve('성공');
-                        }
-                    })
-                }
-                else{
-                    resolve('성공');
-                }
-            });
+            if(userFound.userPassword == newPassword){
+                resolve('성공')
+            }
+            else{
+                const userPassword = userFound.userPassword;
+                bcrypt.compare(newPassword, userPassword, (error, result)=>{
+                    
+                    if(!result){
+                        const sql = `UPDATE User SET userPassword='${hashedPassword}' WHERE userId = '${userFound.userId}'`;
+                        pool.query(sql, (error, results, fields)=>{
+                            if(error){
+                                reject(error);
+                            }
+                            else{
+                                resolve('성공');
+                            }
+                        })
+                    }
+                    else{
+                        resolve('성공');
+                    }
+                });
+
+            } 
         })
     }
     // 이미지 업데이트
@@ -258,40 +264,15 @@ class userAuthService {
         return new Promise((resolve, reject)=>{
             bcrypt.compare(userPassword, userFound.userPassword, (error, result)=>{
                 if(result){//같으면
-                    const sql1 = `DELETE from Comment WHERE userId = '${userId}'`;
-                    pool.query(sql1, (error, results, fields)=>{
+                    const sql = `DELETE from User WHERE userId = '${userId}'`;
+                    //const sql1 = 'delete from Comment';
+                    pool.query(sql, (error, results, fields)=>{
                         if(error){
                             reject(error);
                         }
                         else{
-                            const sql2 = `DELETE from Community WHERE userId = '${userId}'`;
-                            pool.query(sql2, (error, results, fields)=>{
-                                if(error){
-                                    reject(error);
-                                }
-                                else{ 
-                                    const sql3 = `DELETE from LikeCount WHERE userId = '${userId}'`;
-                                    pool.query(sql3, (error, results, fields)=>{
-                                        if(error){
-                                            reject(error);
-                                        }
-                                        else{
-                                            const sql4 = `DELETE from User WHERE userId = '${userId}'`;
-                                            query.pool(sql4, (error, results, fields)=>{
-                                                if(error){
-                                                    reject(error);
-                                                }
-                                                else{
-                                                    const status = '성공적으로 삭제되었습니다.';
-                                                    resolve(status);
-                                                }
-                                            })
-                                        }
-                                    })
-
-                                    
-                                }
-                            })
+                            const status = '성공적으로 삭제되었습니다.';
+                            resolve(status);
                         }
                     })
                 }

@@ -5,17 +5,17 @@ import { userAuthService } from '../services/userService.js';
 import {wrapper} from '../middlewares/wrapper.js';
 
 import multer from 'multer';
-import path from 'path';
 import fs from 'fs';
 import mime from 'mime';
+import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 
-
-const userAuthRouter = Router();
-
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+
+
+const userAuthRouter = Router();
 
 // 파일 저장을 위한 storage 생성
 const storage = multer.diskStorage({
@@ -27,6 +27,7 @@ const storage = multer.diskStorage({
         cb(null, uniqueSuffix + '-' + file.originalname);
     },
 });
+
 const upload = multer({ storage: storage });
 
 // 회원가입
@@ -104,7 +105,7 @@ userAuthRouter.put('/users/:userId', login_required, upload.single('userImage'),
             // 데이터 URI로 변환
             const imageUri = `data:${mimeType};base64,${imageData.toString('base64')}`;
 
-            updatedUser = await userAuthService.setUserWithImage({ userId, newNickname, newPassword, imageUri });
+            updatedUser = await userAuthService.setUserWithImage({ userId, newNickname, newPassword, uploadImage, imageUri });
 
         } else {
             updatedUser = await userAuthService.setUser({ userId, newNickname, newPassword});
@@ -138,7 +139,7 @@ userAuthRouter.get('/users/:userId', login_required, wrapper(async (req, res, ne
 }));
 
 // 유저정보 삭제
-userAuthRouter.post('/users/:userId', login_required, wrapper(async(req,res,next)=>{
+userAuthRouter.delete('/users/:userId', login_required, wrapper(async(req,res,next)=>{
     try{
         const currentUser = req.currentUserId;
         const userId = req.params.userId;
@@ -150,6 +151,7 @@ userAuthRouter.post('/users/:userId', login_required, wrapper(async(req,res,next
             throw new Error('비밀번호를 입력해주세요');
         }
         const status = await userAuthService.deleteUser({userId, userPassword});
+
         res.status(200).send(status);
 
     }catch(error){

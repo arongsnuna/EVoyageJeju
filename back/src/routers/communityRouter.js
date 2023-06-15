@@ -50,6 +50,7 @@ communityRouter.post('/write', login_required, upload.single('postImage'), wrapp
         const postContent = req.body.postContent;
         const postType= req.body.postType;
         const uploadImage = req.file ?? null;
+        console.log(uploadImage);
 
         if(!userId){
             throw new Error('글 작성을 위해선 로그인이 필요합니다.');
