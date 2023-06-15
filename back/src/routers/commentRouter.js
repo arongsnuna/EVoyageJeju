@@ -99,7 +99,7 @@ commentRouter.put(
     try {
       const userId = req.currentUserId;
       const commentId = req.params.commentId;
-      consol.log("userId", userId);
+      console.log("userId", userId);
       console.log("commentId", commentId);
       const commentFound = await commentService.getOneComment({ commentId });
       console.log("commentFound", commentFound);
@@ -113,7 +113,7 @@ commentRouter.put(
       }
 
       const newContent = req.body.commentContent;
-      console.log("newContent,newContent");
+      console.log("newContent", newContent);
 
       if (!newContent) {
         const errorMessage = "값을 입력해주세요.";

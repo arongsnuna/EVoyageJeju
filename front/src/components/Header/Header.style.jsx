@@ -102,7 +102,7 @@ export const ButtonContainer = styled.div`
   padding: 38px 22px;
   gap: 10px;
 
-  width: 450px;
+  width: 600px;
   height: 75px;
 
   p {
@@ -116,10 +116,22 @@ export const ButtonContainer = styled.div`
     letter-spacing: 0.46px;
   }
 
-  img {
+  .profilebox {
+    cursor: pointer;
+
+    margin-right: 35px;
     width: 75px;
     height: 75px;
-    cursor: pointer;
+    border-radius: 70%;
+    overflow: hidden;
+
+    img {
+      // position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      background-size: cover;
+    }
 
     &:active {
       position: relative;

@@ -2,7 +2,6 @@ import React, { useEffect, useState, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useUserState } from "../../UserContext";
 import Paging from "./Paging";
-import SearchBar from "./SearchBar";
 import * as Api from "../../api";
 import {
   Container,
@@ -169,7 +168,6 @@ const Community = () => {
         </div>
       </ButtonContainer>
       <Paging onClick={handlePageChange} />
-      <SearchBar />
     </Container>
   );
 };

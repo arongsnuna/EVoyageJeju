@@ -17,3 +17,8 @@ export const isPasswordValid = (password) => {
 export const isPasswordSame = ({ password, confirmPassword }) => {
   return password === confirmPassword;
 };
+
+export const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  return date.toLocaleDateString(); // Format date as 'YYYY-MM-DD'
+};

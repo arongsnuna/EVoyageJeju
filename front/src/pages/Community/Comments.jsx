@@ -4,12 +4,9 @@ import * as Api from "../../api";
 
 function Comments({ postId, userId }) {
   const [comments, setComments] = useState([]);
-  const [newComment, setNewComment] = useState("");
   const [editingCommentId, setEditingCommentId] = useState(null);
-
-  useEffect(() => {
-    fetchComments();
-  }, []);
+  const [newComment, setNewComment] = useState("");
+  const [editingComment, setEditingComment] = useState("");
 
   // 댓글 불러오기
   const fetchComments = async () => {
@@ -22,7 +19,8 @@ function Comments({ postId, userId }) {
   };
 
   // 댓글 작성
-  const handleAddComment = async () => {
+  const addComment = async (event) => {
+    event.preventDefault();
     try {
       const response = await Api.post(`community/${postId}/comments`, {
         commentContent: newComment,
@@ -35,48 +33,61 @@ function Comments({ postId, userId }) {
     }
   };
 
+  // 댓글 수정 준비
+  const updatingComment = async (commentId, commentContent) => {
+    setEditingCommentId(commentId);
+    setEditingComment(commentContent);
+  };
+
   // 댓글 수정
-  const handleEditComment = async (commentId, commentContent) => {
+  const updateComment = async (commentId) => {
     try {
-      const response = await Api.put(
-        `community/${postId}/comments/${commentId}`,
-        { commentContent }
-      );
+      await Api.put(`community/${postId}/comments/${commentId}`, {
+        commentContent: editingComment,
+      });
+
       setComments(
         comments.map((comment) =>
-          comment.id === commentId
-            ? { ...comment, commentContent: response.data.commentContent }
+          comment.commentId === commentId
+            ? { ...comment, commentContent: editingComment }
             : comment
         )
       );
-      setNewComment("");
       setEditingCommentId(null);
+      setNewComment("");
+      setEditingComment("");
     } catch (error) {
       console.error("댓글을 수정하는데 실패했습니다:", error);
     }
   };
 
   // 댓글 삭제
-  const handleDeleteComment = async (commentId) => {
+  const deleteComment = async (commentId) => {
     try {
       await Api.delete(`community/${postId}/comments/${commentId}`);
 
-      setComments(comments.filter((comment) => comment.id !== commentId));
+      setComments(
+        comments.filter((comment) => comment.commentId !== commentId)
+      );
     } catch (error) {
       console.error("댓글 삭제에 실패 했습니다", error);
     }
   };
 
+  useEffect(() => {
+    fetchComments();
+  }, []);
+
   return (
     <div>
       <h2>댓글창</h2>
       {comments.map((comment) => (
-        <div key={comment.id}>
-          {editingCommentId === comment.id ? (
+        <div key={comment.commentId}>
+          {editingCommentId === comment.commentId ? (
             <input
               type="text"
-              value={newComment}
-              onChange={(e) => setNewComment(e.target.value)}
+              value={editingComment}
+              onChange={(e) => setEditingComment(e.target.value)}
             />
           ) : (
             <p>{comment.commentContent}</p>
@@ -84,15 +95,19 @@ function Comments({ postId, userId }) {
 
           {comment.userId === userId && (
             <>
-              <button onClick={() => setEditingCommentId(comment.id)}>
+              <button
+                onClick={() =>
+                  updatingComment(comment.commentId, comment.commentContent)
+                }
+              >
                 수정
               </button>
-              <button onClick={() => handleDeleteComment(comment.id)}>
+              <button onClick={() => deleteComment(comment.commentId)}>
                 삭제
               </button>
 
-              {editingCommentId === comment.id && (
-                <button onClick={() => handleEditComment(comment.id)}>
+              {editingCommentId === comment.commentId && (
+                <button onClick={() => updateComment(comment.commentId)}>
                   수정 완료
                 </button>
               )}
@@ -107,7 +122,7 @@ function Comments({ postId, userId }) {
           value={newComment}
           onChange={(e) => setNewComment(e.target.value)}
         />
-        <button onClick={handleAddComment}>등록</button>
+        <button onClick={addComment}>등록</button>
       </div>
     </div>
   );
