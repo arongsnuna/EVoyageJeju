@@ -117,14 +117,17 @@ export const ContentContainer = styled.div`
   }
 
   .content-box {
+    display: flex;
+    flex-direction: column;
     border-bottom: 1px solid #00000033;
     div {
       align-items: start;
-      padding: 40px 30px;
+      padding: 40px;
       background: #f9f8f3;
-
-      width: 100%;
-      height: 800px;
+      width: 2220px;
+    }
+    .content {
+      padding-bottom: 300px;
     }
   }
 `;
@@ -170,28 +173,6 @@ export const ButtonContainer = styled.div`
       }
     }
 
-    .delete {
-      border: 1px solid #fc1010;
-      background: #ffffff;
-      color: #fc1010;
-
-      &:hover {
-        background: #fc1010;
-        color: #ffffff;
-      }
-    }
-
-    .like {
-      border: 1px solid #fcce10;
-      background: #ffffff;
-      color: #fcce10;
-
-      &:hover {
-        background: #fcce10;
-        color: #ffffff;
-      }
-    }
-
     .tolist {
       border: 1px solid #15be51;
       background: #ffffff;
@@ -200,6 +181,39 @@ export const ButtonContainer = styled.div`
       &:hover {
         background: #15be51;
         color: #ffffff;
+      }
+    }
+
+    .delete {
+      border: 1px solid #ffd229;
+      background: #ffffff;
+      color: #ffd229;
+
+      &:hover {
+        background: #ffd229;
+        color: #ffffff;
+      }
+    }
+
+    .like {
+      border: 1px solid #f91c1c;
+      background: #ffffff;
+      color: #f91c1c;
+
+      &:hover {
+        background: #f91c1c;
+        color: #ffffff;
+      }
+    }
+
+    .liked {
+      border: 1px solid #f91c1c;
+      background: #f91c1c;
+      color: #ffffff;
+
+      &:hover {
+        background: #ffffff;
+        color: #f91c1c;
       }
     }
   }

@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useUserState } from "../../UserContext";
-import Paging from "./Paging";
 import * as Api from "../../api";
 import {
   Container,
@@ -27,26 +26,24 @@ const Community = () => {
   const [travel, setTravel] = useState([]);
   const [elec, setElec] = useState([]);
 
-  const likeCount = 0;
-
-  const [page, setPage] = useState(1);
-  const pageSize = 10;
-
   const updateCommunity = async () => {
     try {
-      console.log("updateCommunity 안입니다");
-      const res = await Api.get(`community?page=${page}&pageSize=${pageSize}`); //
-      console.log("updateCommunity res", res);
+      const res = await Api.get("community");
       const dataWithAuthor = await Promise.all(
         res.data.map(async (post) => {
           const userRes = await Api.get(`users/${post.userId}`);
-          // const likeRes = await Api.get(`like/${post.postId}`);
-          return { ...post, author: userRes.data.userNickname };
+          const likeRes = await Api.get(`likes/${post.postId}`);
+          return {
+            ...post,
+            author: userRes.data.userNickname,
+            likeCount: likeRes.data.length,
+          };
         })
       );
+      console.log(dataWithAuthor);
       setPosts(dataWithAuthor);
     } catch (err) {
-      console.log("커뮤니티 에러 발생 :", err);
+      console.log("에러 발생 :", err);
     }
   };
 
@@ -72,11 +69,6 @@ const Community = () => {
     setElec(elecList);
   };
 
-  const handlePageChange = (page) => {
-    setPage(page);
-    console.log(page);
-  };
-
   return (
     <Container>
       <TitleContainer>
@@ -87,7 +79,6 @@ const Community = () => {
           <TypeButton disabled={activeTab} onClick={handleAllTab}>
             전체
           </TypeButton>
-
           <TypeButton
             disabled={!activeTab && activeSpecificTab === false}
             onClick={handleTravelTab}
@@ -114,20 +105,20 @@ const Community = () => {
           </div>
         </IndexContainer>
         <ListContainer>
-          {activeTab &&
-            posts.map((post) => (
-              <div key={post.id}>
-                <p className="index">{post.postId}</p>
-                <Link to={`/community/${post.postId}`} className="title">
-                  {post.postTitle}
-                </Link>
-                <p className="author">{post.author}</p>
-                <p className="type">{post.postType}</p>
-                <p className="date">{post.createdAt.substr(0, 10)}</p>
-                <p className="likeCount">{likeCount}</p>
-              </div>
-            ))}
-          {activeSpecificTab
+          {activeTab
+            ? posts.map((post) => (
+                <div key={post.id}>
+                  <p className="index">{post.postId}</p>
+                  <Link to={`/community/${post.postId}`} className="title">
+                    {post.postTitle}
+                  </Link>
+                  <p className="author">{post.author}</p>
+                  <p className="type">{post.postType}</p>
+                  <p className="date">{post.createdAt.substr(0, 10)}</p>
+                  <p className="likeCount">{post.likeCount}</p>
+                </div>
+              ))
+            : activeSpecificTab
             ? elec.map((post) => (
                 <div key={post.id}>
                   <p className="index">{post.postId}</p>
@@ -137,7 +128,7 @@ const Community = () => {
                   <p className="author">{post.author}</p>
                   <p className="type">{post.postType}</p>
                   <p className="date">{post.createdAt.substr(0, 10)}</p>
-                  <p className="likeCount">{likeCount}</p>
+                  <p className="likeCount">{post.likeCount}</p>
                 </div>
               ))
             : travel.map((post) => (
@@ -149,7 +140,7 @@ const Community = () => {
                   <p className="author">{post.author}</p>
                   <p className="type">{post.postType}</p>
                   <p className="date">{post.createdAt.substr(0, 10)}</p>
-                  <p className="likeCount">{likeCount}</p>
+                  <p className="likeCount">{post.likeCount}</p>
                 </div>
               ))}
         </ListContainer>
@@ -167,7 +158,7 @@ const Community = () => {
           )}
         </div>
       </ButtonContainer>
-      <Paging onClick={handlePageChange} />
+      <div>{/* 페이징 넘버링 추가필요 */}</div>
     </Container>
   );
 };
