@@ -36,12 +36,7 @@ communityRouter.get(
       const pageSize =
         typeof req.query.pageSize === "number" ? req.query.pageSize : 10; // 페이지 크기
 
-      console.log("page", typeof page);
-      console.log("pageSize", typeof pageSize);
       const posts = await communityService.getPosts({ page, pageSize });
-
-      console.log("커뮤니티 라우터 page :", page);
-      console.log("커뮤니티 라우터 pageSize :", pageSize);
 
       res.status(200).send(posts);
     } catch (error) {
