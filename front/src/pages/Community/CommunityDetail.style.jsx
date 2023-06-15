@@ -107,16 +107,20 @@ export const ContentContainer = styled.div`
   }
 
   .content-box {
+    display: flex;
+    flex-direction: column;
     border-bottom: 1px solid #00000033;
     div {
       align-items: start;
-      padding: 40px 30px;
+      padding: 40px;
       background: #F9F8F3;
-
-      width: 100%;
-      height: 800px;
+      width: 2220px;
+    }
+    .content {
+      padding-bottom: 300px;
     }
   }
+
 `;
 
 export const ButtonContainer = styled.div`

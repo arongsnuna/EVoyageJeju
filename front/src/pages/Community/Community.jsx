@@ -26,8 +26,11 @@ const Community = () => {
       const dataWithAuthor = await Promise.all(
         res.data.map(async (post) => {
           const userRes = await Api.get(`users/${post.userId}`);
-          // const likeRes = await Api.get(`like/${post.postId}`);
-          return { ...post, author: userRes.data.userNickname };
+          // const likeRes = await Api.get(`likes/${post.postId}`);
+          return { ...post, 
+            author: userRes.data.userNickname, 
+            // likeCount: likeRes.data.postId.length,  
+          };
         })
       );
       console.log(dataWithAuthor)
@@ -95,7 +98,7 @@ const Community = () => {
           </div>
         </IndexContainer>
         <ListContainer>
-          {activeTab && (
+          {activeTab ? (
             posts.map((post) => (
               <div key={post.id}>
                 <p className='index'>{post.postId}</p>
@@ -106,29 +109,30 @@ const Community = () => {
                 <p className='likeCount'>{likeCount}</p>
               </div>
             ))
-          )}
-          {activeSpecificTab ? (
-            elec.map((post) => (
-              <div key={post.id}>
-                <p className='index'>{post.postId}</p>
-                <Link to={`/community/${post.postId}`} className='title'>{post.postTitle}</Link>
-                <p className='author'>{post.author}</p>
-                <p className='type'>{post.postType}</p>
-                <p className='date'>{post.createdAt.substr(0, 10)}</p>
-                <p className='likeCount'>{likeCount}</p>
-              </div>
-            ))
           ) : (
-            travel.map((post) => (
-              <div key={post.id}>
-                <p className='index'>{post.postId}</p>
-                <Link to={`/community/${post.postId}`} className='title'>{post.postTitle}</Link>
-                <p className='author'>{post.author}</p>
-                <p className='type'>{post.postType}</p>
-                <p className='date'>{post.createdAt.substr(0, 10)}</p>
-                <p className='likeCount'>{likeCount}</p>
-              </div>
-            ))
+            activeSpecificTab ? (
+              elec.map((post) => (
+                <div key={post.id}>
+                  <p className='index'>{post.postId}</p>
+                  <Link to={`/community/${post.postId}`} className='title'>{post.postTitle}</Link>
+                  <p className='author'>{post.author}</p>
+                  <p className='type'>{post.postType}</p>
+                  <p className='date'>{post.createdAt.substr(0, 10)}</p>
+                  <p className='likeCount'>{likeCount}</p>
+                </div>
+              ))
+            ) : (
+              travel.map((post) => (
+                <div key={post.id}>
+                  <p className='index'>{post.postId}</p>
+                  <Link to={`/community/${post.postId}`} className='title'>{post.postTitle}</Link>
+                  <p className='author'>{post.author}</p>
+                  <p className='type'>{post.postType}</p>
+                  <p className='date'>{post.createdAt.substr(0, 10)}</p>
+                  <p className='likeCount'>{likeCount}</p>
+                </div>
+              ))
+            )
           )}
         </ListContainer>
       </div>

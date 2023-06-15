@@ -6,19 +6,25 @@ import * as Api from "../../api";
 
 const CommunityWrite = () => {
   const navigate = useNavigate();
+  // 게시글 추가를 위한 state
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [type, setType] = useState('');
+  const [postImage, setPostImage] = useState();
+  console.log(postImage)
 
   const handleSave = async (e) => {
     e.preventDefault();
-
     try {
-      const res1 = await Api.post('community/write', {
-        postTitle: title,
-        postContent: content,
-        postType: type,
-      })
+      const formData = new FormData();
+      formData.append('postImage', postImage);
+      formData.append('postTitle', title);
+      formData.append('postContent', content);
+      formData.append('postType', type);
+      console.log(formData.get('postImage'))
+
+      const res1 = await Api.postFile('community/write', formData);
+      console.log('사진 업로드 성공')
       const newPostId = res1.data.postId;
       navigate(`/community/${newPostId}`);
     } catch (err) {
@@ -58,6 +64,15 @@ const CommunityWrite = () => {
           <div>
             <label>본문</label>
             <textarea value={content} onChange={(e) => setContent(e.target.value)} />
+          </div>
+          <div className="buttonbox">
+            <label htmlFor='input-file'>첨부파일</label>
+            <input 
+              id='input-file'
+              type='file'
+              accept='image/*'
+              onChange={(e) => setPostImage(e.target.files[0])}
+            />
           </div>
         </ContentContainer>
         <ButtonContainer>
