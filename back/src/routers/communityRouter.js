@@ -34,7 +34,7 @@ communityRouter.get(
     try {
       const page = typeof req.query.page === "number" ? req.query.page : 1; // 요청한 페이지 번호
       const pageSize =
-        typeof req.query.pageSize === "number" ? req.query.pageSize : 10; // 페이지 크기
+        typeof req.query.pageSize === "number" ? req.query.pageSize : 100; // 페이지 크기
 
       const posts = await communityService.getPosts({ page, pageSize });
 

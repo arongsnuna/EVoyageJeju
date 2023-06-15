@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useUserState } from "../../UserContext";
+import Paging from "./Paging";
 import * as Api from "../../api";
 import {
   Container,
@@ -26,6 +27,12 @@ const Community = () => {
   const [travel, setTravel] = useState([]);
   const [elec, setElec] = useState([]);
 
+  const [allCurrentPage, setAllCurrentPage] = useState(1);
+  const [travelCurrentPage, setTravelCurrentPage] = useState(1);
+  const [elecCurrentPage, setElecCurrentPage] = useState(1);
+
+  const [postsPerPage, setPostsPerPage] = useState(5);
+
   const updateCommunity = async () => {
     try {
       const res = await Api.get("community");
@@ -40,7 +47,6 @@ const Community = () => {
           };
         })
       );
-      console.log(dataWithAuthor);
       setPosts(dataWithAuthor);
     } catch (err) {
       console.log("에러 발생 :", err);
@@ -51,8 +57,9 @@ const Community = () => {
     updateCommunity();
   }, [activeTab, activeSpecificTab]);
 
-  const handleAllTab = () => {
+  const handleAllTab = async () => {
     setActiveTab(true);
+    setAllCurrentPage(1);
   };
 
   const handleTravelTab = async () => {
@@ -60,6 +67,7 @@ const Community = () => {
     setActiveTab(false);
     setActiveSpecificTab(false);
     setTravel(travelList);
+    setTravelCurrentPage(1);
   };
 
   const handleElecTab = async () => {
@@ -67,8 +75,29 @@ const Community = () => {
     setActiveTab(false);
     setActiveSpecificTab(true);
     setElec(elecList);
+    setElecCurrentPage(1);
   };
 
+  let activePosts = [];
+  let currentPage;
+  if (activeTab) {
+    activePosts = posts;
+    currentPage = allCurrentPage;
+  } else if (activeSpecificTab) {
+    activePosts = elec;
+    currentPage = elecCurrentPage;
+  } else {
+    activePosts = travel;
+    currentPage = travelCurrentPage;
+  }
+  console.log("activePosts", activePosts);
+  // 전체 페이지에서 현재 페이지로 자르기 위함
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = activePosts.slice(indexOfFirstPost, indexOfLastPost);
+  console.log("indexOfLastPost", indexOfLastPost);
+  console.log("indexOfFirstPost", indexOfFirstPost);
+  console.log("currentPosts", currentPosts);
   return (
     <Container>
       <TitleContainer>
@@ -106,7 +135,7 @@ const Community = () => {
         </IndexContainer>
         <ListContainer>
           {activeTab
-            ? posts.map((post) => (
+            ? currentPosts.map((post) => (
                 <div key={post.id}>
                   <p className="index">{post.postId}</p>
                   <Link to={`/community/${post.postId}`} className="title">
@@ -158,7 +187,25 @@ const Community = () => {
           )}
         </div>
       </ButtonContainer>
-      <div>{/* 페이징 넘버링 추가필요 */}</div>
+      {activeTab ? (
+        <Paging
+          page={allCurrentPage}
+          count={Math.ceil(posts.length / postsPerPage)}
+          setPage={setAllCurrentPage}
+        />
+      ) : activeSpecificTab ? (
+        <Paging
+          page={elecCurrentPage}
+          count={Math.ceil(elec.length / postsPerPage)}
+          setPage={setElecCurrentPage}
+        />
+      ) : (
+        <Paging
+          page={travelCurrentPage}
+          count={Math.ceil(travel.length / postsPerPage)}
+          setPage={setTravelCurrentPage}
+        />
+      )}
     </Container>
   );
 };

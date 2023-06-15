@@ -145,7 +145,6 @@ const CommunityDetail = () => {
           <div>{postImage}</div>
         </div>
       </ContentContainer>
-      <Comments postId={postId} userId={user.userId} />
       <ButtonContainer>
         <div>
           <button
@@ -175,6 +174,7 @@ const CommunityDetail = () => {
           )}
         </div>
       </ButtonContainer>
+      <Comments postId={postId} userId={user.userId} />
     </Container>
   );
 };
