@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useUserState } from '../../UserContext';
 import { ROUTE } from '../../routes/routes';
 import * as Api from "../../utils/api";
-import { Container, TitleContainer, TypeContainer, TypeButton, IndexContainer, ListContainer, ButtonContainer } from "./Community.style";
+import { Container, TitleContainer, TypeContainer, TypeButton, IndexContainer, ListContainer, AddButton } from "./Community.style";
 
 const Community = () => {
   const navigate = useNavigate();
@@ -62,40 +62,10 @@ const Community = () => {
     setElec(elecList)
   }
 
-  const handleSearch = (e) => {
-    e.preventDefault();
-
-    if (!search) {
-      return alert('검색어를 입력해주세요.')
-    }
-    
-    const filteredpost = posts.filter((post) => post.postTitle.includes(search));
-    if (filteredpost.length === 0) {
-      return alert('해당 검색어가 포함된 게시글이 없습니다.')
-    }
-    setPosts(filteredpost)
-
-    if (!activeTab) {
-      if (!activeSpecificTab) {
-        const filteredpost = travel.filter((post) => post.postTitle.includes(search));
-        if (filteredpost.length === 0) {
-          return alert('해당 검색어가 포함된 게시글이 없습니다.')
-        }
-        setTravel(filteredpost)
-      } else {
-        const filteredpost = elec.filter((post) => post.postTitle.includes(search));
-        if (filteredpost.length === 0) {
-          return alert('해당 검색어가 포함된 게시글이 없습니다.')
-        }
-        setElec(filteredpost)
-      }
-    }
-  }
-
   return (
     <Container>
       <TitleContainer>
-        <p>게시판</p>
+        <p>📌 제주도 여행, 전기차 이용 꿀팁을 나누어보아요! 📌</p>
       </TitleContainer>
       <TypeContainer>
         <div>
@@ -114,6 +84,11 @@ const Community = () => {
             onClick={handleElecTab}
           >전기차
           </TypeButton>
+          {user ? (
+              <AddButton onClick={() => navigate(ROUTE.COMMUNITYWRITE.link)}>글쓰기</AddButton>
+            ) : (
+              <AddButton onClick={() => alert("로그인 후 이용해 주세요.")}>글쓰기</AddButton>
+            )}
         </div>
       </TypeContainer>
       <div>
@@ -123,7 +98,7 @@ const Community = () => {
             <p className='title'>제목</p>
             <p className='author'>글쓴이</p>
             <p className='type'>구분</p>
-            <p className='date'>등록일</p>
+            <p className='date'>작성일</p>
             <p className='likeCount'>좋아요</p>
           </div>
         </IndexContainer>
@@ -165,31 +140,6 @@ const Community = () => {
             )
           )}
         </ListContainer>
-      </div>
-      <ButtonContainer>
-        <div>
-          <div className='searchform'>
-            <input
-              type='text'
-              placeholder='검색어를 입력하세요.'
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
-            <button
-              onClick={handleSearch}
-            >검색</button>
-          </div>
-          <div className='addform'>
-            {user ? (
-              <button onClick={() => navigate(ROUTE.COMMUNITYWRITE.link)}>글쓰기</button>
-            ) : (
-              <button onClick={() => alert("로그인 후 이용해 주세요.")}>글쓰기</button>
-            )}
-          </div>
-        </div>
-      </ButtonContainer>
-      <div>
-        {/* 페이징 넘버링 추가필요 */}
       </div>
     </Container>
   );

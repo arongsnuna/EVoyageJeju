@@ -135,7 +135,7 @@ const CommunityDetail = () => {
           <div className='type'>{type}</div>
           <div className='info'>글쓴이</div>
           <div className='author'>{author}</div>
-          <div className='info'>등록일</div>
+          <div className='info'>작성일</div>
           <div className='date'>{date}</div> 
           <div className='info'>좋아요 수</div>
           <div className='likeCount'>{likeCount}</div>

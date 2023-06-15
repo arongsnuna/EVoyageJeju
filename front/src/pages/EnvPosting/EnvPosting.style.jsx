@@ -8,19 +8,17 @@ export const Container = styled.div`
 
 export const TitleContainer = styled.div`
   display: flex;
-  flex-direction: column;
   justify-content: center;  
-  margin: 50px 0;
-
-  background: #A6C8FF;
+  margin: 50px 0 120px;
+  border-bottom: 10px dashed #218721;
 
   p {
-    padding: 75px 0 90px;
+    padding: 75px 0 40px;
 
     font-family: 'Inter';
     font-style: normal;
     font-weight: 600;
-    font-size: 52px;
+    font-size: 60px;
     line-height: 58px;
     text-align: center;
     letter-spacing: 0.2px;
@@ -40,25 +38,31 @@ export const PostingContainer = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+    border-radius: 50px;
+    border-top: 52px dotted #4fc174;
+
     margin: 0 25px 50px;
-    padding: 0;
-    // border: 1px solid grey;
+    padding: 50px 50px 10px;
 
     width: 24%;
+
+    background: #F9F8F7;
   }
 
   img {
     cursor: pointer;
 
-    border: none;
+    border-radius: 70%;
+    border: 5px solid #218721;
     width: 700px;
     height: 700px;
   }
 
   p {
     width: 700px;
-    text-align: center;
+    border-bottom: 5px ridge #218721;
 
+    text-align: center;
     font-family: 'Inter';
     font-style: normal;
     font-weight: 600;
@@ -67,6 +71,6 @@ export const PostingContainer = styled.div`
     letter-spacing: 0.2px;
     text-transform: capitalize;
 
-    color: #212121;
+    color: #000000;
   }
 `;

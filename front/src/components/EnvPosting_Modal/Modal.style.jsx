@@ -21,7 +21,11 @@ export const ModalContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  padding-bottom: 20px;
   margin-left: 680px;
+  border-radius: 60px;
+  border-top: 52px dotted #4fc174;
   
   position: absolute;
   top: -500;
@@ -31,7 +35,7 @@ export const ModalContainer = styled.div`
   transform: translate(0%, 0%);
   overflow: auto;
 
-  background: white;
+  background: #FFFFFF;
 `;
 
 export const CancelButton = styled.button`
@@ -41,12 +45,14 @@ export const CancelButton = styled.button`
   margin: 30px 30px 0 20px;
 
   background: none;
-  font-size: 40px;
+  font-weight: 600;
+  font-size: 60px;
+  color: #2A552A;
 
   cursor: pointer;
 
   :hover {
-    color: red;
+    color: #000000;
     font-weight: 700;
   }
 
@@ -74,18 +80,19 @@ export const StyledSlider = styled(Slider)`
   height: 88%;
 
   .slick-prev {
-    left: -60px;
+    left: -100px;
     font: none;
     ::before {
-      font-size: 50px;
-      color: black;
+      font-size: 80px;
+      color: #345434;
     }
   };
   .slick-next {
+    right: -35px;
     font: none;
     ::before {
-      font-size: 50px;
-      color: black;
+      font-size: 80px;
+      color: #345434;
     }
   }
 
@@ -94,6 +101,7 @@ export const StyledSlider = styled(Slider)`
     height: 100%;
 
     img {
+      border-radius: 80px;
       width: 100%;
       height: 100%;
     }

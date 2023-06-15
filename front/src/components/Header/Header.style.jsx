@@ -5,30 +5,29 @@ export const Container = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-content: center;
-  border-bottom: 2px solid #DDE1E6;
+  border-bottom: 2px solid #FDB551;
 
   position: absolute;
   width: 100%;
-  height: 150px;
+  height: 200px;
   left: 0px;
   top: 0px;
 
-  background: #FFFFFF;
+  background: #FCD565;
 `;
 
 export const TitleContainer = styled.div`
   display: flex;
   flex-direction: row;
+  align-items: center;
 
   img {
-    width: 57px;
-    height: 57px;
-    padding-top: 45px;
+    width: 80px;
+    height: 80px;
     padding-left: 120px;
   }
 
   a {
-    margin-top: 48px;
     width: 220px;
     height: 51px;
     padding-left: 30px;
@@ -37,7 +36,7 @@ export const TitleContainer = styled.div`
     font-family: 'Inter';
     font-style: normal;
     font-weight: 700;
-    font-size: 40px;
+    font-size: 43px;
     line-height: 29px;
     display: flex;
     align-items: center;
@@ -64,7 +63,7 @@ export const NavContainer = styled.div`
   width: 100%;
 
   &:hover {
-    background: #A6C8FF;
+    background: #FFE69C;
   }
 
   a {
@@ -78,15 +77,15 @@ export const NavContainer = styled.div`
     font-family: 'Inter';
     font-style: normal;
     font-weight: 700;
-    font-size: 28px;
+    font-size: 35px;
     line-height: 19px;
     letter-spacing: 0.2px;
     text-decoration-line: none;
 
-    color: #424242;
+    color: #000000;
 
     &:hover {
-      color: #3563E9;
+      color: #RGB(253 190 101);
     }
   }
 `;
@@ -98,11 +97,11 @@ export const ButtonContainer = styled.div`
   align-items: center;
   justify-content: flex-end;
 
-  margin-right: 120px;
+  margin-right: 50px;
   padding: 38px 22px;
   gap: 10px;
 
-  width: 600px;
+  width: 650px;
   height: 75px;
 
   p {
@@ -116,6 +115,13 @@ export const ButtonContainer = styled.div`
     letter-spacing: 0.46px;
   }
 
+  .profile {
+    display: flex;
+    align-content: center;
+    margin-top: 25px;
+    width: 600px;
+  }
+
   .profilebox {
     cursor: pointer;
 
@@ -126,7 +132,6 @@ export const ButtonContainer = styled.div`
     overflow: hidden;
 
     img {
-      // position: absolute;
       width: 100%;
       height: 100%;
       object-fit: cover;
@@ -142,14 +147,15 @@ export const ButtonContainer = styled.div`
 
 export const HeaderButton = styled.button`
   cursor: pointer;
+  margin-top: 35px;
 
-  width: 130px;
-  height: 50px;
+  width: 150px;
+  height: 60px;
 
   font-family: 'Inter';
   font-style: normal;
   font-weight: 600;
-  font-size: 20px;
+  font-size: 24px;
   line-height: 19px;
   text-align: center;
   letter-spacing: 0.46px;
@@ -157,7 +163,7 @@ export const HeaderButton = styled.button`
 
   background: ${(props) => props.backgroundColor};
   border-radius: 5px;
-  border-color: #3563e9;
+  border-color: #218721;
 
   &:active {
     position: relative;

@@ -15,29 +15,29 @@ export const InputContainer = styled.div`
 
   p {
     margin: 40px 70px 25px;
-    font-size: 70px;
-    color: grey;
+    font-size: 80px;
+    color: #218721;
   }
 `;
 
 export const CurrentPositionButton = styled.button`
-  width: 200px;
-  height: 50px;
+  width: 220px;
+  height: 70px;
   margin: 70px 20px;
-  border: none;
+  border: 1px solid F7950F;
 
   cursor: pointer;
 
   font-family: 'Inter';
   font-style: normal;
   font-weight: 600;
-  font-size: 20px;
+  font-size: 24px;
   line-height: 19px;
   text-align: center;
   letter-spacing: 0.46px;
   color: #FFFFFF;
 
-  background: #3563e9;
+  background: #FDA62D;
   border-radius: 5px;
 
   &:active {
@@ -56,19 +56,19 @@ export const SearchFormInput = styled.input`
   border-radius: 5px;
 
   width: 500px;
-  height: 47px;
+  height: 65px;
 
   font-family: 'Inter';
   font-style: normal;
-  font-size: 20px;
+  font-size: 24px;
   line-height: 19px;
   text-align: center;
   letter-spacing: 0.46px;
 `;
 
 export const SearchFormButton = styled.button`
-  width: 200px;
-  height: 50px;
+  width: 220px;
+  height: 70px;
   margin: 70px 20px;
 
   cursor: pointer;
@@ -76,15 +76,15 @@ export const SearchFormButton = styled.button`
   font-family: 'Inter';
   font-style: normal;
   font-weight: 600;
-  font-size: 20px;
+  font-size: 24px;
   line-height: 19px;
   text-align: center;
   letter-spacing: 0.46px;
-  color: #3563e9;
+  color: #FFFFFF;
 
-  background: #FFFFFF;
+  background: #FDA62D;
   border-radius: 5px;
-  border-color: #3563e9;
+  border-color: #FDA62D;
 
   &:active {
     position: relative;

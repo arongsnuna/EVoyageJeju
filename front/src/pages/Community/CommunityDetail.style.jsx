@@ -1,16 +1,16 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  margin: 170px 0 300px;
+  margin: 150px 0 300px;
 `;
 
 export const TitleContainer = styled.div`
   display: flex;
   justify-content: center;
-  margin-top: 230px;
+  margin-top: 200px;
 
   p {
-    padding: 0 30px 35px;
+    padding: 100px 30px 35px;
     width: 2300px;
 
     font-family: 'Roboto';
@@ -58,37 +58,42 @@ export const ContentContainer = styled.div`
   flex-wrap: wrap;
   justify-content: center;
 
-  margin-top: 40px;
-
   div {
     display: flex;
     flex-direction: row;
     align-items: center;
+
     width: 2300px;
+    background: #f9f8f7;
 
     font-family: 'Roboto';
     font-style: normal;
     font-weight: 600;
-    font-size: 24px;
+    font-size: 26px;
     line-height: 110%;
     color: #000000;
   }
 
   .title-box {
+    padding-top: 70px;
     background: #f2f2f2;
-    border-top: 1px solid #00000033;
+    border-top-left-radius: 60px;
+    border-top-right-radius: 55px;
+    border-top: 53px dotted #4fc174;
     border-bottom: 1px solid #00000033;
     div {
       padding-left: 80px;
       width: 100%;
       height: 100px;
+      background: #DFDCD3;
 
       font-weight: 700;
-      font-size: 32px;
+      font-size: 40px;
     }
   }
 
   .posting-infobox {
+    margin-top: 0;
     border-bottom: 1px solid #00000033;
     div {
       justify-content: center;
@@ -102,7 +107,7 @@ export const ContentContainer = styled.div`
     .likeCount { width: 150px; }
     .info { 
       width: 200px;
-      background: #f2f2f2; 
+      background: #DFDCD3; 
     }
   }
 
@@ -127,7 +132,7 @@ export const ButtonContainer = styled.div`
   display: flex;
   justify-content: flex-end;
 
-  padding: 100px 380px 40px;
+  padding: 40px 380px 40px;
 
   div {
     display: flex;

@@ -61,20 +61,22 @@ function Header() {
         <ButtonContainer>
           {user ? (
             <>
-              <p>🍊{user.userNickname}님 반갑습니다🚜</p>
-              <div className="profilebox">
-                <img
-                  src={user.userImage ? user.userImage : mypagelogo}
-                  alt="Login user"
-                  onClick={() => setClick(!click)}
-                />
+              <div className="profile">
+                <p>🍊{user.userNickname}님 반갑습니다🚜</p>
+                <div className="profilebox">
+                  <img
+                    src={user.userImage ? user.userImage : mypagelogo}
+                    alt="Login user"
+                    onClick={() => setClick(!click)}
+                  />
+                </div>
               </div>
               {click && <MypageDropDown />}
             </>
           ) : (
             <>
               <HeaderButton
-                fontColor="#3563e9"
+                fontColor="#218721"
                 backgroundColor="#FFFFFF"
                 onClick={() => navigate(ROUTE.REGISTER.link)}
               >
@@ -82,7 +84,7 @@ function Header() {
               </HeaderButton>
               <HeaderButton
                 fontColor="#FFFFFF"
-                backgroundColor="#3563e9"
+                backgroundColor="#218721"
                 onClick={() => navigate(ROUTE.LOGIN.link)}
               >
                 Login
