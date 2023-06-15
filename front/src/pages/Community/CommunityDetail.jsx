@@ -23,9 +23,22 @@ const CommunityDetail = () => {
   // 좋아요를 누른 userId 수(length) 저장
   const [likeCount, setLikeCount] = useState(0);
 
+  // 이미지 용량 validate
+  const validateForm = () => {
+    if (postImage && postImage.size > 512 * 512) {
+        alert('이미지 크기는 50kbyte 이하여야 합니다.');
+        return false;
+    }
+    return true;
+  };
+
   // 해당 postId의 게시물 정보 불러오기
   const getPostInfo = async () => {
     try {
+      if (!validateForm()) {
+        return;
+      }
+
       const res1 = await Api.get(`community/${postId}`);
       const userIdOrigin = res1.data.userId
       const res2 = await Api.get(`users/${userIdOrigin}`);

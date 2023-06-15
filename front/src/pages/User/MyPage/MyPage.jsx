@@ -36,8 +36,8 @@ function MyPage() {
   }, [userImage])
 
   const validateForm = () => {
-    if (profileImage && profileImage.size > 1024 * 1024) {
-        alert('이미지 크기는 1MB 이하여야 합니다.');
+    if (profileImage && profileImage.size > 512 * 512) {
+        alert('이미지 크기는 50kbyte 이하여야 합니다.');
         return false;
     }
     return true;
@@ -127,8 +127,8 @@ function MyPage() {
                 <div>
                   <p>Photo requirements:</p>
                   <ol>
-                    <li>Min. 400px x 400px</li>
-                    <li>Max. 2MB</li>
+                    <li>Min. 512px x 512px</li>
+                    <li>Max. 50kbyte</li>
                     <li>Your Face or Company Logo</li>
                   </ol>
                 </div>

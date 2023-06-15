@@ -32,7 +32,7 @@ const upload = multer({ storage: storage });
 communityRouter.get('', wrapper(async (req, res,next)=>{
     try{
         const page = req.query.page || 1; // 요청한 페이지 번호
-        const pageSize = req.query.pageSize || 10; // 페이지 크기
+        const pageSize = req.query.pageSize || 100; // 페이지 크기
 
         const posts = await communityService.getPosts({page, pageSize});
         res.status(200).send(posts);
