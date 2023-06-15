@@ -18,18 +18,16 @@ const Community = () => {
   const [travel, setTravel] = useState([]);
   const [elec, setElec] = useState([]);
 
-  const likeCount = 0;
-
   const updateCommunity = async () => {
     try {
       const res = await Api.get('community');
       const dataWithAuthor = await Promise.all(
         res.data.map(async (post) => {
           const userRes = await Api.get(`users/${post.userId}`);
-          // const likeRes = await Api.get(`likes/${post.postId}`);
+          const likeRes = await Api.get(`likes/${post.postId}`);
           return { ...post, 
             author: userRes.data.userNickname, 
-            // likeCount: likeRes.data.postId.length,  
+            likeCount: likeRes.data.length,  
           };
         })
       );
@@ -106,7 +104,7 @@ const Community = () => {
                 <p className='author'>{post.author}</p>
                 <p className='type'>{post.postType}</p>
                 <p className='date'>{post.createdAt.substr(0, 10)}</p>
-                <p className='likeCount'>{likeCount}</p>
+                <p className='likeCount'>{post.likeCount}</p>
               </div>
             ))
           ) : (
@@ -118,7 +116,7 @@ const Community = () => {
                   <p className='author'>{post.author}</p>
                   <p className='type'>{post.postType}</p>
                   <p className='date'>{post.createdAt.substr(0, 10)}</p>
-                  <p className='likeCount'>{likeCount}</p>
+                  <p className='likeCount'>{post.likeCount}</p>
                 </div>
               ))
             ) : (
@@ -129,7 +127,7 @@ const Community = () => {
                   <p className='author'>{post.author}</p>
                   <p className='type'>{post.postType}</p>
                   <p className='date'>{post.createdAt.substr(0, 10)}</p>
-                  <p className='likeCount'>{likeCount}</p>
+                  <p className='likeCount'>{post.likeCount}</p>
                 </div>
               ))
             )

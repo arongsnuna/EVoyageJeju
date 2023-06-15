@@ -163,28 +163,6 @@ export const ButtonContainer = styled.div`
         top: 2px;
       }
     }
-
-    .delete {
-      border: 1px solid #FC1010;
-      background: #FFFFFF;
-      color: #FC1010;
-      
-      &:hover {
-        background: #FC1010;
-        color: #FFFFFF;
-      }
-    }
-
-    .like {
-      border: 1px solid #FCCE10;
-      background: #FFFFFF;
-      color: #FCCE10;
-      
-      &:hover {
-        background: #FCCE10;
-        color: #FFFFFF;
-      }
-    }
     
     .tolist {
       border: 1px solid #15BE51;
@@ -194,6 +172,39 @@ export const ButtonContainer = styled.div`
       &:hover {
         background: #15BE51;
         color: #FFFFFF;
+      }
+    }
+    
+    .delete {
+      border: 1px solid #FFD229;
+      background: #FFFFFF;
+      color: #FFD229;
+      
+      &:hover {
+        background: #FFD229;
+        color: #FFFFFF;
+      }
+    }
+
+    .like {
+      border: 1px solid #F91C1C;
+      background: #FFFFFF;
+      color: #F91C1C;
+      
+      &:hover {
+        background: #F91C1C;
+        color: #FFFFFF;
+      }
+    }
+
+    .liked {
+      border: 1px solid #F91C1C;
+      background: #F91C1C;
+      color: #FFFFFF;
+      
+      &:hover {
+        background: #FFFFFF;
+        color: #F91C1C;
       }
     }
   }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ROUTE } from '../../routes';
 import { Container, TitleContainer, TypeContainer, TypeButton, ContentContainer, ButtonContainer } from './CommunityDetail.style';
@@ -22,8 +22,6 @@ const CommunityDetail = () => {
   const [followers, setFollowers] = useState([]);
   // 좋아요를 누른 userId 수(length) 저장
   const [likeCount, setLikeCount] = useState(0);
-  console.log(followers)
-  const [isClicked, setIsClicked] = useState(false)
 
   // 해당 postId의 게시물 정보 불러오기
   const getPostInfo = async () => {
@@ -43,18 +41,27 @@ const CommunityDetail = () => {
       console.log(err)
     }
   };
+  useEffect(() => { getPostInfo() }, []);
 
-  // 해당 postId의 게시물의 좋아요 수 불러오기
-  const getLikeCount = async () => {
+
+  // 해당 페이지의 '좋아요'를 누른 followerlist 불러오기
+  const getFollower = async () => {
     const res = await Api.get(`likes/${postId}`)
-    setFollowers(res.data)
-    setLikeCount(followers.length)
+    setFollowers(res.data);
   };
 
-  useEffect(() => {
-    getPostInfo();
-    getLikeCount();
-  }, []);
+    // followers(좋아요를 누른 사람들 모음)에 현재 로그인된 유저가 포함됐는지 확인
+  // True(포함됨): already clicked, False(불포함): not clicked.
+  const isClicked = followers.filter((follower) => follower.userId === user.userId)
+
+  useEffect(() => { getFollower() }, [ isClicked ])
+
+  // 불러온 해당 페이지의 좋아요 수 update
+  const getLikeCount = useCallback(() => { 
+      setLikeCount(followers.length) 
+  }, [followers]);
+  useEffect(() => { getLikeCount() }, [ getLikeCount ])
+
 
   // 삭제 기능 구현
   const handleDelete = async () => {
@@ -74,9 +81,8 @@ const CommunityDetail = () => {
     e.preventDefault();
     try  {
       await Api.post(`likes/${postId}/increment`, { postId: postId, userId: user.userId })
-      // getLikeCount();
+      getLikeCount();
       alert('해당 게시물에 좋아요를 누르셨습니다.')
-      setIsClicked(true)
     } catch (err) {
       console.log(err)
       alert(err.response.data)
@@ -88,26 +94,14 @@ const CommunityDetail = () => {
     e.preventDefault();
 
     try  {
-      // var result = confirm("좋아요를 취소하시겠습니까?");
-      // if (result) {
-      //   await Api.delete(`likes/${postId}/decrement`);   
-      //   getLikeCount();
-      // }
       await Api.delete(`likes/${postId}/decrement`);   
-      // getLikeCount();
+      getLikeCount();
       alert('해당 게시물에 좋아요를 취소하셨습니다.');
-      setIsClicked(false)
     } catch (err) {
       console.log(err)
       alert(err.response.data)
     }
   };
-
-  // followers(좋아요를 누른 사람들 모음)에 현재 로그인된 유저가 포함됐는지 확인
-  // True(포함됨): already clicked, False(불포함): not clicked.
-  // const isClicked = followers.filter((follower) => follower.userId === user.userId)
-
-  const imgurl = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR4CkQC1DVO1tPh3MtAB0MS4wMQlA7zDC23VA&usqp=CAU'
 
   return (
     <Container>
@@ -132,8 +126,7 @@ const CommunityDetail = () => {
         </div>
         <div className='content-box'>
           <div className='content'>{content}</div>
-          {/* <div>{postImage}</div> */}
-          <div><img src={imgurl} /></div>
+          <div>{postImage}</div>
         </div>
       </ContentContainer>
       <ButtonContainer>
@@ -145,10 +138,10 @@ const CommunityDetail = () => {
               <button className='delete' onClick={handleDelete}>삭제</button>
             </>
           }
-          {isClicked ? (
+          {isClicked.length === 0 ? (
             <button className='like' onClick={handleLikeClick}>❤️</button>
           ) : (
-            <button className='like' onClick={handleCancelClick}>🤍</button>
+            <button className='liked' onClick={handleCancelClick}>🤍</button>
           )}
         </div>
       </ButtonContainer>
