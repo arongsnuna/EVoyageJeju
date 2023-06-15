@@ -67,7 +67,11 @@ function EVCarChart() {
       >
         <CartesianGrid stroke="#f5f5f5" />
         <XAxis dataKey="year" />
-        <YAxis yAxisId="left" dataKey="전기차 수" tickFormatter={tickFormatter}>
+        <YAxis
+          yAxisId="left"
+          dataKey="전기차 수"
+          tickFormatter={numberFormatter}
+        >
           <Label
             value="전기차 수"
             angle={-90}
