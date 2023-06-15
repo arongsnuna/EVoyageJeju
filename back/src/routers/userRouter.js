@@ -4,7 +4,31 @@ import { login_required } from '../middlewares/login_required.js';
 import { userAuthService } from '../services/userService.js';
 import {wrapper} from '../middlewares/wrapper.js';
 
+import multer from 'multer';
+import fs from 'fs';
+import mime from 'mime';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+
 const userAuthRouter = Router();
+
+// 파일 저장을 위한 storage 생성
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, path.join(__dirname, '../uploaded/user')); // 파일 업로드 위치 설정
+    },
+    filename: function (req, file, cb) {
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
+        cb(null, uniqueSuffix + '-' + file.originalname);
+    },
+});
+
+const upload = multer({ storage: storage });
 
 // 회원가입
 userAuthRouter.post('/register', wrapper(async (req, res, next)=> {
@@ -22,13 +46,10 @@ userAuthRouter.post('/register', wrapper(async (req, res, next)=> {
             userPassword,
         });
 
-        if(newUser.errorMessage){
-            throw new Error(newUser.errorMessage);
-        }
         res.status(201).json(newUser);
-
-    if (newUser.errorMessage) {
-      throw new Error(newUser.errorMessage);
+    }
+    catch(error){
+      next(error);
     }
 }));
 
@@ -38,11 +59,8 @@ userAuthRouter.post('/login', wrapper(async (req, res, next) =>{
         const userId = req.body.userId;
         const userPassword = req.body.userPassword;
 
-    const user = await userAuthService.getUser({ userId, userPassword });
+        const user = await userAuthService.getUser({ userId, userPassword });
 
-        if (user.errorMessage) {
-            throw new Error(user.errorMessage);
-        }
         res.status(200).send(user);
     } catch (error) {
         next(error);
@@ -50,10 +68,11 @@ userAuthRouter.post('/login', wrapper(async (req, res, next) =>{
 }));
 
 // 유저정보 수정
-userAuthRouter.put('/users/:userId', login_required, wrapper(async (req, res, next) =>{
+userAuthRouter.put('/users/:userId', login_required, upload.single('userImage'), wrapper(async (req, res, next) =>{
     try {
         const currentUser = req.currentUserId;
         const userId = req.params.userId;
+        const uploadImage = req.file ?? null;
 
         if(currentUser != userId){
             throw new Error('수정할 권한이 없습니다.')
@@ -70,10 +89,27 @@ userAuthRouter.put('/users/:userId', login_required, wrapper(async (req, res, ne
             throw new Error('비밀번호와 확인 비밀번호가 다릅니다');
         }
 
-        const updatedUser = await userAuthService.setUser({ userId, newNickname, newPassword });
+        let updatedUser;
 
-        if (updatedUser.errorMessage) {
-            throw new Error(updatedUser.errorMessage);
+        if (uploadImage !== null) {
+            // 업로드 된 파일을 서버의 파일 시스템에 저장
+            const fileName = uploadImage.filename;
+            const filePath = path.join(__dirname, '../uploaded/user', fileName);
+
+            // 이미지파일의 경로를 불러와 데이터 URI로 변환(로컬 파일 시스템의 경로를 사용하기 때문)
+            // 이미지 파일 읽기
+            const imageData = fs.readFileSync(filePath);
+            // MIME 타입을 가져오기
+            const mimeType = mime.lookup(filePath);
+
+            // 데이터 URI로 변환
+            const imageUri = `data:${mimeType};base64,${imageData.toString('base64')}`;
+
+            updatedUser = await userAuthService.setUserWithImage({ userId, newNickname, newPassword, uploadImage, imageUri });
+
+        } else {
+            updatedUser = await userAuthService.setUser({ userId, newNickname, newPassword});
+            
         }
         res.status(200).json(updatedUser);
     } catch (error) {
@@ -103,7 +139,7 @@ userAuthRouter.get('/users/:userId', login_required, wrapper(async (req, res, ne
 }));
 
 // 유저정보 삭제
-userAuthRouter.post('/users/:userId', login_required, wrapper(async(req,res,next)=>{
+userAuthRouter.delete('/users/:userId', login_required, wrapper(async(req,res,next)=>{
     try{
         const currentUser = req.currentUserId;
         const userId = req.params.userId;
@@ -115,10 +151,7 @@ userAuthRouter.post('/users/:userId', login_required, wrapper(async(req,res,next
             throw new Error('비밀번호를 입력해주세요');
         }
         const status = await userAuthService.deleteUser({userId, userPassword});
-        if(status.errorMessage){
-            throw new Error(status.errorMessage);
-        }
-        res.status(200).send(status.message);
+        res.status(200).send(status);
 
     }catch(error){
         next(error);
@@ -140,12 +173,5 @@ userAuthRouter.get('/current', login_required, wrapper(async (req, res, next) =>
         next(error)
     }
 }));
-
-      res.status(200).send(currentUserInfo);
-    } catch (error) {
-      next(error);
-    }
-  }
-);
 
 export { userAuthRouter };

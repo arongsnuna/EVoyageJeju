@@ -22,7 +22,7 @@ const CommunityWrite = () => {
       formData.append('postContent', content);
       formData.append('postType', type);
       console.log(formData.get('postImage'))
-
+      
       const res1 = await Api.postFile('community/write', formData);
       console.log('사진 업로드 성공')
       const newPostId = res1.data.postId;
