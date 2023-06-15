@@ -264,44 +264,15 @@ class userAuthService {
         return new Promise((resolve, reject)=>{
             bcrypt.compare(userPassword, userFound.userPassword, (error, result)=>{
                 if(result){//같으면
-                    const sql1 = `DELETE from Comment WHERE userId = '${userId}'`;
+                    const sql = `DELETE from User WHERE userId = '${userId}'`;
                     //const sql1 = 'delete from Comment';
-                    pool.query(sql1, (error, results, fields)=>{
+                    pool.query(sql, (error, results, fields)=>{
                         if(error){
                             reject(error);
                         }
                         else{
-                            const sql2 = `DELETE from Community WHERE userId = '${userId}'`;
-                            //const sql2 = 'delete from Community';
-                            pool.query(sql2, (error, results, fields)=>{
-                                if(error){
-                                    reject(error);
-                                }
-                                else{ 
-                                    const sql3 = `DELETE from LikeCount WHERE userId = '${userId}'`;
-                                    //const sql3 = 'delete from LikeCount';
-                                    pool.query(sql3, (error, results, fields)=>{
-                                        if(error){
-                                            reject(error);
-                                        }
-                                        else{
-                                            const sql4 = `DELETE from User WHERE userId = '${userId}'`;
-                                            //const sql4 = 'delete from User';
-                                            pool.query(sql4, (error, results, fields)=>{
-                                                if(error){
-                                                    reject(error);
-                                                }
-                                                else{
-                                                    const status = '성공적으로 삭제되었습니다.';
-                                                    resolve(status);
-                                                }
-                                            })
-                                        }
-                                    })
-
-                                    
-                                }
-                            })
+                            const status = '성공적으로 삭제되었습니다.';
+                            resolve(status);
                         }
                     })
                 }

@@ -151,6 +151,7 @@ userAuthRouter.delete('/users/:userId', login_required, wrapper(async(req,res,ne
             throw new Error('비밀번호를 입력해주세요');
         }
         const status = await userAuthService.deleteUser({userId, userPassword});
+
         res.status(200).send(status);
 
     }catch(error){
