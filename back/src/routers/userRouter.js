@@ -5,17 +5,17 @@ import { userAuthService } from '../services/userService.js';
 import {wrapper} from '../middlewares/wrapper.js';
 
 import multer from 'multer';
-import path from 'path';
 import fs from 'fs';
 import mime from 'mime';
+import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 
-
-const userAuthRouter = Router();
-
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+
+
+const userAuthRouter = Router();
 
 // 파일 저장을 위한 storage 생성
 const storage = multer.diskStorage({
@@ -27,6 +27,7 @@ const storage = multer.diskStorage({
         cb(null, uniqueSuffix + '-' + file.originalname);
     },
 });
+
 const upload = multer({ storage: storage });
 
 // 회원가입
