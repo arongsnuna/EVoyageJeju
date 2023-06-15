@@ -4,7 +4,7 @@ import { LOGIN_SUCCESS } from '../../../reducer/action';
 import { Link, useNavigate } from "react-router-dom";
 import { isIDVaild, isPasswordValid } from '../../../utils/util';
 import { useUserDispatch } from '../../../UserContext';
-import { TitleContainer, FormContainer, FormFieldset, ButtonContainer, FormButton, AlreadySignUpText } from './LoginForm.style';
+import { Container, TitleContainer, FormContainer, FormFieldset, ButtonContainer, FormButton, AlreadySignUpText } from './LoginForm.style';
 
 import logo from '../logo.png'
 import { ROUTE } from '../../../routes/routes';
@@ -51,13 +51,13 @@ function LoginForm() {
   };
 
   return (
-    <>
+    <Container>
       <TitleContainer>
         <img src={logo} alt='EVoyageJeju Logo' />
         <Link to={ROUTE.Home.link}>탐라는차다</Link>
       </TitleContainer>
       <FormContainer onSubmit={handleSubmit}>
-        <legend>로그인</legend>
+        <legend>🌐로그인</legend>
         <FormFieldset>
           <label>ID</label>
           <input 
@@ -84,27 +84,18 @@ function LoginForm() {
         </FormFieldset>
         <ButtonContainer>
           <FormButton 
-            fontColor='#FFFFFF'
-            backgroundColor='#3563E9'
             type="submit" 
             disabled={!isFormValid}
           >
             LOGIN
           </FormButton>
-          {/* <FormButton 
-            fontColor='#3563E9'
-            backgroundColor='#FFFFFF'
-            type="submit" 
-          >
-            Log in with Google
-          </FormButton> */}
         </ButtonContainer>
         <AlreadySignUpText>
           <Link to={ROUTE.Home.link}>Just Searching.</Link>
           <Link to={ROUTE.REGISTER.link}>No account yet? Sign Up First.</Link>
         </AlreadySignUpText>
       </FormContainer>
-    </>
+    </Container>
   );
 }
 

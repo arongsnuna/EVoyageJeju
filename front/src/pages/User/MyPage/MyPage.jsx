@@ -100,7 +100,7 @@ function MyPage() {
   return (
     <>
       <TitleContainer>
-        <p>마이페이지</p>
+        <p>🔐 마이페이지 🔐</p>
       </TitleContainer>
       <FormContainer>
         <fieldset>
@@ -175,7 +175,7 @@ function MyPage() {
                 />
               ) : (
                 <>
-                  <p></p>
+                  <p>****</p>
                   <button
                     onClick={() => setIsEditablePassword(true)}
                   >수정</button>

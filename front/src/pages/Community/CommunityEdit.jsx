@@ -52,10 +52,10 @@ const CommunityEdit = () => {
 
   return (
     <Container>
-      <TitleContainer>
-        <p>게시판</p>
-      </TitleContainer>
       <InputContainer>
+        <TitleContainer>
+          <p>🛠️게시글 수정</p>
+        </TitleContainer>
         <RadioContainer>
           <p>유형</p>
           <div>

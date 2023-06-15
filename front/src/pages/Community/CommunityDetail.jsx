@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Container, TitleContainer, TypeContainer, TypeButton, ContentContainer, ButtonContainer } from './CommunityDetail.style';
+import { Container, TitleContainer, ContentContainer, ButtonContainer } from './CommunityDetail.style';
 import { ROUTE } from '../../routes/routes';
 import * as Api from "../../utils/api";
 import { useUserState } from '../../UserContext';
+import Comments from './Comments';
 
 const CommunityDetail = () => {
   const navigate = useNavigate();
@@ -122,7 +123,7 @@ const CommunityDetail = () => {
   return (
     <Container>
       <TitleContainer>
-        <p>게시판</p>
+        <p>📒게시글 조회</p>
       </TitleContainer>
       <ContentContainer>
         <div className='title-box'>
@@ -155,12 +156,13 @@ const CommunityDetail = () => {
             </>
           }
           {isClicked.length === 0 ? (
-            <button className='like' onClick={handleLikeClick}>❤️</button>
+            <button className='like' onClick={handleLikeClick}>💗</button>
           ) : (
             <button className='liked' onClick={handleCancelClick}>🤍</button>
           )}
         </div>
       </ButtonContainer>
+      <Comments />
     </Container>
   );
 };

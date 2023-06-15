@@ -25,18 +25,20 @@ function EnvPosting() {
         />
       )}
       <PostingContainer>
-        {postings.map((posting) => (
-          <div>
-            <img 
-              key={posting.id} 
-              src={posting.thumbnailUrl} 
-              onClick={() => { 
-                setIsModalOpen(true) 
-                setSelectedItem(posting.contentUrl)
-              }} />
-            <p>{posting.title}</p>
-          </div>
-        ))}        
+        <div>
+          {postings.map((posting) => (
+            <div className="thumbnail">
+              <img 
+                key={posting.id} 
+                src={posting.thumbnailUrl} 
+                onClick={() => { 
+                  setIsModalOpen(true) 
+                  setSelectedItem(posting.contentUrl)
+                }} />
+              <p>{posting.title}</p>
+            </div>
+          ))} 
+        </div>       
       </PostingContainer>
     </Container>
   );

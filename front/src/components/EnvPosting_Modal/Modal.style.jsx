@@ -24,8 +24,7 @@ export const ModalContainer = styled.div`
 
   padding-bottom: 20px;
   margin-left: 680px;
-  border-radius: 60px;
-  border-top: 52px dotted #4fc174;
+  border-radius: 80px;
   
   position: absolute;
   top: -500;
@@ -35,7 +34,7 @@ export const ModalContainer = styled.div`
   transform: translate(0%, 0%);
   overflow: auto;
 
-  background: #FFFFFF;
+  background: #caf5d7;
 `;
 
 export const CancelButton = styled.button`

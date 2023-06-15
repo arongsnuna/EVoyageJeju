@@ -7,10 +7,16 @@ export const Container = styled.div`
 export const TitleContainer = styled.div`
   display: flex;
   justify-content: center;
-  margin-top: 230px;
+  margin-top: 260px;
+  border-top-left-radius: 60px;
+  border-top-right-radius: 55px;
+  border-top: 100px dotted #f9f8f7;
 
   p {
-    padding: 0 30px 35px;
+    display: flex;
+    justify-content: flex-start;
+
+    padding: 150px 30px 0 150px;
     width: 2300px;
 
     font-family: 'Roboto';
@@ -32,32 +38,32 @@ export const InputContainer = styled.div`
   div {
     display: flex;
     flex-direction: row;
-    width: 1700px;
+    width: 2300px;
+    background: #caf5d7;
   }
 `;
 
 export const RadioContainer = styled.div`
   align-items: center;
-  border-top: 1px solid #00000033;
-  padding: 70px 50px 0;
+  padding: 50px 0 40px;
 
   p {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-right: 70px;
+    margin: 50px 50px 0 150px;
 
-    width: 120px;
-    height: 50px;
+    width: 160px;
+    height: 60px;
 
-    border: 1px solid #3563E9;
+    border: 1px solid #218721;
     border-radius: 5px;
-    background: #3563E9;
+    background: #218721;
 
     font-family: 'Inter';
     font-style: normal;
-    font-weight: 500;
-    font-size: 24px;
+    font-weight: 700;
+    font-size: 28px;
     line-height: 17px;
     text-align: center;
     letter-spacing: 0.46px;
@@ -67,29 +73,32 @@ export const RadioContainer = styled.div`
   div {
     align-items: center;
     justify-content: center;
+    margin-top: 50px;
     margin-right: 20px;
 
     width: 180px;
-    height: 50px;
+    height: 60px;
 
-    border: 1px solid #0073B9;
+    border: 3px solid #218721;
     border-radius: 5px;
+
+    background: #f9f8f7;
 
     font-family: 'Inter';
     font-style: normal; 
-    font-weight: 500;
-    font-size: 24px;
+    font-weight: 700;
+    font-size: 28px;
     line-height: 17px;
     text-align: center;
     letter-spacing: 0.46px;
-    color: #0073B9;
+    color: #218721;
 
     input {
       margin-left: 0;
       margin-right: 15px;
       width: 24px;
       height: 24px;
-      accent-color:#0073B9;
+      accent-color:#218721;
     }
   }
 `;
@@ -97,28 +106,27 @@ export const RadioContainer = styled.div`
 export const ContentContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  padding: 0 50px;
   
   div {
-    padding: 20px 0 22.5px;
+    padding: 20px 0;
 
     label {
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-right: 70px;
+      margin: 0 50px 20px 150px;
   
-      width: 120px;
-      height: 50px;
+      width: 160px;
+      height: 60px;
   
-      border: 1px solid #3563E9;
+      border: 1px solid #218721;
       border-radius: 5px;
-      background: #3563E9;
+      background: #218721;
   
       font-family: 'Inter';
       font-style: normal;
-      font-weight: 500;
-      font-size: 24px;
+      font-weight: 700;
+      font-size: 28px;
       line-height: 17px;
       text-align: center;
       letter-spacing: 0.46px;
@@ -126,14 +134,15 @@ export const ContentContainer = styled.div`
     }
 
     input, textarea {
-      width: 1500px;
+      width: 1800px;
+      height: 60px;
       border-radius: 5px;
       padding-left: 15px;
 
       font-family: 'Roboto';
       font-style: normal;
       font-weight: 500;
-      font-size: 24px;
+      font-size: 28px;
       line-height: 140%;
       color: #000000;
     }
@@ -144,26 +153,19 @@ export const ContentContainer = styled.div`
     }
   }
 
-  .buttonbox {
+  input[type="file"] {
+    padding-top: 11px;
     
-    label {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 140%;
+    color: #000000;
 
-    }
-
-    input[type="file"] {
-      padding-top: 6px;
-      
-      font-family: 'Roboto';
-      font-style: normal;
-      font-weight: 500;
-      font-size: 24px;
-      line-height: 140%;
-      color: #000000;
-
-      &::file-selector-button {
-        margin-right: 20px;
-        height: 40px;
-      }
+    &::file-selector-button {
+      margin-right: 20px;
+      height: 40px;
     }
   }
 `;
@@ -171,31 +173,33 @@ export const ContentContainer = styled.div`
 export const ButtonContainer = styled.div`
   display: flex;
   justify-content: flex-end;
-  padding: 40px 50px 70px;;
-  border-bottom: 1px solid #00000033;
+  padding: 40px 0 150px;
+  border-bottom-left-radius: 60px;
+  border-bottom-right-radius: 60px;
 
   width: 2316px;
 
   button {
-    width: 150px;
-    height: 50px;
+    width: 160px;
+    height: 60px;
 
     margin-left: 15px;
     border: 1px solid #3563E9;
     border-radius: 5px;
-    background: #FFFFFF;
+    background: #3563E9;
 
     font-family: 'Inter';
     font-style: normal;
-    font-weight: 600;
-    font-size: 24px;
+    font-weight: 700;
+    font-size: 28px;
     line-height: 19px;
     text-align: center;
     letter-spacing: 0.46px;
-    color: #3563E9;
+    color: #FFFFFF;
 
     &:hover {
-      background: #3563E9;
+      border: 1px solid #1D3B97;
+      background: #1D3B97;
       color: #FFFFFF;
     }
 
@@ -206,13 +210,17 @@ export const ButtonContainer = styled.div`
   }
 
   .tolist {
-    border: 1px solid #15BE51;
-    background: #FFFFFF;
-    color: #15BE51;
+    border: 1px solid #9C0FFC;
+    background: #9C0FFC;
+    color: #FFFFFF;
 
     &:hover {
-      background: #15BE51;
+      background: #9C0FFC;
       color: #FFFFFF;
     }
+  }
+
+  .save {
+    margin-right: 112px;
   }
 `;

@@ -24,14 +24,14 @@ export const CurrentPositionButton = styled.button`
   width: 220px;
   height: 70px;
   margin: 70px 20px;
-  border: 1px solid F7950F;
+  border: none;
 
   cursor: pointer;
 
   font-family: 'Inter';
   font-style: normal;
   font-weight: 600;
-  font-size: 24px;
+  font-size: 28px;
   line-height: 19px;
   text-align: center;
   letter-spacing: 0.46px;
@@ -54,13 +54,15 @@ export const MapComp = styled.div`
 export const SearchFormInput = styled.input`
   margin: 70px 0 70px 20px;
   border-radius: 5px;
+  border: 1px solid F7950F;
+
 
   width: 500px;
   height: 65px;
 
   font-family: 'Inter';
   font-style: normal;
-  font-size: 24px;
+  font-size: 28px;
   line-height: 19px;
   text-align: center;
   letter-spacing: 0.46px;
@@ -70,13 +72,14 @@ export const SearchFormButton = styled.button`
   width: 220px;
   height: 70px;
   margin: 70px 20px;
+  border: none;
 
   cursor: pointer;
 
   font-family: 'Inter';
   font-style: normal;
   font-weight: 600;
-  font-size: 24px;
+  font-size: 28px;
   line-height: 19px;
   text-align: center;
   letter-spacing: 0.46px;
@@ -84,7 +87,6 @@ export const SearchFormButton = styled.button`
 
   background: #FDA62D;
   border-radius: 5px;
-  border-color: #FDA62D;
 
   &:active {
     position: relative;

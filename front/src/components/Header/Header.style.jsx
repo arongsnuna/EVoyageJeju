@@ -5,7 +5,8 @@ export const Container = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-content: center;
-  border-bottom: 2px solid #FDB551;
+  border-top-left-radius: 70px;
+  border-top-right-radius: 70px;
 
   position: absolute;
   width: 100%;
@@ -13,7 +14,7 @@ export const Container = styled.div`
   left: 0px;
   top: 0px;
 
-  background: #FCD565;
+  background: #4fc174;
 `;
 
 export const TitleContainer = styled.div`
@@ -63,7 +64,7 @@ export const NavContainer = styled.div`
   width: 100%;
 
   &:hover {
-    background: #FFE69C;
+    background: #caf5d7;
   }
 
   a {
@@ -74,11 +75,12 @@ export const NavContainer = styled.div`
     width: 100%;
     height: 100%;
 
+    text-align: center;
     font-family: 'Inter';
     font-style: normal;
     font-weight: 700;
-    font-size: 35px;
-    line-height: 19px;
+    font-size: 30px;
+    line-height: 40px;
     letter-spacing: 0.2px;
     text-decoration-line: none;
 
@@ -105,11 +107,12 @@ export const ButtonContainer = styled.div`
   height: 75px;
 
   p {
+    padding-left: 50px;
     margin-right: 15px;
     font-family: 'Inter';
     font-style: normal;
     font-weight: 600;
-    font-size: 28px;
+    font-size: 30px;
     line-height: 19px;
     text-align: center;
     letter-spacing: 0.46px;

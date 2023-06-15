@@ -62,7 +62,7 @@ function Header() {
           {user ? (
             <>
               <div className="profile">
-                <p>🍊{user.userNickname}님 반갑습니다🚜</p>
+                <p>{user.userNickname}님 반갑습니다!</p>
                 <div className="profilebox">
                   <img
                     src={user.userImage ? user.userImage : mypagelogo}

@@ -69,26 +69,30 @@ const Community = () => {
       </TitleContainer>
       <TypeContainer>
         <div>
-          <TypeButton 
-            disabled={activeTab}
-            onClick={handleAllTab}
-          >전체
-          </TypeButton>
-          <TypeButton 
-            disabled={!activeTab && activeSpecificTab===false}
-            onClick={handleTravelTab}
-          >여행
-          </TypeButton>
-          <TypeButton
-            disabled={!activeTab && activeSpecificTab===true}
-            onClick={handleElecTab}
-          >전기차
-          </TypeButton>
-          {user ? (
-              <AddButton onClick={() => navigate(ROUTE.COMMUNITYWRITE.link)}>글쓰기</AddButton>
-            ) : (
-              <AddButton onClick={() => alert("로그인 후 이용해 주세요.")}>글쓰기</AddButton>
-            )}
+          <div>
+            <TypeButton 
+              disabled={activeTab}
+              onClick={handleAllTab}
+            >전체
+            </TypeButton>
+            <TypeButton 
+              disabled={!activeTab && activeSpecificTab===false}
+              onClick={handleTravelTab}
+            >여행
+            </TypeButton>
+            <TypeButton
+              disabled={!activeTab && activeSpecificTab===true}
+              onClick={handleElecTab}
+            >전기차
+            </TypeButton>
+            <div className='btnbox'>
+              {user ? (
+                <AddButton onClick={() => navigate(ROUTE.COMMUNITYWRITE.link)}>글쓰기</AddButton>
+              ) : (
+                <AddButton onClick={() => alert("로그인 후 이용해 주세요.")}>글쓰기</AddButton>
+              )}
+            </div>
+          </div>
         </div>
       </TypeContainer>
       <div>

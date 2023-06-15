@@ -35,22 +35,24 @@ const CommunityWrite = () => {
 
   return (
     <Container>
-      <TitleContainer>
-        <p>게시판</p>
-      </TitleContainer>
       <InputContainer>
+        <TitleContainer>
+          <p>🖌️게시글 작성</p>
+        </TitleContainer>
         <RadioContainer>
           <p>유형</p>
           <div>
             <input 
               type="radio" 
+              name="type"
               onChange={() => setType("전기차")}
             />
             <label>전기차</label>
           </div>
           <div>
             <input 
-              type="radio" 
+              type="radio"
+              name="type" 
               onChange={() => setType("여행")}
             />
             <label>여행</label>

@@ -31,17 +31,15 @@ export const TypeContainer =  styled.div`
   justify-content: center;
 
   div {
-    border-top-left-radius: 60px;
-    border-top-right-radius: 55px;
-    border-top: 50px dotted #4fc174;
-    border-left: 1px solid #f9f8f7;
-    border-right: 1px solid #f9f8f7;
-    border-bottom: 1px solid #FDB551;
-
+    display: flex;
+    flex-direction: row;
     width: 2316px;
-
-    background: #f9f8f7;
   }
+
+  .btnbox {
+    justify-content: flex-end;
+  }
+
 `;
 
 export const TypeButton = styled.button`
@@ -52,6 +50,8 @@ export const TypeButton = styled.button`
   border: none;
   border-top-left-radius: 60px;
   border-top-right-radius: 55px;
+
+  width: 20%;
   
   background: none;
 
@@ -76,8 +76,8 @@ export const TypeButton = styled.button`
 `;
 
 export const AddButton = styled.button`
-  margin-left: 1320px;
-  margin-bottom: 20px;
+  margin: 80px 0 0 0;
+
   width: 170px;
   height: 70px;
 

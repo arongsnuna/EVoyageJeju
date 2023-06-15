@@ -10,10 +10,11 @@ export const TitleContainer = styled.div`
   display: flex;
   justify-content: center;  
   margin: 50px 0 120px;
-  border-bottom: 10px dashed #218721;
 
   p {
-    padding: 75px 0 40px;
+    padding: 80px 0 95px;
+    width: 2922px;
+    border-bottom: 10px dashed #218721;
 
     font-family: 'Inter';
     font-style: normal;
@@ -29,24 +30,30 @@ export const TitleContainer = styled.div`
 
 export const PostingContainer = styled.div`
   display: flex;
-  flex-flow: row wrap;
   justify-content: center;
 
   width: 100%;
 
   div {
     display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 2600px;
+  }
+
+  .thumbnail {
+    display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: center;
     border-radius: 50px;
-    border-top: 52px dotted #4fc174;
+    border-top: 52px dotted #f9f8f7;
 
     margin: 0 25px 50px;
     padding: 50px 50px 10px;
 
-    width: 24%;
+    width: 700px;
 
-    background: #F9F8F7;
+    background: #caf5d7;
   }
 
   img {

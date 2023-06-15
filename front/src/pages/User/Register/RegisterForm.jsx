@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import * as Api from '../../../utils/api';
 import { Link, useNavigate } from "react-router-dom";
 import { isNameValid, isNickNameValid, isIDVaild, isPasswordValid } from '../../../utils/util';
-import { TitleContainer, FormContainer, FormFieldset, ButtonContainer, FormButton, AlreadySignUpText } from './RegisterForm.style';
+import { Container, TitleContainer, FormContainer, FormFieldset, ButtonContainer, FormButton, AlreadySignUpText } from './RegisterForm.style';
 
 import logo from '../logo.png'
 import { ROUTE } from '../../../routes/routes';
@@ -16,7 +16,7 @@ function RegisterForm() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const isFormValid = isNameValid(id) && isNickNameValid(nickname) && isIDVaild(id) && isPasswordValid(password);
+  const isFormValid = isNameValid(id) && isNickNameValid(nickname) && isIDVaild(id) && isPasswordValid(password) && (password === confirmPassword);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -41,13 +41,13 @@ function RegisterForm() {
   };
 
   return (
-    <>
+    <Container>
       <TitleContainer>
         <img src={logo} alt='EVoyageJeju Logo' />
         <Link to={ROUTE.Home.link}>탐라는차다</Link>
       </TitleContainer>
       <FormContainer onSubmit={handleSubmit}> 
-        <legend>회원가입</legend>
+        <legend>🙋🏻회원가입</legend>
         <FormFieldset>
           <label>이름</label><br />
           <input 
@@ -110,26 +110,17 @@ function RegisterForm() {
         </FormFieldset>
         <ButtonContainer>
           <FormButton 
-            fontColor='#FFFFFF'
-            backgroundColor='#3563E9'
             type="submit" 
             disabled={!isFormValid}
           >
             Register
           </FormButton>
-          {/* <FormButton 
-            fontColor='#3563E9'
-            backgroundColor='#FFFFFF'
-            type="submit" 
-          >
-            Login with Google
-          </FormButton> */}
         </ButtonContainer>
         <AlreadySignUpText>
           <Link to={ROUTE.LOGIN.link}>Already have an account?</Link>
         </AlreadySignUpText>
       </FormContainer>
-    </>
+    </Container>
   );
 }
 

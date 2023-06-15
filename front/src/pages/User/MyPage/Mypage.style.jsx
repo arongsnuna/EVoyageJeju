@@ -2,24 +2,23 @@ import styled from "styled-components";
 
 export const TitleContainer = styled.div`
   display: flex;
-  justify-content: center;
-  margin-top: 230px;
+  justify-content: center;  
+  margin: 200px 0 40px;
 
   p {
-    padding: 0 30px 35px;
-    border-bottom: 1px solid #DDE1E6;
-    width: 1400px;
+    padding: 100px 0 95px;
+    width: 2922px;
+    border-bottom: 10px dashed #218721;
 
-    font-family: 'Inter';
+    font-family: 'Roboto';
     font-style: normal;
-    font-weight: 700;
-    font-size: 40px;
-    line-height: 44px;
-    display: flex;
-    align-items: center;
+    font-weight: 600;
+    font-size: 60px;
+    line-height: 58px;
+    text-align: center;
     letter-spacing: 0.2px;
-
-    color: #000000;
+    text-transform: capitalize;
+    color: #212121;
   }
 `;
 
@@ -54,7 +53,7 @@ export const FormPhotoDiv = styled.div`
   display: flex;
   flex-direction: column;
 
-  border: 1px solid #DDE1E6;
+  border: 5px dashed #FDB551;
   margin-bottom: 20px;
   padding: 50px;
 
@@ -97,7 +96,7 @@ export const FormPhotoContent = styled.form`
       justify-content: center;
       cursor: pointer;
       margin-bottom: 20px;
-      border: 1px solid #3563e9;
+      border: 4px solid #218721;
       border-radius: 5px;
       height: 50px;
 
@@ -108,11 +107,12 @@ export const FormPhotoContent = styled.form`
       font-size: 25px;
       line-height: 100%;
       letter-spacing: 0.5px;
-      color: #3563e9;
+      color: #218721;
 
       &:hover {
+        border: 4px solid #1D5D1D;
         background: #F6F9FF;
-        color: #3563e9;
+        color: #1D5D1D;
       }
 
       &:active {
@@ -122,11 +122,11 @@ export const FormPhotoContent = styled.form`
     }
     
     .save {
-      background: #3563e9;
+      background: #218721;
       color: #FFFFFF;
 
       &:hover {
-        background: #2D50B9;
+        background: #1D5D1D;
         color: #FFFFFF;
       }
     }
@@ -136,8 +136,6 @@ export const FormPhotoContent = styled.form`
 `;
 
 export const FormPhotoInfo = styled.div`
-  // display: flex;
-
   div {
     display: flex;
     flex-direction: column;
@@ -163,14 +161,14 @@ export const FormPhotoInfo = styled.div`
 `;
 
 export const FormUserDiv = styled.div`
-  border: 1px solid #DDE1E6;
+  border: 5px dashed #FDB551;
   margin-bottom: 20px;
-  padding: 60px 50px;
+  padding: 60px 50px 40px;
 
   div {
     display: flex;
     flex-direction: row;
-    margin: 0 0 10px;
+    margin: 10px 0 5px;
   }
 
   label {
@@ -199,29 +197,40 @@ export const FormUserDiv = styled.div`
     color: #21272A;
   }
 
+  input {
+    margin-top: 2px;
+    padding-left: 10px;
+    height: 40px;
+    width: 265px;
+  }
+
   button {
     cursor: pointer;
 
     padding: 0 10px;
     border: none;
+    border-radius: 5px;
 
     height: 48px;
     width: 580px;
 
-    background: #3563e9;
+    background: #218721;
 
     font-family: 'Roboto';
     font-style: normal;
-    font-size: 20px;
+    font-weight: 700;
+    font-size: 25px;
     line-height: 140%;
     color: #FFFFFF;
-    box-shadow: 1px 3px 2px #7F848D;
 
-    :active {
+    &:hover {
+      background: #1D5D1D;
+      color: #FFFFFF;
+    }
+
+    &:active {
       position: relative;
       top: 3px;
-
-      box-shadow: none;
     }
   }
 `;
@@ -232,7 +241,7 @@ export const ButtonContainer = styled.div`
   margin-top: 30px;
 
   button {
-    margin: 42px 30px 8px 0;
+    margin: 42px 30px 0 0;
     
     width: 120px;
     height: 45px;
@@ -242,11 +251,11 @@ export const ButtonContainer = styled.div`
 
     font-family: 'Roboto';
     font-style: normal;
-    font-weight: 500;
+    font-weight: 700;
     font-size: 24px;
     line-height: 100%;
     letter-spacing: 0.5px;
-    color: #3563e9;
+    color: #FDA62D;
   
     &:active {
       position: relative;
