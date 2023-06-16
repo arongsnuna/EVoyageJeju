@@ -49,6 +49,15 @@ export const InputContainer = styled.div`
     font-size: 28px;
     font-weight: 700;
     color: white;
+
+    &:hover {
+      background: #719B71;
+    }
+
+    &:active {
+      position: relative;
+      top: 3px;
+    }
   }
 `;
 
@@ -151,5 +160,14 @@ export const ButtonContainer = styled.div`
     font-size: 28px;
     font-weight: 700;
     color: white;
+    
+    &:hover {
+      background: #719B71;
+    }
+
+    &:active {
+      position: relative;
+      top: 3px;
+    }
   }
 `;

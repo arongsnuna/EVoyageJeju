@@ -17,7 +17,7 @@ export const postings = [
   },
   { 
     id: 2,
-    title: '충전시 시동을 꺼야하나요 ?', 
+    title: '충전시 시동을 꺼야하나요?', 
     thumbnailUrl: 'https://www.tamraev.com/upload/card/20210506135628_91321958.jpg', 
     contentUrl: [
       {id: 1, cardUrl: 'https://www.tamraev.com/upload/card/20210506135628_91321958.jpg'},
@@ -26,13 +26,13 @@ export const postings = [
   },
   { 
     id: 3,
-    title: '전기차를 이용하면 석탄원료가 증가하지 않나요 ?', 
-    thumbnailUrl: 'http://www.me.go.kr/file/readEncFile.do?fileName=d966848ebebd602cd5eafc3c5541c3fd42390498a9d251d01fcb084c4099faf48bbb42ce90342425c2be9e5a1f0c34bc', 
+    title: '주행 가능 거리가 줄지 않는 것이 신기해요!', 
+    thumbnailUrl: 'https://www.tamraev.com/upload/card/20210506122654_89371205.jpg', 
     contentUrl: [
-      {id: 1, cardUrl: 'http://www.me.go.kr/file/readEncFile.do?fileName=d966848ebebd602cd5eafc3c5541c3fd42390498a9d251d01fcb084c4099faf48bbb42ce90342425c2be9e5a1f0c34bc'},
-      {id: 2, cardUrl: 'http://www.me.go.kr/file/readEncFile.do?fileName=d966848ebebd602cd5eafc3c5541c3fd42390498a9d251d01fcb084c4099faf432ac839e966f5ecff4fca14c6dd11458'},
-      {id: 3, cardUrl: 'http://www.me.go.kr/file/readEncFile.do?fileName=d966848ebebd602cd5eafc3c5541c3fd42390498a9d251d01fcb084c4099faf45e635eeea06fa978b34c129bcc97c8ae'},
-      {id: 4, cardUrl: 'http://www.me.go.kr/file/readEncFile.do?fileName=d966848ebebd602cd5eafc3c5541c3fd42390498a9d251d01fcb084c4099faf4005c5f36d73eee51d3bcff4624c8f295'},
+      {id: 1, cardUrl: 'https://www.tamraev.com/upload/card/20210506122654_89371205.jpg'},
+      {id: 2, cardUrl: 'https://www.tamraev.com/upload/card/20210506122656_60378845.jpg'},
+      {id: 3, cardUrl: 'https://www.tamraev.com/upload/card/20210506122658_35137467.jpg'},
+      {id: 4, cardUrl: 'https://www.tamraev.com/upload/card/20210506122701_04115045.jpg'},
     ]
   },
   { 
@@ -48,7 +48,7 @@ export const postings = [
   },
   { 
     id: 5,
-    title: '비오는 날 충전하면 위험하지 않나요 ?', 
+    title: '비오는 날 충전하면 위험하지 않나요?', 
     thumbnailUrl: 'https://www.tamraev.com/upload/card/20210506135852_54537292.jpg', 
     contentUrl: [
       {id: 1, cardUrl: 'https://www.tamraev.com/upload/card/20210506135852_54537292.jpg'},

@@ -166,22 +166,22 @@ export const ButtonContainer = styled.div`
 
 export const HeaderButton = styled.button`
   cursor: pointer;
-  margin-top: 35px;
+  margin-top: 25px;
 
   width: 150px;
-  height: 60px;
+  height: 70px;
 
   font-family: 'Inter';
   font-style: normal;
   font-weight: 600;
-  font-size: 24px;
+  font-size: 27px;
   line-height: 19px;
   text-align: center;
   letter-spacing: 0.46px;
   color: ${(props) => props.fontColor};
 
   background: ${(props) => props.backgroundColor};
-  border-radius: 5px;
+  border-radius: 40px;
   border-color: #218721;
 
   &:active {
