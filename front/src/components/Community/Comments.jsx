@@ -25,6 +25,10 @@ function Comments({ postId, userId }) {
 
   // 댓글 작성
   const addComment = async () => {
+    if (!userId) {
+      alert("로그인 후 댓글을 작성해주세요");
+      return;
+    }
     try {
       const response = await Api.post(`community/${postId}/comments`, {
         commentContent: newComment,
