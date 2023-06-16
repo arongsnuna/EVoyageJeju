@@ -28,11 +28,22 @@ const CommunityEdit = () => {
     })
   }, []);
 
+  // 업로드 사진 용량 제한
+  const validateForm = () => {
+    if (postImage && postImage.size > 50 * 1024) {
+        alert('이미지 크기는 50kbyte 이하여야 합니다.');
+        return false;
+    }
+    return true;
+  };
 
   const handleEdit = async (e) => {
     e.preventDefault();
 
     try {
+      if (!validateForm()) {
+        return;
+      }
       const formData = new FormData();
       formData.append('postImage', postImage);
       formData.append('postTitle', title);

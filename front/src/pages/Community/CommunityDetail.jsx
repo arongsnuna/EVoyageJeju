@@ -4,7 +4,7 @@ import { Container, TitleContainer, ContentContainer, ButtonContainer } from './
 import { ROUTE } from '../../routes/routes';
 import * as Api from "../../utils/api";
 import { useUserState } from '../../UserContext';
-import Comments from './Comments';
+import Comments from '../../components/Community/Comments';
 
 const CommunityDetail = () => {
   const navigate = useNavigate();
@@ -156,9 +156,9 @@ const CommunityDetail = () => {
             </>
           }
           {isClicked.length === 0 ? (
-            <button className='like' onClick={handleLikeClick}>💗</button>
+            <button className='like' onClick={handleLikeClick}>♥️</button>
           ) : (
-            <button className='liked' onClick={handleCancelClick}>🤍</button>
+            <button className='liked' onClick={handleCancelClick}>♥️</button>
           )}
         </div>
       </ButtonContainer>

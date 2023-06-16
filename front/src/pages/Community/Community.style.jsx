@@ -33,7 +33,7 @@ export const TypeContainer =  styled.div`
   div {
     display: flex;
     flex-direction: row;
-    width: 2316px;
+    width: 2320px;
   }
 
   .btnbox {
@@ -45,8 +45,8 @@ export const TypeContainer =  styled.div`
 export const TypeButton = styled.button`
   cursor: pointer;
 
-  margin-top: 50px;
-  padding: 40px 85px;
+  margin-top: 0px;
+  padding: 40px 85px 30px;
   border: none;
   border-top-left-radius: 60px;
   border-top-right-radius: 55px;
@@ -70,13 +70,12 @@ export const TypeButton = styled.button`
 
   &:disabled {
     background: #FFC87B;
-    color: #218721;
     border: 1px solid #FDB551;
   }
 `;
 
 export const AddButton = styled.button`
-  margin: 80px 0 0 0;
+  margin: 50px 0 20px;
 
   width: 170px;
   height: 70px;

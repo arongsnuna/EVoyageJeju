@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useUserState } from '../../UserContext';
 import { ROUTE } from '../../routes/routes';
@@ -17,8 +17,6 @@ const Community = () => {
   // 탭 전환 시 postType에 맞게 post 저장
   const [travel, setTravel] = useState([]);
   const [elec, setElec] = useState([]);
-  // 검색을 위한 state
-  const [search, setSearch] = useState('');
 
   const updateCommunity = async () => {
     try {

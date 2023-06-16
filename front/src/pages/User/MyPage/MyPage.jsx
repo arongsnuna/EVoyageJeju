@@ -35,13 +35,14 @@ function MyPage() {
     Api.get(`users/${user.userId}`).then((res) => setCurrentUser(res.data))
   }, [userImage])
 
+  // 업로드 사진 용량 제한
   const validateForm = () => {
-    if (profileImage && profileImage.size > 512 * 512) {
+    if (profileImage && profileImage.size > 50 * 1024) {
         alert('이미지 크기는 50kbyte 이하여야 합니다.');
         return false;
     }
     return true;
-};
+  };
 
   // 이미지 업로드 버튼 함수
   const handleSubmit = async (e) => {

@@ -43,10 +43,6 @@ function EVCarChart() {
 
   const numberFormatter = (number) => new Intl.NumberFormat().format(number);
 
-  const tickFormatter = (number) => {
-    return number >= 1000 ? `${(number / 1000).toFixed(0)}k` : number;
-  };
-
   const tooltipFormatter = (value, name) => {
     const unit = name === "전기차 수" ? " 대" : " 천톤CO2eq";
     return [numberFormatter(value) + unit, name];
@@ -66,11 +62,16 @@ function EVCarChart() {
         }}
       >
         <CartesianGrid stroke="#f5f5f5" />
-        <XAxis dataKey="year" />
+        <XAxis 
+          dataKey="year" 
+          style={{ fontSize: "25px" }}
+        />
         <YAxis
           yAxisId="left"
           dataKey="전기차 수"
           tickFormatter={numberFormatter}
+          // margin={{top: 50}}
+          style={{ fontSize: "20px" }}
         >
           <Label
             value="전기차 수"
@@ -84,6 +85,7 @@ function EVCarChart() {
           dataKey="차량 CO2 배출량"
           orientation="right"
           tickFormatter={numberFormatter}
+          style={{ fontSize: "20px" }}
           domain={[900, 1600]}
         >
           <Label

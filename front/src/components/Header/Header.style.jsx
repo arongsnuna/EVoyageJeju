@@ -22,6 +22,12 @@ export const TitleContainer = styled.div`
   flex-direction: row;
   align-items: center;
 
+  &:hover {
+    border-top-left-radius: 70px;
+    border-top-right-radius: 70px;
+    background: #caf5d7;
+  }
+
   img {
     width: 80px;
     height: 80px;
@@ -29,9 +35,10 @@ export const TitleContainer = styled.div`
   }
 
   a {
-    width: 220px;
+    width: 250px;
     height: 51px;
     padding-left: 30px;
+    padding-right: 70px;
     text-decoration: none;
   
     font-family: 'Inter';
@@ -64,13 +71,22 @@ export const NavContainer = styled.div`
   width: 100%;
 
   &:hover {
-    background: #caf5d7;
+    border-top-left-radius: 100px;
+    border-top-right-radius: 100px;
+    background: #f9f8f7;
+  }
+
+  .clicked {
+    border-top-left-radius: 100px;
+    border-top-right-radius: 100px;
+    background: #f9f8f7;
   }
 
   a {
     display: flex;
     align-items: center;
     justify-content: center;
+    padding-top: 10px;
 
     width: 100%;
     height: 100%;
@@ -85,10 +101,6 @@ export const NavContainer = styled.div`
     text-decoration-line: none;
 
     color: #000000;
-
-    &:hover {
-      color: #RGB(253 190 101);
-    }
   }
 `;
 
@@ -139,6 +151,10 @@ export const ButtonContainer = styled.div`
       height: 100%;
       object-fit: cover;
       background-size: cover;
+
+      &:hover {
+        background: #f9f8f7;
+      }
     }
 
     &:active {
