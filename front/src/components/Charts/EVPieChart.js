@@ -99,7 +99,7 @@ function EVPieChart() {
   useEffect(() => {
     const fetchData = async (year) => {
       try {
-        const response = await fetch(`http://kdt-ai7-team09.elicecoding.com/evRatio/${year}`);
+        const response = await fetch(`http://34.64.178.167:3000/evRatio/${year}`);
 
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
