@@ -139,7 +139,7 @@ userAuthRouter.get('/users/:userId', wrapper(async (req, res, next)=> {
 }));
 
 // 유저정보 삭제
-userAuthRouter.delete('/users/:userId', login_required, wrapper(async(req,res,next)=>{
+userAuthRouter.post('/users/:userId', login_required, wrapper(async(req,res,next)=>{
     try{
         const currentUser = req.currentUserId;
         const userId = req.params.userId;

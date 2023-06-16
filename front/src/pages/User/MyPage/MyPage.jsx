@@ -32,7 +32,7 @@ function MyPage() {
   const [editComplete, setEditComplete] = useState(false);
 
   useEffect(() => {
-    Api.get(`users/${user.userId}`).then((res) => setCurrentUser(res.data))
+    Api.get(`users/${userId}`).then((res) => setCurrentUser(res.data))
   }, [userImage])
 
   // 업로드 사진 용량 제한
@@ -62,8 +62,8 @@ function MyPage() {
       const updatedUser = res.data;
       setCurrentUser(updatedUser)
     } catch (err) {
-      // alert(err.response.data)
-      alert("프로필 업로드에 실패하셨습니다.")
+      alert(err.response.data)
+      // alert("프로필 업로드에 실패하셨습니다.")
     }
   }
 
@@ -84,7 +84,7 @@ function MyPage() {
     try {
       const passwordInput = prompt("탈퇴를 위한 비밀번호를 입력해주십시오.");
       console.log(passwordInput)
-      await Api.post(`users/${user.userId}`, {
+      await Api.post(`users/${userId}`, {
         userPassword: passwordInput
       })
       alert(`${user.userName}님의 탈퇴가 처리되었습니다.`);
