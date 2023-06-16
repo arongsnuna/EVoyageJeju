@@ -18,11 +18,14 @@ function EditNickName({ currentNickName, setIsEditableNickName, setEditComplete 
         userPassword: user.userPassword,
         confirmPassword: user.userPassword
       })
-    } catch (e) {
-      console.log("에러 발생 :", e);
+      setIsEditableNickName(false);
+      setEditComplete(true);
+    } catch (err) {
+      if (err.response.status === 400) {
+        alert(err.response.data.error);
+      }
+    console.log('유저 닉네임 수정에 실패하였습니다.', err);
     }
-    setIsEditableNickName(false);
-  setEditComplete(true);
   }
 
   return (

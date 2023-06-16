@@ -44,9 +44,11 @@ function LoginForm() {
       // 기본 페이지로 이동함.
       navigate(ROUTE.Home.link, { replace: true });
     } catch (err) {
-      console.log('err', err.response.data.message)
-      // 에러메세지 출력
-      alert(err.response.data)
+      if (err.response.status === 400) {
+        // 에러메세지 출력
+        alert(err.response.data.error);
+      }
+      console.log('로그인 실패', err)
     }
   };
 

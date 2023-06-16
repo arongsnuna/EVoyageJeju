@@ -40,7 +40,7 @@ const Community = () => {
 
   useEffect(() => {
     updateCommunity();
-  }, [activeTab, activeSpecificTab]);
+  }, []);
 
   const handleAllTab = () => {
     setActiveTab(true);

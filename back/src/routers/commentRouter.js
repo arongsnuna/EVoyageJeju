@@ -9,6 +9,10 @@ const commentRouter = Router();
 commentRouter.get('/:postId/comments', wrapper(async (req,res,next)=>{
     try{
         const postId = req.params.postId;
+        const postFound = await communityService.getOnePost({postId});
+        if(!postFound){
+            throw new Error('이 게시글은 존재하지 않습니다. 다시 한 번 확인해주세요.');
+        }
         const comments = await commentService.getComments({postId});
         res.status(200).send(comments);
     }
@@ -18,17 +22,28 @@ commentRouter.get('/:postId/comments', wrapper(async (req,res,next)=>{
 
 }));
 
-// // 특정 댓글 조회
-// commentRouter.get('/comment/:commentId', wrapper(async(req, res, next)=>{
-//     try{
-//         const commentId = req.params.commentId;
-//         const comment = await commentService.getOneComment({commentId});
-//         res.status(200).send(comment);
-//     }
-//     catch(error){
-//         next(error);
-//     }
-// }))
+// 특정 댓글 조회
+commentRouter.get('/:postId/comments/:commentId', wrapper(async(req, res, next)=>{
+    try{
+        const postId = req.params.postId;
+        const postFound = await communityService.getOnePost({postId});
+        if(!postFound){
+            throw new Error('이 게시글은 존재하지 않습니다. 다시 한 번 확인해주세요.');
+        }
+        const commentId = req.params.commentId;
+        const commentFound = await commentService.getOneComment({commentId});
+        if(!commentFound){
+            const errorMessage = '이 댓글은 존재하지 않습니다.';
+            throw new Error(errorMessage);
+        }
+
+        const comment = await commentService.getOneComment({commentId});
+        res.status(200).send(comment);
+    }
+    catch(error){
+        next(error);
+    }
+}))
 
 // 해당 게시글의 댓글 추가
 commentRouter.post('/:postId/comments', login_required, wrapper(async (req, res, next)=>{
@@ -59,6 +74,12 @@ commentRouter.delete('/:postId/comments/:commentId', login_required, wrapper(asy
     try{
         const userId = req.currentUserId;
         const commentId = req.params.commentId;
+        const postId = req.params.postId;
+
+        const postFound = await communityService.getOnePost({postId});
+        if(!postFound){
+            throw new Error('이 게시글은 존재하지 않습니다. 다시 한 번 확인해주세요.');
+        }
 
         const commentFound = await commentService.getOneComment({commentId});
         if(!commentFound){
@@ -82,6 +103,12 @@ commentRouter.put('/:postId/comments/:commentId', login_required, wrapper(async 
     try{
         const userId = req.currentUserId;
         const commentId = req.params.commentId;
+        const postId = req.params.postId;
+
+        const postFound = await communityService.getOnePost({postId});
+        if(!postFound){
+            throw new Error('이 게시글은 존재하지 않습니다. 다시 한 번 확인해주세요.');
+        }
 
         const commentFound = await commentService.getOneComment({commentId});
         if(!commentFound){
