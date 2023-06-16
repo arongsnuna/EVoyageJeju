@@ -1,35 +1,54 @@
 import styled from "styled-components";
 
-export const Container = styled.div`
-  margin: 100px 0 800px;
-`;
-
 export const ListContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 1em;
-  outline: none;
-  border-radius: 4px;
-  max-width: 1200px;
-  margin: auto;
-  height: 1500px;
+
+  margin-top: 100px;
+
+  div {
+    border-radius: 50px;
+    margin: 10px 0;
+    background: #FFE69C;
+  }
 `;
 
-export const TitleContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
+export const InputContainer = styled.div`
+  width: 2300px;
 
-  h2 {
-    padding: 0 30px 35px;
-    font-family: "Roboto";
+  input {
+    margin: 20px 0 10px 30px;
+    border: none;
+    border-radius: 25px;
+    padding-left: 40px;
+
+    height: 80px;
+    width: 800px;
+
+    font-family: "Inter";
     font-style: normal;
-    font-weight: 700;
-    font-size: 36px;
-    line-height: 110%;
-    text-align: center;
+    font-weight: normal;
+    font-size: 26px;
+    line-height: 28px;
     color: #21272a;
+    letter-spacing: 0.5px;
+  }
+
+  button {
+    cursor: pointer;
+    margin-left: 20px;
+    border: none;
+    border-radius: 10px;
+
+    width: 180px;
+    height: 60px;
+
+    background-color: #8bbe8a;
+
+    font-size: 28px;
+    font-weight: 700;
+    color: white;
   }
 `;
 
@@ -38,125 +57,99 @@ export const CommentContainer = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  width: 80%;
-  margin-top: 15px;
-  position: relative;
-  border:${(props) => (props.isUserComment ? "2px solid blue" : "none")}
 
-  &:first-child {
-    margin-top: 0; 
+  padding: 0;
+  width: 2300px;
+
+  &:last-child {
+    margin-bottom: 20px;
   }
 
-  p {
-    width: 100%; 
-    margin: 0; 
-    font-family: "Roboto";
-    font-style: normal;
-    font-weight: normal;
-    font-size: 24px;
-    line-height: 28px;
-    color: #21272a;
+  .content-box {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0;
+    margin-left: 30px;
+    border-radius: 30px;
+
+    width: 2230px;
+    background: #f9f8f7;
+
+    div {
+      display: flex;
+      background: #f9f8f7;
+
+      .id {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 15px 0;
+
+        border-right: 5px solid #218721;
+        width: 250px;
+
+        font-size: 28px;
+        font-weight: 550;
+      }
+    }
   }
 
   input {
-    flex: 1; 
-    margin-top: 10px; 
-    padding: 10px;
-    font-family: "Roboto";
+    margin-left: 40px;
+    border-radius: 50px;
+    margin: 13px 0 13px 20px;
+    padding: 11px 0 11px 20px;
+
+    width: 1400px;
+
+    font-family: "Inter";
     font-style: normal;
     font-weight: normal;
-    font-size: 26px; 
+    font-size: 26px;
     line-height: 28px;
     color: #21272a;
-    border-radius: 5px;
+    letter-spacing: 0.5px;
+  }
+
+  p {
+    margin-left: 40px;
+
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: normal;
+    font-size: 26px;
+    line-height: 28px;
+    color: #21272a;
+    letter-spacing: 0.5px;
+  }
+
+  .button-box {
+    margin-right: 50px;
   }
 `;
 
 export const ButtonContainer = styled.div`
   display: flex;
-  flex-direction: row;
-  justify-content: center; // Change from 'center' to 'space-between'
   align-items: center;
-  position: absolute;
-  right: 0;
-  top: -11px;
-  height: 20%;
-  padding: 20px;
-  border: 1px solid #8bbe8a;
-  border-radius: 8px;
-  margin: 20px auto;
+
+  paddding-bottom: 30px;
+
   background-color: #f6e8d3;
 
-  input {
-    margin-right: 10px;
-    padding: 5px;
-    border-radius: 4px;
-    border: 1px solid #8bbe8a;
-    width: 60%;
-  }
-
   button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    background-color: #8bbe8a;
-    color: white;
     cursor: pointer;
+    margin-left: 20px;
+    border: none;
+    border-radius: 10px;
+
+    width: 180px;
+    height: 60px;
+
+    background-color: #8bbe8a;
+
+    font-size: 28px;
+    font-weight: 700;
+    color: white;
   }
-`;
-
-export const Button = styled.button`
-  padding: 5px 10px;
-  border: none;
-  border-radius: 5px;
-  background: #3563e9;
-  color: #ffffff;
-  font-family: "Roboto";
-  font-style: normal;
-  font-weight: 600;
-  font-size: 20px;
-  line-height: 10px;
-  cursor: pointer;
-  min-width: 50px;
-
-  &:active {
-    position: relative;
-    top: 3px;
-  }
-
-  &:disabled {
-    background: #a6c8ff;
-  }
-`;
-
-export const RegisterButtonContainer = styled(ButtonContainer)`
-  min-width 120px
-`;
-
-export const RegisterButton = styled.button`
-  padding: 5px 10px;
-  border: none;
-  border-radius: 5px;
-  background: #3563e9;
-  color: #ffffff;
-  font-family: "Roboto";
-  font-style: normal;
-  font-weight: 600;
-  font-size: 20px;
-  line-height: 10px;
-  cursor: pointer;
-  min-width: 50px;
-
-  &:active {
-    position: relative;
-    top: 3px;
-  }
-
-  &:disabled {
-    background: #a6c8ff;
-  }
-`;
-
-export const EditCompleteButton = styled(Button)`
-  min-width: 120px;
 `;

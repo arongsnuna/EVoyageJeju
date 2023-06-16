@@ -1,15 +1,10 @@
 import React, { useState, useEffect } from "react";
 import * as Api from "../../utils/api";
 import {
-  Container,
-  TitleContainer,
   ListContainer,
+  InputContainer,
   ButtonContainer,
   CommentContainer,
-  Button,
-  RegisterButtonContainer,
-  RegisterButton,
-  EditCompleteButton,
 } from "./Comments.style";
 
 function Comments({ postId, userId }) {
@@ -90,62 +85,70 @@ function Comments({ postId, userId }) {
   }, []);
 
   return (
-    <Container>
-      <TitleContainer>
-        <h2>댓글창</h2>
-      </TitleContainer>
+    <>
       <ListContainer>
-        {comments.map((comment) => (
-          <CommentContainer
-            key={comment.commentId}
-            isUserComment={comment.userId === userId}
-          >
-            {editingCommentId === comment.commentId ? (
-              <input
-                type="text"
-                value={editingComment}
-                onChange={(e) => setEditingComment(e.target.value)}
-              />
-            ) : (
-              <div>
-                <p>작성자 Id: {comment.userId}</p>
-                <p>{comment.commentContent}</p>
-              </div>
-            )}
-
-            {comment.userId === userId && (
-              <ButtonContainer>
-                <Button
-                  onClick={() =>
-                    updatingComment(comment.commentId, comment.commentContent)
-                  }
-                >
-                  수정
-                </Button>
-                <Button onClick={() => deleteComment(comment.commentId)}>
-                  삭제
-                </Button>
-                {editingCommentId === comment.commentId && (
-                  <EditCompleteButton
-                    onClick={() => updateComment(comment.commentId)}
-                  >
-                    수정완료
-                  </EditCompleteButton>
-                )}
-              </ButtonContainer>
-            )}
-          </CommentContainer>
-        ))}
         <div>
-          <input
-            type="text"
-            value={newComment}
-            onChange={(e) => setNewComment(e.target.value)}
-          />
-          <RegisterButton onClick={addComment}>등록</RegisterButton>
+          <InputContainer>
+            <input  
+              type="text"
+              placeholder="댓글을 남겨주세요!"
+              value={newComment}
+              onChange={(e) => setNewComment(e.target.value)}
+            />
+            <button onClick={addComment}>등록</button>
+          </InputContainer>
+          {comments.map((comment) => (
+            <CommentContainer
+              key={comment.commentId}
+              isUserComment={comment.userId === userId}
+            >
+              <div className="content-box">
+                {editingCommentId === comment.commentId ? (
+                  <div>
+                    <p className="id">{comment.userId}</p>
+                    <input
+                      type="text"
+                      value={editingComment}
+                      onChange={(e) => setEditingComment(e.target.value)}
+                    />
+                  </div>
+                ) : (
+                  <div>
+                    <p className="id">{comment.userId}</p>
+                    <p className="content">{comment.commentContent}</p>
+                  </div>
+                )}
+                  <div className="button-box">
+                  {comment.userId === userId && (
+                    <ButtonContainer>
+                      {editingCommentId === comment.commentId ? (
+                        <button
+                          onClick={() => updateComment(comment.commentId)}
+                        >
+                          수정완료
+                        </button>
+                      ) : (
+                        <button
+                          onClick={() =>
+                            updatingComment(comment.commentId, comment.commentContent)
+                          }
+                        >
+                          수정
+                        </button>
+                      )}
+                      <button onClick={() => deleteComment(comment.commentId)}>
+                        삭제
+                      </button>
+
+                    </ButtonContainer>
+                  )}
+                </div>
+              </div>
+            </CommentContainer>
+          ))}
         </div>
       </ListContainer>
-    </Container>
+    </>
   );
 }
 
