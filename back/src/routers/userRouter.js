@@ -128,7 +128,7 @@ userAuthRouter.get('/users',  wrapper(async (req, res, next)=> {
 }));
 
 // 특정 유저의 정보
-userAuthRouter.get('/users/:userId', login_required, wrapper(async (req, res, next)=> {
+userAuthRouter.get('/users/:userId', wrapper(async (req, res, next)=> {
     try {
         const userId = req.params.userId;
         const currentUserInfo = await userAuthService.getUserInfo({userId});
