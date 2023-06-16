@@ -165,22 +165,30 @@ class userAuthService {
     }
     // 닉네임 업데이트
     static async userNicknameUpdate({ userFound, newNickname }) {
-        
+        const userNickname = newNickname;
+        const userConfirmedByNickname = await this.findByNickname({userNickname});
         return new Promise((resolve, reject)=>{
-            if(userFound.userNickname !=  newNickname){
-                const sql = `UPDATE User SET userNickname='${newNickname}' WHERE userId = '${userFound.userId}'`;
-                pool.query(sql, (error, results, fields)=>{
-                    if(error){
-                        reject(error);
-                    }
-                    else{
-                        resolve('성공');
-                    }  
-                })
+            if(userConfirmedByNickname){
+                const errorMessage = '이 닉네임은 현재 사용중입니다. 다른 닉네임을 입력해 주세요.';
+                reject(errorMessage);
             }
             else{
-                resolve('성공');
+                if(userFound.userNickname !=  newNickname){
+                    const sql = `UPDATE User SET userNickname='${newNickname}' WHERE userId = '${userFound.userId}'`;
+                    pool.query(sql, (error, results, fields)=>{
+                        if(error){
+                            reject(error);
+                        }
+                        else{
+                            resolve('성공');
+                        }  
+                    })
+                }
+                else{
+                    resolve('성공');
+                }
             }
+            
         })
     }
     // 비밀번호 업데이트
