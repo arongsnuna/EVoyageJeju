@@ -62,6 +62,7 @@ function MyPage() {
       const updatedUser = res.data;
       setCurrentUser(updatedUser)
     } catch (err) {
+      // alert(err.response.data)
       alert("프로필 업로드에 실패하셨습니다.")
     }
   }

@@ -55,11 +55,11 @@ const CommunityDetail = () => {
       console.log(err)
     }
   };
+
   useEffect(() => { 
     getPostInfo();
     getFollower();
   }, []);
-
 
   // 해당 페이지의 '좋아요'를 누른 followerlist 불러오기
   const getFollower = async () => {
@@ -69,7 +69,10 @@ const CommunityDetail = () => {
 
   // followers(좋아요를 누른 사람들 모음)에 현재 로그인된 유저가 포함됐는지 확인
   // True(포함됨): already clicked, False(불포함): not clicked.
-  const isClicked = followers.filter((follower) => follower.userId === user.userId)
+  let isClicked = false;
+  if (user) {
+    isClicked = followers.find((follower) => follower.userId === user?.userId);
+  }
 
   // 불러온 해당 페이지의 좋아요 수 update
   const getLikeCount = useCallback(() => { 
@@ -95,13 +98,13 @@ const CommunityDetail = () => {
   const handleLikeClick = async (e) => {
     e.preventDefault();
     try  {
-      await Api.post(`likes/${postId}/increment`, { postId: postId, userId: user.userId })
+      await Api.post(`likes/${postId}/increment`, { postId: postId, userId: user?.userId })
       getFollower();
       getLikeCount();
       alert('해당 게시물에 좋아요를 누르셨습니다.')
     } catch (err) {
       console.log(err)
-      alert(err.response.data)
+      alert("로그인 후에 좋아요를 누를 수 있습니다.")
     }
   };
 
@@ -116,7 +119,8 @@ const CommunityDetail = () => {
       alert('해당 게시물에 좋아요를 취소하셨습니다.');
     } catch (err) {
       console.log(err)
-      alert(err.response.data)
+      // alert(err.response.data)
+      alert("로그인 후에 좋아요를 누를 수 있습니다.")
     }
   };
 
@@ -149,20 +153,20 @@ const CommunityDetail = () => {
       <ButtonContainer>
         <div>
           <button className='tolist' onClick={() => navigate(ROUTE.COMMUNITY.link)}>목록</button>
-          {postUserId === user.userId &&
+          {postUserId === user?.userId &&
             <>
               <button onClick={() => navigate(`/community/${postId}/edit`)}>수정</button>
               <button className='delete' onClick={handleDelete}>삭제</button>
             </>
           }
-          {isClicked.length === 0 ? (
+          {!isClicked ? (
             <button className='like' onClick={handleLikeClick}>♥️</button>
           ) : (
             <button className='liked' onClick={handleCancelClick}>♥️</button>
           )}
         </div>
       </ButtonContainer>
-      <Comments postId={postId} userId={user.userId} />
+      <Comments postId={postId} userId={user?.userId} />
     </Container>
   );
 };

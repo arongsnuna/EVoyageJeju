@@ -39,10 +39,10 @@ export const InputContainer = styled.div`
     cursor: pointer;
     margin-left: 20px;
     border: none;
-    border-radius: 10px;
+    border-radius: 25px;
 
     width: 180px;
-    height: 60px;
+    height: 80px;
 
     background-color: #8bbe8a;
 
