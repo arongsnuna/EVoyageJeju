@@ -8,7 +8,7 @@ function PopulationBarChart() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:5001/population");
+        const response = await fetch("http://kdt-ai7-team09.elicecoding.com/population");
 
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
