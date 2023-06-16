@@ -42,7 +42,7 @@ export const ContentContainer = styled.div`
 
     font-family: 'Roboto';
     font-style: normal;
-    font-weight: 600;
+    font-weight: 500;
     font-size: 26px;
     line-height: 110%;
     color: #000000;
@@ -57,8 +57,8 @@ export const ContentContainer = styled.div`
       height: 100px;
       background: #FFC87B;
 
-      font-weight: 700;
-      font-size: 40px;
+      font-weight: 600;
+      font-size: 36px;
     }
   }
 
@@ -110,6 +110,8 @@ export const ButtonContainer = styled.div`
     width: 2300px;
 
     button {
+      cursor: pointer;
+
       width: 150px;
       height: 50px;
 

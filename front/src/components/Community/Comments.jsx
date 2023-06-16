@@ -7,6 +7,8 @@ import {
   ButtonContainer,
   CommentContainer,
   Button,
+  RegisterButtonContainer,
+  RegisterButton,
   EditCompleteButton,
 } from "./Comments.style";
 
@@ -27,8 +29,7 @@ function Comments({ postId, userId }) {
   };
 
   // 댓글 작성
-  const addComment = async (event) => {
-    event.preventDefault();
+  const addComment = async () => {
     try {
       const response = await Api.post(`community/${postId}/comments`, {
         commentContent: newComment,
@@ -86,7 +87,7 @@ function Comments({ postId, userId }) {
 
   useEffect(() => {
     fetchComments();
-  }, [comments]);
+  }, []);
 
   return (
     <Container>
@@ -95,7 +96,10 @@ function Comments({ postId, userId }) {
       </TitleContainer>
       <ListContainer>
         {comments.map((comment) => (
-          <CommentContainer key={comment.commentId}>
+          <CommentContainer
+            key={comment.commentId}
+            isUserComment={comment.userId === userId}
+          >
             {editingCommentId === comment.commentId ? (
               <input
                 type="text"
@@ -132,15 +136,14 @@ function Comments({ postId, userId }) {
             )}
           </CommentContainer>
         ))}
-
-        <ButtonContainer>
+        <div>
           <input
             type="text"
             value={newComment}
             onChange={(e) => setNewComment(e.target.value)}
           />
-          <Button onClick={addComment}>등록</Button>
-        </ButtonContainer>
+          <RegisterButton onClick={addComment}>등록</RegisterButton>
+        </div>
       </ListContainer>
     </Container>
   );

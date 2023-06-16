@@ -82,7 +82,7 @@ const renderCustomizedLabel = ({
         fill={labelColor}
         textAnchor={x > cx ? "start" : "end"}
         dominantBaseline="central"
-        style={{ fontSize: "12px", fontWeight: "bold" }}
+        style={{ fontSize: "16px", fontWeight: "bold" }}
       >
         {label}
       </text>
@@ -142,10 +142,10 @@ function EVPieChart() {
         {year <= 2020 && (
           <PieChart width={800} height={800}>
             <text
-              x={320} // 중앙에 텍스트를 위치시키기 위한 x 위치 조정
-              y={220} // 중앙에 텍스트를 위치시키기 위한 y 위치 조정
+              x={360} // 중앙에 텍스트를 위치시키기 위한 x 위치 조정
+              y={240} // 중앙에 텍스트를 위치시키기 위한 y 위치 조정
               dx={5}
-              dy={100} // 텍스트를 적절히 중앙에 위치시키기 위한 조정
+              dy={120} // 텍스트를 적절히 중앙에 위치시키기 위한 조정
               textAnchor="middle"
               fill="#000000"
               style={{ fontSize: "2em", fontWeight: "bold" }}
@@ -153,8 +153,8 @@ function EVPieChart() {
               100%
             </text>
             <text
-              style={{ fontSize: "23px", fontWeight: "bold" }}
-              x={100}
+              style={{ fontSize: "28px", fontWeight: "bold" }}
+              x={30}
               y={20}
               textAnchor="inner"
               dominantBaseline="middle"
@@ -165,10 +165,10 @@ function EVPieChart() {
               dataKey="ratio"
               isAnimationActive={false}
               data={data}
-              cx={320}
-              cy={300}
-              outerRadius={240}
-              innerRadius={120} // 도넛 차트를 만들기 위한 설정
+              cx={360}
+              cy={340}
+              outerRadius={270}
+              innerRadius={135} // 도넛 차트를 만들기 위한 설정
               fill="#8884d8"
               labelLine={false}
               label={renderCustomizedLabel}
@@ -185,7 +185,6 @@ function EVPieChart() {
             onClick={() => {
               if (year > 2015) setYear(year - 1); // 2015는 이전 연도로 이동할 수 있는 가장 작은 연도로 가정합니다.
             }}
-            // variant="outlined"
           >
             이전 연도
           </button>
@@ -194,7 +193,6 @@ function EVPieChart() {
             onClick={() => {
               if (year < 2020) setYear(year + 1);
             }}
-            // variant="outlined"
           >
             다음 연도
           </button>

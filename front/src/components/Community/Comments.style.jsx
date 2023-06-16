@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  margin: 170px 0 800px;
+  margin: 100px 0 800px;
 `;
 
 export const ListContainer = styled.div`
@@ -9,29 +9,11 @@ export const ListContainer = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 1em;
-  outline: none; // Remove the outline
-  border-radius: 4px; // optional: if you want the outline to have rounded corners
-  max-width: 1200px; // adjust to the desired maximum width
-  margin: auto; // centers the container
-  overflow-y: scroll; // enable vertical scrolling
-  height: 1500px; // adjust to the desired height
-
-  /* Add infinite scrolling behavior */
-  &::-webkit-scrollbar {
-    width: 8px; // adjust the scrollbar width as needed
-  }
-
-  &::-webkit-scrollbar-track {
-    background: #f1f1f1; // adjust the track background color as needed
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: #888; // adjust the thumb color as needed
-  }
-
-  &::-webkit-scrollbar-thumb:hover {
-    background: #555; // adjust the thumb color on hover as needed
-  }
+  outline: none;
+  border-radius: 4px;
+  max-width: 1200px;
+  margin: auto;
+  height: 1500px;
 `;
 
 export const TitleContainer = styled.div`
@@ -53,18 +35,21 @@ export const TitleContainer = styled.div`
 
 export const CommentContainer = styled.div`
   display: flex;
-  justify-content: space-between; /* Align items to the start and end of the container */
+  flex-direction: row;
+  justify-content: space-between;
   align-items: center;
   width: 80%;
   margin-top: 15px;
+  position: relative;
+  border:${(props) => (props.isUserComment ? "2px solid blue" : "none")}
 
   &:first-child {
-    margin-top: 0; /* Remove top margin for the first comment */
+    margin-top: 0; 
   }
 
   p {
-    width: 100%; /* Adjust width to occupy the entire container */
-    margin: 0; /* Remove default margins */
+    width: 100%; 
+    margin: 0; 
     font-family: "Roboto";
     font-style: normal;
     font-weight: normal;
@@ -74,13 +59,13 @@ export const CommentContainer = styled.div`
   }
 
   input {
-    flex: 1; /* Allow the input to expand and take available space */
-    margin-top: 10px; /* Add a margin-top for the input */
+    flex: 1; 
+    margin-top: 10px; 
     padding: 10px;
     font-family: "Roboto";
     font-style: normal;
     font-weight: normal;
-    font-size: 26px; /* Increase the font size by 2px */
+    font-size: 26px; 
     line-height: 28px;
     color: #21272a;
     border-radius: 5px;
@@ -89,9 +74,13 @@ export const CommentContainer = styled.div`
 
 export const ButtonContainer = styled.div`
   display: flex;
-  flex-direction: row; // Add this
-  justify-content: space-between; // Change from 'center' to 'space-between'
+  flex-direction: row;
+  justify-content: center; // Change from 'center' to 'space-between'
   align-items: center;
+  position: absolute;
+  right: 0;
+  top: -11px;
+  height: 20%;
   padding: 20px;
   border: 1px solid #8bbe8a;
   border-radius: 8px;
@@ -100,10 +89,10 @@ export const ButtonContainer = styled.div`
 
   input {
     margin-right: 10px;
-    padding: 10px;
+    padding: 5px;
     border-radius: 4px;
     border: 1px solid #8bbe8a;
-    width: 70%;
+    width: 60%;
   }
 
   button {
@@ -117,7 +106,7 @@ export const ButtonContainer = styled.div`
 `;
 
 export const Button = styled.button`
-  padding: 10px 20px;
+  padding: 5px 10px;
   border: none;
   border-radius: 5px;
   background: #3563e9;
@@ -126,9 +115,37 @@ export const Button = styled.button`
   font-style: normal;
   font-weight: 600;
   font-size: 20px;
-  line-height: 28px;
+  line-height: 10px;
   cursor: pointer;
-  min-width: 100px; // Adjust this value as needed
+  min-width: 50px;
+
+  &:active {
+    position: relative;
+    top: 3px;
+  }
+
+  &:disabled {
+    background: #a6c8ff;
+  }
+`;
+
+export const RegisterButtonContainer = styled(ButtonContainer)`
+  min-width 120px
+`;
+
+export const RegisterButton = styled.button`
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  background: #3563e9;
+  color: #ffffff;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 10px;
+  cursor: pointer;
+  min-width: 50px;
 
   &:active {
     position: relative;
@@ -141,5 +158,5 @@ export const Button = styled.button`
 `;
 
 export const EditCompleteButton = styled(Button)`
-  min-width: 120px; // Adjust this value as needed
+  min-width: 120px;
 `;

@@ -162,7 +162,7 @@ const CommunityDetail = () => {
           )}
         </div>
       </ButtonContainer>
-      <Comments />
+      <Comments postId={postId} userId={user.userId} />
     </Container>
   );
 };

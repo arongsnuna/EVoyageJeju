@@ -1,38 +1,40 @@
 import styled from "styled-components";
 
 export const ButtonContainer = styled.div`
-  margin: -200px 0 50px 100px;
+  margin: -200px 0 50px 320px;
   button {
-    height: 40px;
+    height: 48px;
     position: absolute;
     cursor: pointer;
 
-    font-family: 'Inter';
+    font-family: "Inter";
     font-style: normal;
     font-weight: 600;
-    font-size: 20px;
+    font-size: 24px;
     line-height: 19px;
     text-align: center;
     letter-spacing: 0.46px;
-    color: #3563e9;
-  
-    background: #FFFFFF;
+    color: #ffffff  ;
+
+    background: #218721;
     border-radius: 5px;
     border-color: #3563e9;
 
     &:hover {
-      background: #3563e9;
-      color: #FFFFFF  ;
+      background: #175917;
+      color: #ffffff;
     }
   }
   .prev {
     margin-right: 120px;
   }
   .next {
-    margin-left: 120px;
+    margin-left: 130px;
+    margin-right: 20px;
   }
 `;
 export const PopulationBarChartTitle = styled.h2`
   margin-top: -5px;
   text-align: center;
+  font-size: 28px;
 `;

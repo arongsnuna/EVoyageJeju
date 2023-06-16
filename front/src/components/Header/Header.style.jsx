@@ -95,7 +95,7 @@ export const NavContainer = styled.div`
     font-family: 'Inter';
     font-style: normal;
     font-weight: 700;
-    font-size: 30px;
+    font-size: 36px;
     line-height: 40px;
     letter-spacing: 0.2px;
     text-decoration-line: none;

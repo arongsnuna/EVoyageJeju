@@ -56,14 +56,15 @@ function PopulationBarChart() {
     <>
       <PopulationBarChartTitle>2020년 도시별 인구수</PopulationBarChartTitle>
       <>
-        <BarChart width={600} height={500} layout="vertical" data={data}>
+        <BarChart width={800} height={600} layout="vertical" data={data}>
           <XAxis
             type="number"
+            tick={{ fontSize: 20 }}
             tickFormatter={(tickItem) =>
               new Intl.NumberFormat().format(tickItem)
             }
           />
-          <YAxis dataKey="city" type="category" />
+          <YAxis dataKey="city" type="category" tick={{ fontSize: 24 }} />
           <Tooltip
             formatter={(value) => {
               return [new Intl.NumberFormat().format(value) + "명"];

@@ -25,23 +25,26 @@ export const Description = styled.div`
 
   background: #FFE69C;
 
-  font-family: "Noto Sans KR", sans-serif;
+  font-family: "Nanum Gothic", sans-serif;
   font-weight: 500;
-  font-size: 32px;
+  font-size: 30px;
   line-height: 1.5;
-  text-align: center;
   font-style: normal;
   letter-spacing: 0.2px;
   color: #212121;
 
   div {
-    padding: 50px 0 100px;
+    padding: 50px 0 70px;
     border-radius: 50px;
     border: 10px dashed #218721;
 
     width: 2500px;
 
     background: #f9f8f7;
+  }
+
+  h1 {
+    margin-bottom: 40px;
   }
 
   p {
@@ -106,10 +109,10 @@ export const SecondGraphContainer = styled.div`
 `;
 
 export const Title = styled.h2`
-  margin-bottom: 30px;
+  margin-bottom: 50px;
 
-  font-family: "Noto Sans KR", sans-serif;
-  font-size: 32px;
+  font-family: "Nanum Gothic", sans-serif;
+  font-size: 38px;
   font-weight: 700;
   text-align: center;
 `;
@@ -120,7 +123,7 @@ export const ExplanationRight = styled.div`
   justify-content: center;
 
   margin: 0 25px 0 100px;
-  padding: 40px 40px 20px 40px;
+  padding: 40px;
   border-radius: 50px;
 
   width: 655px;
@@ -128,13 +131,23 @@ export const ExplanationRight = styled.div`
 
   background: #FFE69C;
 
-  font-family: "Noto Sans KR", sans-serif;
+  font-family: "Nanum Gothic", sans-serif;
   font-size: 28px;
   line-height: 1.5;
   text-align: center;
   font-style: normal;
   letter-spacing: 0.2px;
   color: #212121;
+
+  div {
+    padding: 100px 10px 60px;
+    border-radius: 50px;
+    border: 8px dashed #218721;
+
+    height: 490px;
+
+    background: #f9f8f7;
+  }
 
   p {
     margin: 0;
@@ -148,21 +161,31 @@ flex-direction: column;
 justify-content: center;
 
 margin: 25px 25px 20px;
-padding: 40px 40px 70px;
+padding: 40px;
 border-radius: 50px;
 
 width: 655px;
-height: 600px;
+height: 630px;
 
 background: #FFE69C;
 
-font-family: "Noto Sans KR", sans-serif;
+font-family: "Nanum Gothic", sans-serif;
 font-size: 28px;
 line-height: 1.5;
 text-align: center;
 font-style: normal;
 letter-spacing: 0.2px;
 color: #212121;
+
+div {
+  padding: 80px 50px 70px;
+  border-radius: 50px;
+  border: 8px dashed #218721;
+
+  height: 550px;
+
+  background: #f9f8f7;
+}
 
 p {
   margin: 0;
