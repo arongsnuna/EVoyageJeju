@@ -106,7 +106,7 @@ class commentService{
     static async contentUpdate({commentFound, newContent}){
         return new Promise((resolve, reject)=>{
             if(commentFound.commentContent != newContent){
-                const sql = `update Comment SET commentContent ='${newContent}'`;
+                const sql = `update Comment SET commentContent ='${newContent}' where commentId = '${commentFound.commentId}'`;
                 pool.query(sql, (error, results, fields)=>{
                     if(error){
                         reject(error);
