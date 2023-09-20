@@ -1,75 +1,194 @@
 import styled from "styled-components";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 
 export const Container = styled.div`
-  text-align: center;
-  height: 2000px;
-`;
-
-export const Title = styled.h1`
-  color: #444;
-  margin: 20px 0;
-`;
-export const ChartContainer = styled.div`
-  height: 400px; // 원하는 높이로 조절
-  margin-bottom: 20px; // 그래프 사이의 간격 조절
-`;
-
-export const HeadContentContainer = styled.div`
   display: flex;
   flex-direction: column;
-  text-align: center;
-`;
-
-export const SliderContainer = styled.div`
-  margin: 0 30px;
-  // padding: 200px 0;
-  height: 700px;
-  border: 5px solid black;
-
-  background: red;
-`;
-
-export const StyledSlider = styled(Slider)`
-  margin: 30px;
-
-  background: blue;
-
-  p {
-    font-size: 50px;
-    text-align: center;
-  }
-`;
-
-export const VideoBackgroundContainer = styled.div`
-  position: relative;
-`;
-
-export const VideoBackgroundInner = styled.div`
-  left: 0px;
-  position: absolute;
-  top: 0px;
-  height: 100%;
-  width: 100%;
-  overflow: hidden;
-`;
-
-export const VideoBackgroundVideo = styled.video`
-  object-fit: cover;
-  height: 100%;
-  max-width: 100%;
-`;
-
-export const VideoBackgroundContent = styled.div`
-  left: 0px;
-  position: absolute;
-  top: 0px;
-  height: 100%;
-  width: 100%;
   align-items: center;
+
+  padding-top: 200px;
+  text-align: center;
+  height: auto;
+`;
+
+export const Description = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+
+  margin: 120px 25px 70px;
+  padding: 40px 0 30px 60px;
+  border-radius: 50px;
+  border-top: 65px dotted #f9f8f7;
+
+  width: 2580px;
+  height: 600px;
+
+  background: #FFE69C;
+
+  font-family: "Nanum Gothic", sans-serif;
+  font-weight: 500;
+  font-size: 30px;
+  line-height: 1.5;
+  font-style: normal;
+  letter-spacing: 0.2px;
+  color: #212121;
+
+  div {
+    padding: 50px 0 70px;
+    border-radius: 50px;
+    border: 10px dashed #218721;
+
+    width: 2500px;
+
+    background: #f9f8f7;
+  }
+
+  h1 {
+    margin-bottom: 40px;
+  }
+
+  p {
+    margin: 0;
+    margin-bottom: 10px;
+  }
+`;
+
+export const FirstChartContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  margin: 0 20px 70px;
+  padding: 80px 20px 80px 40px;
+  border-radius: 50px;
+  border-top: 65px dotted #f9f8f7;
+
+  gap: 20px;
+  width: 2600px;
+  height: 600px;
+
+  background: #caf5d7;
+`;
+
+export const SecondChartContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  margin: 0 20px 200px;
+  padding: 80px 20px 50px 40px;
+  border-radius: 50px;
+  border-top: 65px dotted #f9f8f7;
+
+  gap: 20px;
+  width: 2600px;
+  height: 700px;
+
+  background: #caf5d7;
+`;
+
+export const FirstGraphContainer = styled.div`
+  flex: 1;
+  padding: 40px 0 20px 20px;
+  border-radius: 50px;
+  max-width: 60%;
+  height: 600px;
+  width: 400px;
+  background: #f9f8f7;
+`;
+
+export const SecondGraphContainer = styled.div`
+  flex: 1;
+  padding: 40px 0 70px 20px;
+  border-radius: 50px;
+
+  height: 600px;
+  background: #f9f8f7;
+`;
+
+export const Title = styled.h2`
+  margin-bottom: 50px;
+
+  font-family: "Nanum Gothic", sans-serif;
+  font-size: 38px;
+  font-weight: 700;
+  text-align: center;
+`;
+
+export const ExplanationRight = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  margin: 0 25px 0 100px;
+  padding: 40px;
+  border-radius: 50px;
+
+  width: 655px;
+  height: 600px;
+
+  background: #FFE69C;
+
+  font-family: "Nanum Gothic", sans-serif;
+  font-size: 28px;
+  line-height: 1.5;
+  text-align: center;
+  font-style: normal;
+  letter-spacing: 0.2px;
+  color: #212121;
+
+  div {
+    padding: 100px 10px 60px;
+    border-radius: 50px;
+    border: 8px dashed #218721;
+
+    height: 490px;
+
+    background: #f9f8f7;
+  }
+
+  p {
+    margin: 0;
+    margin-bottom: 10px;
+  }
+`;
+
+export const ExplanationLeft = styled.div`
+display: flex;
+flex-direction: column;
+justify-content: center;
+
+margin: 25px 25px 20px;
+padding: 40px;
+border-radius: 50px;
+
+width: 655px;
+height: 630px;
+
+background: #FFE69C;
+
+font-family: "Nanum Gothic", sans-serif;
+font-size: 28px;
+line-height: 1.5;
+text-align: center;
+font-style: normal;
+letter-spacing: 0.2px;
+color: #212121;
+
+div {
+  padding: 80px 50px 70px;
+  border-radius: 50px;
+  border: 8px dashed #218721;
+
+  height: 550px;
+
+  background: #f9f8f7;
+}
+
+p {
+  margin: 0;
+  margin-bottom: 10px;
+}
 `;

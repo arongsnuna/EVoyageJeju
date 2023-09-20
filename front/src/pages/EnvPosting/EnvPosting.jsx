@@ -16,7 +16,7 @@ function EnvPosting() {
   return (
     <Container>
       <TitleContainer>
-        <p>전기차는 왜 환경에 좋고, 어떻게 이용해야 할까요?</p>
+        <p>🚜 전기차 이용 꿀팁보시고 환경도 챙겨가세요! 🌏</p>
       </TitleContainer>
       {isModalOpen  && (
         <Modal 
@@ -25,18 +25,20 @@ function EnvPosting() {
         />
       )}
       <PostingContainer>
-        {postings.map((posting) => (
-          <div>
-            <img 
-              key={posting.id} 
-              src={posting.thumbnailUrl} 
-              onClick={() => { 
-                setIsModalOpen(true) 
-                setSelectedItem(posting.contentUrl)
-              }} />
-            <p>{posting.title}</p>
-          </div>
-        ))}        
+        <div>
+          {postings.map((posting) => (
+            <div className="thumbnail">
+              <img 
+                key={posting.id} 
+                src={posting.thumbnailUrl} 
+                onClick={() => { 
+                  setIsModalOpen(true) 
+                  setSelectedItem(posting.contentUrl)
+                }} />
+              <p>{posting.title}</p>
+            </div>
+          ))} 
+        </div>       
       </PostingContainer>
     </Container>
   );

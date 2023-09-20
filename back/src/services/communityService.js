@@ -110,32 +110,14 @@ class communityService{
     // 글 삭제하기 
     static async deletePost({postId}){
         return new Promise((resolve, reject)=>{
-            const sql1 = `DELETE from Comment WHERE postId = '${postId}'`
+            const sql1 = `DELETE from Community WHERE postId = '${postId}'`
             pool.query(sql1, (error, results, fields)=>{
                 if(error){
                     reject(error);
                 }
                 else{
-                    const sql2 = `DELETE from LikeCount WHERE postId = '${postId}'`
-                    pool.query(sql2, (error, results, fields)=>{
-                        if(error){
-                            reject(error);
-                        }
-                        else{
-                            const sql3 = `DELETE from Community WHERE postId = '${postId}'`
-                            pool.query(sql3, (error, results, fields)=>{
-                                if(error){
-                                    reject(error);
-                                }
-                                else{
-                                    const message = '삭제되었습니다';
-                                    resolve(message); 
-                                }
-                            })
-                            
-                            
-                        }
-                    })
+                    const message = '삭제되었습니다';
+                    resolve(message); 
                 }
             })
         })

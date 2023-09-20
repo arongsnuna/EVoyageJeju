@@ -32,7 +32,7 @@ const upload = multer({ storage: storage });
 communityRouter.get('', wrapper(async (req, res,next)=>{
     try{
         const page = req.query.page || 1; // 요청한 페이지 번호
-        const pageSize = req.query.pageSize || 10; // 페이지 크기
+        const pageSize = req.query.pageSize || 100; // 페이지 크기
 
         const posts = await communityService.getPosts({page, pageSize});
         res.status(200).send(posts);
@@ -50,6 +50,7 @@ communityRouter.post('/write', login_required, upload.single('postImage'), wrapp
         const postContent = req.body.postContent;
         const postType= req.body.postType;
         const uploadImage = req.file ?? null;
+        console.log(uploadImage);
 
         if(!userId){
             throw new Error('글 작성을 위해선 로그인이 필요합니다.');
@@ -111,7 +112,7 @@ communityRouter.get('/:postId', wrapper(async (req,res,next)=>{
 }));
 
 // 글 삭제하기
-communityRouter.post('/:postId', login_required, wrapper(async (req, res, next)=>{
+communityRouter.delete('/:postId', login_required, wrapper(async (req, res, next)=>{
     try{
         const userId = req.currentUserId;
         const postId = req.params.postId;

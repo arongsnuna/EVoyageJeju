@@ -18,7 +18,7 @@ function EVCarChart() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:5001/co2");
+        const response = await fetch("http://34.64.178.167:3000/co2Emission");
 
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -41,7 +41,9 @@ function EVCarChart() {
     fetchData();
   }, []);
 
-  const numberFormatter = (number) => new Intl.NumberFormat().format(number);
+  const numberFormatter = (number) => {
+    return `${number / 1000}k`;
+  };
 
   const tooltipFormatter = (value, name) => {
     const unit = name === "전기차 수" ? " 대" : " 천톤CO2eq";
@@ -56,23 +58,25 @@ function EVCarChart() {
         data={data}
         margin={{
           top: 20,
-          right: 20,
+          right: 100,
           bottom: 20,
-          left: 20,
+          left: 50,
         }}
       >
         <CartesianGrid stroke="#f5f5f5" />
-        <XAxis dataKey="year" />
+        <XAxis dataKey="year" style={{ fontSize: "25px" }} />
         <YAxis
           yAxisId="left"
           dataKey="전기차 수"
           tickFormatter={numberFormatter}
+          style={{ fontSize: "24px" }}
         >
           <Label
             value="전기차 수"
             angle={-90}
             position="insideLeft"
-            style={{ textAnchor: "middle" }}
+            style={{ textAnchor: "middle", fontSize: "24px" }}
+            offset={-20}
           />
         </YAxis>
         <YAxis
@@ -80,23 +84,25 @@ function EVCarChart() {
           dataKey="차량 CO2 배출량"
           orientation="right"
           tickFormatter={numberFormatter}
+          style={{ fontSize: "24px" }}
           domain={[900, 1600]}
         >
           <Label
             value="차량 CO2 배출량"
             angle={90}
             position="insideRight"
-            style={{ textAnchor: "middle" }}
+            style={{ textAnchor: "middle", fontSize: "24px" }}
+            offset={-20}
           />
         </YAxis>
         <Tooltip formatter={tooltipFormatter} />
         <Legend />
-        <Bar yAxisId="left" dataKey="전기차 수" barSize={20} fill="#413ea0" />
+        <Bar yAxisId="left" dataKey="전기차 수" barSize={120} fill="#413ea0" />
         <Line
           yAxisId="right"
           dataKey="차량 CO2 배출량"
           stroke="#ff7300"
-          strokeWidth={3}
+          strokeWidth={6}
         />
       </ComposedChart>
     </ResponsiveContainer>

@@ -9,10 +9,10 @@ export const Container = styled.div`
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 120px;
+  height: 300px;
   transform: translateY(0);
 
-  background: #3563e9;
+  background: #FCD565;
 
   p {
     margin: 0;
@@ -21,9 +21,9 @@ export const Container = styled.div`
     font-family: "Roboto";
     font-style: normal;
     font-weight: 400;
-    font-size: 17px;
+    font-size: 25px;
     line-height: 140%;
-    color: #ffffff;
+    color: #000000;
     text-align: center;
     letter-spacing: 0.5px;
   }

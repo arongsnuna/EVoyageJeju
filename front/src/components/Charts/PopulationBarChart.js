@@ -1,14 +1,6 @@
 import React, { useState, useEffect } from "react";
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  Tooltip,
-  CartesianGrid,
-  Cell,
-  ResponsiveContainer,
-} from "recharts";
+import { BarChart, Bar, XAxis, YAxis, Tooltip, Cell } from "recharts";
+import { PopulationBarChartTitle } from "./chartStyle";
 
 function PopulationBarChart() {
   const [data, setData] = useState([]);
@@ -16,7 +8,7 @@ function PopulationBarChart() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:5001/population");
+        const response = await fetch("http://34.64.178.167:3000/population");
 
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -61,31 +53,34 @@ function PopulationBarChart() {
   }, []);
 
   return (
-    <ResponsiveContainer>
-      <BarChart width={1000} height={600} layout="vertical" data={data}>
-        <XAxis
-          type="number"
-          tickFormatter={(tickItem) => new Intl.NumberFormat().format(tickItem)}
-        />
-        <YAxis dataKey="city" type="category" />
-
-        {/* CartesianGrid 컴포넌트를 제거합니다 */}
-
-        <Tooltip
-          formatter={(value) => {
-            return [new Intl.NumberFormat().format(value) + "명"];
-          }}
-        />
-        <Bar dataKey="인구수">
-          {data.map((entry, index) => (
-            <Cell
-              key={`cell-${index}`}
-              fill={entry.city === "제주" ? "orange" : "skyblue"}
-            />
-          ))}
-        </Bar>
-      </BarChart>
-    </ResponsiveContainer>
+    <>
+      <PopulationBarChartTitle>2020년 도시별 인구수</PopulationBarChartTitle>
+      <>
+        <BarChart width={800} height={600} layout="vertical" data={data}>
+          <XAxis
+            type="number"
+            tick={{ fontSize: 20 }}
+            tickFormatter={(tickItem) =>
+              new Intl.NumberFormat().format(tickItem)
+            }
+          />
+          <YAxis dataKey="city" type="category" tick={{ fontSize: 24 }} />
+          <Tooltip
+            formatter={(value) => {
+              return [new Intl.NumberFormat().format(value) + "명"];
+            }}
+          />
+          <Bar dataKey="인구수">
+            {data.map((entry, index) => (
+              <Cell
+                key={`cell-${index}`}
+                fill={entry.city === "제주" ? "orange" : "skyblue"}
+              />
+            ))}
+          </Bar>
+        </BarChart>
+      </>
+    </>
   );
 }
 

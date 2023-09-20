@@ -1,26 +1,28 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useUserState } from "../../../UserContext";
+import { useUserDispatch } from "../../../UserContext";
+import { LOGOUT } from "../../../reducer/action";
+import * as Api from '../../../utils/api';
+import { ROUTE } from "../../../routes/routes";
 import EditNickName from '../../../components/MyPage/EditNickName';
 import EditPassword from '../../../components/MyPage/EditPassword';
-import { useUserState } from "../../../UserContext";
-import * as Api from '../../../utils/api';
 import { TitleContainer, FormContainer, FormPhotoDiv, FormPhotoContent, FormPhotoInfo, FormUserDiv, ButtonContainer, EditCompletedText } from "./Mypage.style";
+import mypagelogo from './mypagelogo.png';
+
 
 function MyPage() {
   const { user } = useUserState();
   const imgRef = useRef();
+  const navigate = useNavigate();
+  const dispatch = useUserDispatch();
 
   const [currentUser, setCurrentUser] = useState(user);
-  console.log(currentUser)
   const { userName, userNickname, userId, userPassword, userImage } = currentUser;
   
   // 프로필 이미지 변경을 위한 state
   const [profileImage, setProfileImage] = useState(userImage);
-  const [previewPhoto, setPreviewPhoto] = useState('');
-  console.log(profileImage)
-  
-  // useEffect(() => {
-  //     Api.get(`users/${user.userId}`).then((res) => setCurrentUser(res.data))
-  // }, [user.userId])
+  const [previewProfile, setPreviewProfile] = useState('');
 
   // EditForm 활성화를 위한 state
   const [isEditableNickName, setIsEditableNickName] = useState(false);
@@ -29,25 +31,39 @@ function MyPage() {
   // 수정 완료 알림을 위한 state
   const [editComplete, setEditComplete] = useState(false);
 
+  useEffect(() => {
+    Api.get(`users/${userId}`).then((res) => setCurrentUser(res.data))
+  }, [userImage])
+
+  // 업로드 사진 용량 제한
+  const validateForm = () => {
+    if (profileImage && profileImage.size > 50 * 1024) {
+        alert('이미지 크기는 50kbyte 이하여야 합니다.');
+        return false;
+    }
+    return true;
+  };
+
   // 이미지 업로드 버튼 함수
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      if (!validateForm()) {
+        return;
+      }
       const formData = new FormData();
       formData.append('userImage', profileImage);
       formData.append('userNickname', user.userNickname);
       formData.append('userPassword', user.userPassword);
       formData.append('confirmPassword', user.userPassword);
-      console.log(formData)
-
-      const res = await Api.put(`users/${user.userId}`, formData);
-      alert('성공')
+      console.log(formData.get('userImage'))
+      const res = await Api.putFile(`users/${user.userId}`, formData);
+      alert('프로필 업로드에 성공하셨습니다.')
       const updatedUser = res.data;
       setCurrentUser(updatedUser)
     } catch (err) {
-      alert("실패")
+      alert("프로필 업로드에 실패하셨습니다.")
     }
-    console.log(currentUser)
   }
 
   // 업로드된 이미지 파일 state 저장, 이미지 미리보기
@@ -57,45 +73,63 @@ function MyPage() {
     const reader = new FileReader();
     reader.readAsDataURL(e.target.files[0]);
     reader.onloadend = () => {
-      setPreviewPhoto(reader.result);
+      setPreviewProfile(reader.result);
     };
   };
+
+  // 회원탈퇴
+  const handleDelete = async (e) => {
+    e.preventDefault();
+    try {
+      const passwordInput = prompt("탈퇴를 위한 비밀번호를 입력해주십시오.");
+      console.log(passwordInput)
+      await Api.post(`users/${userId}`, {
+        userPassword: passwordInput
+      })
+      alert(`${user.userName}님의 탈퇴가 처리되었습니다.`);
+      // 로그아웃 처리
+      sessionStorage.removeItem("userToken");
+      dispatch({ type: LOGOUT });
+
+      navigate(ROUTE.Home.link)
+    } catch (err) {
+      console.log(err)
+      alert(err.response.data)
+    }
+  }
 
   return (
     <>
       <TitleContainer>
-        <p>마이페이지</p>
+        <p>🔐 마이페이지 🔐</p>
       </TitleContainer>
       <FormContainer>
         <fieldset>
-          <FormPhotoDiv onSubmit={handleSubmit}>
+          <FormPhotoDiv>
             <legend>Profile Photo</legend>
             <div>
               <FormPhotoContent>
                 <div className="profilebox">
-                  <img src={previewPhoto} />
+                  <img src={!profileImage ? mypagelogo : !previewProfile ? profileImage : previewProfile} />
                 </div>
                 <div className="buttonbox">
                   <label htmlFor='input-file'>Upload Phote</label>
                   <input 
                     id='input-file'
                     type='file'
-                    accept='Photo/*'
-                    name='profilePicture'
+                    accept='image/*'
                     onChange={saveImgFile}
                     ref={imgRef}
                   />
-                  <button type="submit">저장</button>
+                  <button className="save" onClick={handleSubmit}>저장</button>
                 </div>
               </FormPhotoContent>
               <FormPhotoInfo>
                 <div>
                   <p>Photo requirements:</p>
-                </div>
-                <div>
                   <ol>
-                    <li>Min. 400px x 400px</li>
-                    <li>Max. 2MB</li>
+                    <li>Min. 512px x 512px</li>
+                    <li>Max. 50kbyte</li>
                     <li>Your Face or Company Logo</li>
                   </ol>
                 </div>
@@ -142,7 +176,7 @@ function MyPage() {
                 />
               ) : (
                 <>
-                  <p>{userPassword}</p>
+                  <p>****</p>
                   <button
                     onClick={() => setIsEditablePassword(true)}
                   >수정</button>
@@ -150,11 +184,7 @@ function MyPage() {
               )}
             </div>
             <ButtonContainer>
-              <button 
-                type="submit" 
-              >
-                회원탈퇴
-              </button>
+              <button onClick={handleDelete}>회원탈퇴</button>
             </ButtonContainer>
           </FormUserDiv>
         </fieldset>

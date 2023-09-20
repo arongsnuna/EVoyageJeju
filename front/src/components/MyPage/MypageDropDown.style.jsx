@@ -13,22 +13,22 @@ export const Li = styled.li`
   button {
     cursor: pointer;
     border: none;
-    border-bottom: 1px solid #C1C7CD;
+    border: 4px solid #218721;
     width: 100%;
     height: 75px;
 
-    background: #F2F4F8;
+    background: #FFFFFF;
 
     font-family: 'Roboto';
     font-style: normal;
-    font-weight: 400;
-    font-size: 22px;
+    font-weight: 700;
+    font-size: 26px;
     line-height: 140%;
     text-align: center;
-    color: #697077;
+    color: #218721;
 
     &:hover {
-      background: #0F62FE;
+      background: #218721;
       color: #FFFFFF;
     }
 

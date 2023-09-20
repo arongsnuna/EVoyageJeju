@@ -9,6 +9,7 @@ function MypageDropDown() {
   const dispatch = useUserDispatch();
 
   const logout = () => {
+    sessionStorage.removeItem("userToken");
     dispatch({ type: LOGOUT });
     alert("로그아웃 되었습니다.")
     navigate(ROUTE.Home.link)

@@ -19,7 +19,11 @@ function Header() {
   const { user } = useUserState();
   const navigate = useNavigate();
   const [click, setClick] = useState(false);
-  console.log(click);
+  // nav 클릭 이벤트
+  const [clickedHome, setClickedHome] = useState('');
+  const [clickedInfo, setClickedInfo] = useState('');
+  const [clickedCommu, setClickedCommu] = useState('');
+  const [clickedCharger, setClickedCharger] = useState('');
 
   if (window.location.pathname === ROUTE.LOGIN.link) {
     return <></>;
@@ -37,22 +41,62 @@ function Header() {
 
         <Navigation>
           <NavContainer>
-            <Link to={ROUTE.Home.link} exact="true">
+            <Link 
+              to={ROUTE.Home.link} 
+              className={ clickedHome === "selected" ? "clicked" : '' }
+              onClick={() => {
+                setClickedHome("selected")
+                setClickedInfo("")
+                setClickedCommu("")
+                setClickedCharger("")
+              }}
+              exact="true"
+            >
               홈
             </Link>
           </NavContainer>
           <NavContainer>
-            <Link to={ROUTE.ENVINFO.link} exact="true">
+            <Link 
+              to={ROUTE.ENVINFO.link} 
+              className={ clickedInfo === "selected" ? "clicked" : '' }
+              onClick={() => {
+                setClickedInfo("selected")
+                setClickedHome("")
+                setClickedCommu("")
+                setClickedCharger("")
+              }}
+              exact="true"
+            >
               정보
             </Link>
           </NavContainer>
           <NavContainer>
-            <Link to={ROUTE.COMMUNITY.link} exact="true">
+            <Link 
+              to={ROUTE.COMMUNITY.link} 
+              className={ clickedCommu === "selected" ? "clicked" : '' }
+              onClick={() => {
+                setClickedCommu("selected")
+                setClickedHome("")
+                setClickedInfo("")
+                setClickedCharger("")
+              }}
+              exact="true"
+            >
               커뮤니티
             </Link>
           </NavContainer>
           <NavContainer>
-            <Link to={ROUTE.CHARGER.link} exac="true">
+            <Link 
+              to={ROUTE.CHARGER.link} 
+              className={ clickedCharger === "selected" ? "clicked" : '' }
+              onClick={() => {
+                setClickedCharger("selected")
+                setClickedHome("")
+                setClickedInfo("")
+                setClickedCommu("")
+              }}
+              exact="true"
+            >
               가까운 충전소 찾기
             </Link>
           </NavContainer>
@@ -61,18 +105,22 @@ function Header() {
         <ButtonContainer>
           {user ? (
             <>
-              <p>🍊{user.userNickname}님 반갑습니다🚜</p>
-              <img
-                src={mypagelogo}
-                alt="Login user"
-                onClick={() => setClick(!click)}
-              />
+              <div className="profile">
+                <p>{user.userNickname}님 반갑습니다!</p>
+                <div className="profilebox">
+                  <img
+                    src={user.userImage ? user.userImage : mypagelogo}
+                    alt="Login user"
+                    onClick={() => setClick(!click)}
+                  />
+                </div>
+              </div>
               {click && <MypageDropDown />}
             </>
           ) : (
             <>
               <HeaderButton
-                fontColor="#3563e9"
+                fontColor="#218721"
                 backgroundColor="#FFFFFF"
                 onClick={() => navigate(ROUTE.REGISTER.link)}
               >
@@ -80,7 +128,7 @@ function Header() {
               </HeaderButton>
               <HeaderButton
                 fontColor="#FFFFFF"
-                backgroundColor="#3563e9"
+                backgroundColor="#218721"
                 onClick={() => navigate(ROUTE.LOGIN.link)}
               >
                 Login
